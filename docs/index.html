@@ -15,10 +15,10 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="stylesheet" href="/src/styles.css" />
   </head>
-  <body class="ok docs-okami-agent" data-page="docs">
+  <body data-page="docs">
     <header class="dx-nav">
       <a class="dx-brand" href="/" aria-label="Okami Maturity home">
-        <span class="brand-text">Okami <strong>Maturity</strong></span>
+        <img src="/assets/brand/okami-maturity-logo-light-transparent-v2.png" alt="Okami Maturity" class="brand-logo" style="height: 28px; width: auto;" />
         <span class="dx-brand-sub">
           <span class="lang lang-pt">Documentação</span>
           <span class="lang lang-en">Documentation</span>
@@ -61,16 +61,15 @@
           <ul>
             <li><a href="#maturity" data-i18n="docs_side_maturity">Maturidade SAMM</a></li>
             <li><a href="#modules" data-i18n="docs_side_modules">5 Funções &amp; 15 Práticas</a></li>
-            <li><a href="#appsec" data-i18n="docs_side_overview">Visão geral &amp; Scoring 0-3</a></li>
+            <li><a href="#appsec" data-i18n="docs_side_overview">Scoring 0-3</a></li>
           </ul>
         </div>
         <div class="dx-group">
           <p class="dx-group-h" data-i18n="docs_group_integration">Evidence &amp; Assessment</p>
           <ul>
-            <li><a href="#quickstart" data-i18n="docs_side_quickstart">Evidence model</a></li>
-            <li><a href="#project-map" data-i18n="docs_side_project_map">Assessment workflow</a></li>
-            <li><a href="#state-model" data-i18n="docs_side_state_model">Roadmap &amp; reporting</a></li>
-            <li><a href="#environment" data-i18n="docs_side_environment">Import evidence</a></li>
+            <li><a href="#state-model" data-i18n="docs_side_state_model">Modelo de evidências</a></li>
+            <li><a href="#registries" data-i18n="docs_side_registries">Roadmap &amp; reporting</a></li>
+            <li><a href="#connectors" >Import evidence</a></li>
           </ul>
         </div>
         <div class="dx-group">
@@ -80,6 +79,12 @@
             <li><a href="#security" data-i18n="docs_side_security">Security &amp; Privacy</a></li>
             <li><a href="#contribute" data-i18n="docs_side_contribute">Contributing questions</a></li>
             <li><a href="#troubleshooting" data-i18n="docs_side_troubleshooting">Running locally</a></li>
+          </ul>
+        </div>
+        <div class="dx-group">
+          <p class="dx-group-h">SAMM Questions</p>
+          <ul>
+            <li><a href="#samm-question-root">90 perguntas interativas</a></li>
           </ul>
         </div>
       </aside>
@@ -514,24 +519,7 @@ npm run preview</code></pre>
             <span class="lang lang-pt">Estrutura completa das 90 perguntas do modelo SAMM (5 funções de negócio, 15 práticas). Algumas expandidas com intenção, evidências e interpretação de maturidade 0-3. Clique para detalhes.</span>
             <span class="lang lang-en">Full structure of the 90 SAMM model questions (5 business functions, 15 practices). Some expanded with intent, evidence and maturity level 0-3 interpretation. Click to expand details.</span>
           </p>
-          <style>
-.samm-root { font-size: 0.95rem; line-height: 1.4; }
-.samm-stats { background: #f8f8f8; padding: 8px; border-radius: 4px; margin-bottom: 12px; }
-.samm-practice { margin-bottom: 16px; border: 1px solid #ddd; border-radius: 4px; padding: 8px; }
-.samm-practice h4 { margin: 0 0 8px; font-size: 1rem; }
-.samm-qlist { list-style: none; padding: 0; margin: 0; }
-.samm-q { padding: 4px 0; border-bottom: 1px solid #eee; }
-.samm-q.full { background: #f0fff0; }
-.q-head { display: flex; gap: 8px; align-items: flex-start; }
-.q-text { flex: 1; }
-.samm-toggle { font-size: 0.8rem; padding: 2px 6px; cursor: pointer; }
-.q-details { margin-top: 6px; padding: 8px; background: #fff; border: 1px solid #ccc; border-radius: 3px; font-size: 0.85rem; }
-.maturity-levels { margin-top: 4px; }
-.ml { padding: 2px 0; }
-.ml-label { font-weight: bold; display: inline-block; width: 60px; }
-.ph { color: #888; font-size: 0.8rem; }
-</style>
-<div id="samm-question-root" class="samm-root"></div>
+          <div id="samm-question-root" class="samm-root"></div>
           <div class="dx-note info">
             <span class="ico">i</span>
             <div class="txt">
