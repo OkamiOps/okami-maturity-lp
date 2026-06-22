@@ -120,6 +120,15 @@ body[data-lang="en"] .lang-en {
   min-width: 0;
 }
 
+.brand-logo {
+  display: block;
+  width: auto;
+  max-width: clamp(168px, 17vw, 252px);
+  max-height: 52px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 18px rgba(255, 43, 178, 0.18));
+}
+
 .brand-crop {
   display: block;
   width: 204px;
@@ -276,6 +285,9 @@ body[data-lang="en"] .lang-en {
   display: flex;
   gap: 12px;
   align-items: center;
+  justify-content: flex-end;
+  min-width: 0;
+  flex-wrap: wrap;
 }
 
 .nav-status {
@@ -4467,7 +4479,9 @@ body[data-lang="en"] .closing-accent.lang-en {
   }
 
   .nav-links {
-    display: none;
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
   }
 
   .header-actions {
@@ -7003,7 +7017,7 @@ body.docs-okami-agent > :not(.dx-nav) {
 
 @media (max-width: 420px) {
   .install-line {
-    grid-template-columns: auto 1fr;
+    grid-template-columns: auto minmax(0, 1fr) auto;
   }
   .install-line code {
     white-space: nowrap;
@@ -7017,10 +7031,211 @@ body.docs-okami-agent > :not(.dx-nav) {
     min-width: 50px;
   }
 
+  .dx-side {
+    padding: 8px 10px;
+    font-size: 0.85rem;
+  }
+  .dx-main {
+    padding: 16px 12px 40px;
+    max-width: 100%;
+  }
+  .hero-actions, .header-actions {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .ok-btn {
+    min-height: 36px;
+    padding: 0 10px;
+    font-size: 10px;
+  }
+
   .terminal-card pre,
   .terminal-card code {
     font-size: 10px;
     overflow-x: auto;
     white-space: pre;
+  }
+}
+
+
+/* Okami Maturity SAMM question cards - dark theme, responsive */
+.samm-root {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--ok-fg);
+}
+
+.samm-stats {
+  background: var(--ok-bg-1);
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  border: 1px solid var(--ok-line);
+  font-size: 0.85rem;
+}
+
+.samm-practices {
+  display: grid;
+  gap: 16px;
+}
+
+.samm-practice {
+  background: var(--ok-bg-2);
+  border: 1px solid var(--ok-line);
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.samm-practice h4 {
+  margin: 0 0 8px;
+  font-size: 0.95rem;
+  color: var(--ok-cyan);
+  border-bottom: 1px solid var(--ok-line);
+  padding-bottom: 4px;
+  font-family: "JetBrains Mono", monospace;
+}
+
+.samm-qlist {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.samm-q {
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--ok-line);
+}
+
+.samm-q:last-child {
+  border-bottom: none;
+}
+
+.samm-q.full {
+  background: rgba(0, 229, 255, 0.03);
+}
+
+.q-head {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.q-text {
+  flex: 1;
+  font-size: 0.88rem;
+}
+
+.samm-toggle {
+  font-size: 0.7rem;
+  padding: 1px 8px;
+  border: 1px solid var(--ok-line);
+  background: var(--ok-bg-1);
+  color: var(--ok-fg-soft);
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: "JetBrains Mono", monospace;
+}
+
+.samm-toggle:hover {
+  border-color: var(--ok-cyan);
+  color: var(--ok-cyan);
+}
+
+.q-details {
+  margin-top: 8px;
+  padding: 10px;
+  background: var(--ok-bg-1);
+  border: 1px solid var(--ok-line);
+  border-radius: 6px;
+  font-size: 0.8rem;
+}
+
+.maturity-levels {
+  margin-top: 8px;
+  display: grid;
+  gap: 2px;
+}
+
+.ml {
+  padding: 2px 0;
+  font-size: 0.78rem;
+}
+
+.ml-label {
+  font-weight: bold;
+  display: inline-block;
+  width: 70px;
+  color: var(--ok-orange);
+}
+
+.ph {
+  color: var(--ok-fg-mute);
+  font-size: 0.75rem;
+  font-family: "JetBrains Mono", monospace;
+}
+
+/* SAMM levels showcase on landing */
+.samm-levels {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin: 12px 0;
+}
+
+.level-card {
+  background: var(--ok-bg-2);
+  border: 1px solid var(--ok-line);
+  border-radius: 6px;
+  padding: 8px 6px;
+  text-align: center;
+  font-size: 0.75rem;
+}
+
+.level-card strong {
+  display: block;
+  color: var(--ok-cyan);
+  font-size: 0.85rem;
+}
+
+/* Docs sidebar + shell responsive for 390px mobile and desktop */
+.dx-shell {
+  display: grid;
+  grid-template-columns: 264px minmax(0, 1fr) 232px;
+  max-width: 1440px;
+  margin: 0 auto;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .dx-shell {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .dx-side {
+    position: static;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--ok-line);
+    padding: 16px 20px;
+    overflow-y: visible;
+  }
+  .dx-toc {
+    display: none;
+  }
+  .dx-main {
+    padding: 0 12px;
+  }
+}
+
+@media (max-width: 420px) {
+  .dx-shell {
+    padding: 0 8px;
+  }
+  .samm-practice {
+    padding: 8px;
+  }
+  .samm-q {
+    font-size: 0.82rem;
   }
 }
