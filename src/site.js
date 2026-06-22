@@ -293,8 +293,18 @@ const setActiveDocSection = (sectionId) => {
 
     if (isActive) {
       link.setAttribute("aria-current", "true");
-      if (link.closest(".dx-side")) {
-        link.scrollIntoView({ block: "nearest", inline: "nearest" });
+      const side = link.closest(".dx-side");
+      if (side && side.scrollHeight > side.clientHeight) {
+        const linkTop = link.offsetTop;
+        const linkBottom = linkTop + link.offsetHeight;
+        const visibleTop = side.scrollTop;
+        const visibleBottom = visibleTop + side.clientHeight;
+
+        if (linkTop < visibleTop) {
+          side.scrollTop = Math.max(0, linkTop - 16);
+        } else if (linkBottom > visibleBottom) {
+          side.scrollTop = linkBottom - side.clientHeight + 16;
+        }
       }
     } else {
       link.removeAttribute("aria-current");

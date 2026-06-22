@@ -31,7 +31,7 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
 }
 
 body {
@@ -7237,5 +7237,123 @@ body.docs-okami-agent > :not(.dx-nav) {
   }
   .samm-q {
     font-size: 0.82rem;
+  }
+}
+
+/* Hotfix: docs must behave like Okami Agent docs, not like a fixed OS cockpit. */
+html {
+  min-height: 100%;
+  overflow-y: auto;
+}
+
+body.docs-okami-agent {
+  padding-top: 0;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  touch-action: pan-y;
+  overscroll-behavior-y: auto;
+}
+
+body.docs-okami-agent .dx-nav {
+  position: sticky;
+  top: 0;
+  inset: auto;
+}
+
+body.docs-okami-agent .dx-shell {
+  min-height: calc(100dvh - var(--dx-nav-h));
+}
+
+body.docs-okami-agent .dx-side {
+  top: calc(var(--dx-nav-h) + 12px);
+  height: auto;
+  max-height: calc(100dvh - var(--dx-nav-h) - 24px);
+}
+
+body.docs-okami-agent .dx-main {
+  padding-bottom: 128px;
+}
+
+/* Hotfix: push the landing toward Okami Agent's public-alpha visual language. */
+body.okami-agent-surface {
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: var(--ok-bg-0);
+}
+
+body.okami-agent-surface .site-header {
+  background: rgba(6, 6, 9, 0.94);
+  box-shadow: none;
+}
+
+body.okami-agent-surface .nav-console a {
+  border-bottom-color: transparent;
+  color: var(--ok-fg-soft);
+  box-shadow: none;
+}
+
+body.okami-agent-surface .nav-console a span,
+body.okami-agent-surface .nav-console a strong {
+  color: inherit;
+}
+
+body.okami-agent-surface .nav-console a:hover {
+  border-bottom-color: var(--ok-orange);
+  background: transparent;
+  color: var(--ok-fg);
+  box-shadow: none;
+}
+
+body.okami-agent-surface .hero {
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 0.84fr);
+}
+
+body.okami-agent-surface .hero-title {
+  max-width: 920px;
+  letter-spacing: -0.045em;
+}
+
+body.okami-agent-surface .hero-panel,
+body.okami-agent-surface .terminal-card,
+body.okami-agent-surface .proof-card,
+body.okami-agent-surface .module-card,
+body.okami-agent-surface .deployment-step {
+  border-color: var(--ok-line);
+  background: rgba(8, 9, 15, 0.96);
+  box-shadow: none;
+}
+
+body.okami-agent-surface .terminal-brand {
+  color: var(--ok-orange);
+}
+
+body.okami-agent-surface .section-label {
+  color: var(--ok-orange);
+}
+
+body.okami-agent-surface .section-label::before {
+  background: var(--ok-orange);
+}
+
+body.okami-agent-surface .ok-btn-primary {
+  background: var(--ok-orange);
+  box-shadow: none;
+}
+
+@media (max-width: 900px) {
+  body.docs-okami-agent .dx-nav {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  body.docs-okami-agent .dx-search {
+    order: 3;
+    flex-basis: 100%;
+    margin-left: 0;
+  }
+
+  body.docs-okami-agent .dx-side {
+    max-height: none;
   }
 }
