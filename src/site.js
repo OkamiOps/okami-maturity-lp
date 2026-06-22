@@ -234,7 +234,12 @@ const applyLanguage = (lang) => {
 };
 
 document.querySelectorAll("[data-lang-button]").forEach((button) => {
-  button.addEventListener("click", () => applyLanguage(button.dataset.langButton));
+  button.addEventListener("click", () => {
+    applyLanguage(button.dataset.langButton);
+    if (document.getElementById("samm-question-root")) {
+      setTimeout(renderSAMMQuestions, 50);
+    }
+  });
 });
 
 document.querySelectorAll(".showcase-tab").forEach((button) => {
@@ -381,7 +386,7 @@ const sammData = {
     { code: "D-TA-2-B", practice: "D-TA", text: "Do you use a standard methodology, aligned with your application risk levels?", full: false },
     { code: "D-TA-3-A", practice: "D-TA", text: "Do you regularly review and update the risk profiles for your applications?", full: false },
     { code: "D-TA-3-B", practice: "D-TA", text: "Do you regularly review and update the threat modeling methodology for your applications?", full: false },
-    { code: "G-EG-1-A", practice: "G-EG", text: "Do you require employees involved with application development to take SDLC training?", full: true, intent: "Require employees involved with application development to take SDLC training to establish baseline security knowledge.", evidence: "Training is repeatable and available to all; includes OWASP Top 10 and key concepts; requires sign-off; reviewed annually; onboarding for new staff and refreshers.", maturity: {0: "No training is required or offered for development staff.", 1: "Ad-hoc, best-effort training sessions are occasionally provided.", 2: "Consistent, repeatable training program with mandatory attendance and tracking.", 3: "Continuous improvement via LMS, role-specific content, feedback and certification processes." } },
+    { code: "G-EG-1-A", practice: "G-EG", text: "Do you require employees involved with application development to take SDLC training?", text_pt: "As equipes envolvidas com desenvolvimento de aplicativos são obrigadas a fazer treinamento SDLC?", full: true, intent: "Require employees involved with application development to take SDLC training to establish baseline security knowledge.", intent_pt: "Exigir que os funcionários envolvidos com o desenvolvimento de aplicativos façam treinamento SDLC para estabelecer conhecimento básico de segurança.", evidence: "Training is repeatable and available to all; includes OWASP Top 10 and key concepts; requires sign-off; reviewed annually; onboarding for new staff and refreshers.", evidence_pt: "O treinamento é repetível e disponível para todos; inclui OWASP Top 10 e conceitos chave; requer assinatura; revisado anualmente; onboarding para novos funcionários e atualizações.", maturity: {0: "No training is required or offered for development staff.", 1: "Ad-hoc, best-effort training sessions are occasionally provided.", 2: "Consistent, repeatable training program with mandatory attendance and tracking.", 3: "Continuous improvement via LMS, role-specific content, feedback and certification processes." }, maturity_pt: {0: "Nenhum treinamento é exigido ou oferecido para a equipe de desenvolvimento.", 1: "Sessões de treinamento ad-hoc, de melhor esforço, são ocasionalmente fornecidas.", 2: "Programa de treinamento consistente e repetível com participação obrigatória e rastreamento.", 3: "Melhoria contínua via LMS, conteúdo específico por função, feedback e processos de certificação." } },
     { code: "G-EG-1-B", practice: "G-EG", text: "Have you identified a Security Champion for each development team?", full: true, intent: "Identify Security Champions per team to promote security culture locally.", evidence: "Champions receive training; teams receive periodic briefings on security status and fixes.", maturity: {0: "No security champions identified.", 1: "Informal champions exist in some teams on best effort basis.", 2: "Formal identification and training of champions with regular briefings.", 3: "Champions integrated into continuous improvement and cross-team sharing." } },
     { code: "G-EG-2-A", practice: "G-EG", text: "Is training customized for individual roles such as developers, testers, or security champions?", full: true, intent: "Customize training for specific roles to increase relevance and effectiveness.", evidence: "Training includes level 1 topics plus specific tools and demos; mandatory for all employees and contractors.", maturity: {0: "Generic or no role-specific training.", 1: "Some role differentiation on ad-hoc basis.", 2: "Standardized role-based training that is mandatory and tracked.", 3: "Advanced customization, LMS tracking and continuous update based on incidents." } },
     { code: "G-EG-2-B", practice: "G-EG", text: "Does the organization have a Secure Software Center of Excellence (SSCE)?", full: true, intent: "Establish a Secure Software Center of Excellence (SSCE) for centralized guidance.", evidence: "SSCE has charter; teams review architectural changes with SSCE.", maturity: {0: "No central security excellence function.", 1: "Ad-hoc security advice from individuals.", 2: "Established SSCE with defined role and review processes.", 3: "SSCE drives continuous improvement, metrics and organization-wide standards." } },
@@ -455,42 +460,65 @@ const sammData = {
     { code: "V-ST-3-B", practice: "V-ST", text: "Do you use the results of security testing to improve the development lifecycle?", full: false },
   ]
 };
-window.sammData = sammData;function renderSAMMQuestions() {
-  const root = document.getElementById('samm-question-root');
+
+window.sammData = sammData;
+function getLang() { return document.body.dataset.lang || "pt"; }
+function renderSAMMQuestions() {
+  const root = document.getElementById("samm-question-root");
   if (!root || !window.sammData || !window.sammData.questions) {
     if (root) root.innerHTML = '<p style="color:#888">No SAMM data loaded.</p>';
     return;
   }
+  const lang = getLang();
+  const isPt = lang === "pt";
   const qs = window.sammData.questions;
+  const ptQuestionMap = {
+    "Do teams use security principles during design?": "As equipes usam princípios de segurança durante o design?",
+    "Do you require employees involved with application development to take SDLC training?": "As equipes envolvidas com desenvolvimento de aplicativos são obrigadas a fazer treinamento SDLC?",
+    "Have you identified a Security Champion for each development team?": "Você identificou um Security Champion para cada equipe de desenvolvimento?",
+    // add more as needed for short questions
+  };
   const count = qs.length;
-  // Group by practice
   const groups = {};
   qs.forEach(q => {
     if (!groups[q.practice]) groups[q.practice] = [];
     groups[q.practice].push(q);
   });
-  let html = `<div class="samm-stats">Total: <strong>${count}</strong> perguntas SAMM renderizadas (8 expandidas com detalhes de maturidade 0-3).</div>`;
+  const statsText = isPt 
+    ? `Total: <strong>${count}</strong> perguntas SAMM renderizadas (8 expandidas com detalhes de maturidade 0-3).`
+    : `Total: <strong>${count}</strong> SAMM questions rendered (8 expanded with 0-3 maturity details).`;
+  let html = `<div class="samm-stats">${statsText}</div>`;
   html += '<div class="samm-practices">';
   Object.keys(groups).sort().forEach(pr => {
     const list = groups[pr];
     html += `<div class="samm-practice"><h4>${pr} <span class="samm-count">(${list.length})</span></h4><ul class="samm-qlist">`;
     list.forEach(q => {
       const isFull = q.full;
-      html += `<li class="samm-q ${isFull ? 'full' : ''}" data-code="${q.code}">`;
-      html += `<div class="q-head"><strong>${q.code}</strong> <span class="q-text">${q.text}</span>`;
+      const qText = (isPt && ptQuestionMap[q.text]) || (isPt && q.text_pt) || q.text;
+      html += `<li class="samm-q ${isFull ? "full" : ""}" data-code="${q.code}">`;
+      html += `<div class="q-head"><strong>${q.code}</strong> <span class="q-text">${qText}</span>`;
       if (isFull) {
-        html += ` <button class="samm-toggle" data-code="${q.code}">detalhes</button>`;
+        const btnText = isPt ? "detalhes" : "details";
+        html += ` <button class="samm-toggle" data-code="${q.code}">${btnText}</button>`;
       } else {
-        html += ` <em class="ph">${window.translations?.[document.body.dataset.lang || 'pt']?.samm_placeholder || '(placeholder)'}</em>`;
+        const ph = isPt ? "(placeholder)" : "(named placeholder)";
+        html += ` <em class="ph">${ph}</em>`;
       }
       html += `</div>`;
       if (isFull) {
         html += `<div class="q-details" id="det-${q.code}" style="display:none;">`;
-        html += `<p><strong>Intent:</strong> ${q.intent}</p>`;
-        html += `<p><strong>Evidence/examples:</strong> ${q.evidence}</p>`;
-        html += `<div class="maturity-levels"><strong>Maturidade 0-3:</strong>`;
+        const intentL = isPt ? "Intenção:" : "Intent:";
+        const intentT = q.intent_pt || q.intent || "";
+        html += `<p><strong>${intentL}</strong> ${intentT}</p>`;
+        const evidL = isPt ? "Evidência/exemplos:" : "Evidence/examples:";
+        const evidT = q.evidence_pt || q.evidence || "";
+        html += `<p><strong>${evidL}</strong> ${evidT}</p>`;
+        const matL = isPt ? "Maturidade 0-3:" : "Maturity 0-3:";
+        html += `<div class="maturity-levels"><strong>${matL}</strong>`;
         [0,1,2,3].forEach(l => {
-          html += `<div class="ml ml-${l}"><span class="ml-label">Nível ${l}:</span> ${q.maturity[l]}</div>`;
+          const mT = (q.maturity_pt && q.maturity_pt[l]) || (q.maturity && q.maturity[l]) || "";
+          const levL = isPt ? `Nível ${l}:` : `Level ${l}:`;
+          html += `<div class="ml ml-${l}"><span class="ml-label">${levL}</span> ${mT}</div>`;
         });
         html += `</div></div>`;
       }
@@ -498,25 +526,26 @@ window.sammData = sammData;function renderSAMMQuestions() {
     });
     html += `</ul></div>`;
   });
-  html += '</div>';
+  html += "</div>";
   root.innerHTML = html;
-  // Add toggle listeners
-  root.querySelectorAll('.samm-toggle').forEach(btn => {
-    btn.addEventListener('click', () => {
+  root.querySelectorAll(".samm-toggle").forEach(btn => {
+    btn.addEventListener("click", () => {
       const code = btn.dataset.code;
       const det = root.querySelector(`#det-${code}`);
       if (det) {
-        const show = det.style.display === 'none' || !det.style.display;
-        det.style.display = show ? 'block' : 'none';
-        btn.textContent = show ? 'ocultar' : 'detalhes';
+        const show = det.style.display === "none" || !det.style.display;
+        det.style.display = show ? "block" : "none";
+        const isPtNow = getLang() === "pt";
+        const hideT = isPtNow ? "ocultar" : "hide";
+        const detT = isPtNow ? "detalhes" : "details";
+        btn.textContent = show ? hideT : detT;
       }
     });
   });
-  console.log(`[SAMM] Rendered ${count} questions into #samm-question-root`);
+  console.log(`[SAMM] Rendered ${count} questions into #samm-question-root (lang:${lang})`);
 }
 
 // Auto render if on docs with root
-if (document.getElementById('samm-question-root')) {
-  // delay to after language and DOM
+if (document.getElementById("samm-question-root")) {
   setTimeout(renderSAMMQuestions, 120);
 }

@@ -14,7 +14,7 @@
       property="og:description"
       content="Okami Maturity: ferramenta open source para avaliações SAMM, roadmap de maturidade AppSec para executivos e times de segurança."
     />
-    <meta property="og:image" content="/assets/brand/okami-maturity-wordmark.svg" />
+    <meta property="og:image" content="/assets/brand/okami-maturity-logo-light-transparent-v2.png" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Okami Maturity | AppSec Maturity Roadmap com SAMM" />
     <meta
@@ -48,7 +48,7 @@
   <body data-page="home">
     <header class="site-header">
       <a class="brand" href="/" aria-label="Okami Maturity home">
-        <span class="brand-text">Okami <strong>Maturity</strong></span>
+        <img src="/assets/brand/okami-maturity-logo-light-transparent-v2.png" alt="Okami Maturity" class="brand-logo" />
       </a>
       <nav class="nav-links nav-console" aria-label="Main navigation">
         <a class="nav-orange" href="#demo"><span>01</span><strong data-i18n="nav_demo">Avaliação</strong></a>
@@ -188,7 +188,7 @@
         </div>
 
         <div class="samm-showcase">
-          <p class="section-label"><span>§01</span><span>Sam m visual</span></p>
+          <p class="section-label"><span>§01</span><span><span class="lang lang-pt">Níveis SAMM</span><span class="lang lang-en">SAMM Levels</span></span></p>
           <div class="samm-levels">
             <div class="level-card"><strong>Nível 0</strong><span>Incompleto</span></div>
             <div class="level-card"><strong>Nível 1</strong><span>Inicial</span></div>
@@ -215,46 +215,39 @@
         </div>
         <div class="module-grid">
           <article class="module-card nav-cyan">
-            <span class="module-kicker">overview</span>
+            <span class="module-kicker">G</span>
             <span class="module-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M7 24s6-10 17-10 17 10 17 10-6 10-17 10S7 24 7 24z" /><circle cx="24" cy="24" r="4" /></svg></span>
-            <h3>Governança SAMM</h3>
+            <h3><span class="lang lang-pt">Governança</span><span class="lang lang-en">Governance</span></h3>
             <p><span class="lang lang-pt">Políticas, papéis, estratégia e métricas de maturidade AppSec.</span><span class="lang lang-en">Policies, roles, strategy and AppSec maturity metrics.</span></p>
-            <small>SSE · health · activity feed</small>
+            <small>5 práticas · G-EG, G-PC, G-SM</small>
           </article>
           <article class="module-card nav-orange">
-            <span class="module-kicker">usage</span>
-            <span class="module-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M24 7v34" /><path d="M32 14H20a6 6 0 0 0 0 12h8a6 6 0 0 1 0 12H16" /></svg></span>
-            <h3>Governança</h3>
+            <span class="module-kicker">D</span>
+            <span class="module-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M24 6l15 7v10c0 9-6 15-15 19C15 38 9 32 9 23V13z" /><path d="M24 16v10" /><path d="M24 32h.01" /></svg></span>
+            <h3><span class="lang lang-pt">Design</span><span class="lang lang-en">Design</span></h3>
             <p><span class="lang lang-pt">Requisitos de segurança, threat modeling e controles por prática.</span><span class="lang lang-en">Security requirements, threat modeling and controls per practice.</span></p>
-            <small>forecast · vendor mix · burn rate</small>
+            <small>3 práticas · D-SA, D-SR, D-TA</small>
           </article>
           <article class="module-card nav-magenta">
-            <span class="module-kicker">logs</span>
-            <span class="module-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M24 6l15 7v10c0 9-6 15-15 19C15 38 9 32 9 23V13z" /><path d="M24 16v10" /><path d="M24 32h.01" /></svg></span>
-            <h3>Design</h3>
-            <p><span class="lang lang-pt">Testes, revisões, scans e coleta de evidências por nível.</span><span class="lang lang-en">Tests, reviews, scans and evidence collection per level.</span></p>
-            <small>logs · events · checks</small>
+            <span class="module-kicker">I</span>
+            <span class="module-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M10 12h8v24h-8zM20 12h8v24h-8zM30 12h8v24h-8z" /></svg></span>
+            <h3><span class="lang lang-pt">Implementação</span><span class="lang lang-en">Implementation</span></h3>
+            <p><span class="lang lang-pt">Build, deploy, dependências e gestão de segredos.</span><span class="lang lang-en">Build, deploy, dependencies and secrets management.</span></p>
+            <small>3 práticas · I-DM, I-SB, I-SD</small>
           </article>
           <article class="module-card nav-green">
-            <span class="module-kicker">coordinate</span>
-            <span class="module-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M10 12h8v24h-8zM20 12h8v24h-8zM30 12h8v24h-8z" /><path d="M13 18h2M23 25h2M33 20h2" /></svg></span>
-            <h3>Operações SAMM</h3>
-            <p><span class="lang lang-pt">Incidentes, correções e plano de ação por prática SAMM.</span><span class="lang lang-en">Incidents, fixes and action plan per SAMM practice.</span></p>
-            <small>queue · owner · blockers</small>
+            <span class="module-kicker">V</span>
+            <span class="module-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M14 6h15l7 7v29H14z" /></svg></span>
+            <h3><span class="lang lang-pt">Verificação</span><span class="lang lang-en">Verification</span></h3>
+            <p><span class="lang lang-pt">Testes, revisões, scans e coleta de evidências por nível.</span><span class="lang lang-en">Tests, reviews, scans and evidence collection per level.</span></p>
+            <small>3 práticas · V-AA, V-RT, V-ST</small>
           </article>
           <article class="module-card nav-blue">
-            <span class="module-kicker">context</span>
-            <span class="module-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M14 6h15l7 7v29H14z" /><path d="M28 6v9h8" /><path d="M19 24h12M19 30h10M19 36h7" /></svg></span>
-            <h3>Profiles & Docs</h3>
-            <p><span class="lang lang-pt">Coleta e armazenamento de evidências para auditoria e roadmap.</span><span class="lang lang-en">Collect and store evidence for audit and roadmap.</span></p>
-            <small>SOUL.md · MEMORY.md · briefs</small>
-          </article>
-          <article class="module-card nav-cyan source-card">
-            <span class="module-kicker">sessions</span>
-            <span class="module-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M15 14a14 14 0 1 1-3 15" /><path d="M15 14h-7v-7" /><path d="M22 18v8l7 4" /></svg></span>
-            <h3>Verificação</h3>
-            <p><span class="lang lang-pt">Histórico de avaliações, mudanças de nível e plano de melhoria.</span><span class="lang lang-en">Assessment history, level changes and improvement plan.</span></p>
-            <small>session · tool call · artifact</small>
+            <span class="module-kicker">O</span>
+            <span class="module-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M15 14a14 14 0 1 1-3 15" /></svg></span>
+            <h3><span class="lang lang-pt">Operações</span><span class="lang lang-en">Operations</span></h3>
+            <p><span class="lang lang-pt">Monitoramento, incidentes, proteção de dados e descomissionamento.</span><span class="lang lang-en">Monitoring, incidents, data protection and decommissioning.</span></p>
+            <small>3 práticas · O-EM, O-IM, O-OM</small>
           </article>
         </div>
       </section>
@@ -437,7 +430,7 @@
       <div class="footer-main">
         <div class="footer-brand">
           <a class="footer-logo" href="/" aria-label="Okami Maturity home">
-            <span class="brand-text">Okami <strong>Maturity</strong></span>
+            <img src="/assets/brand/okami-maturity-logo-light-transparent-v2.png" alt="Okami Maturity" class="brand-logo" style="height: 24px; width: auto;" />
           </a>
           <p>
             <span class="lang lang-pt">Okami Maturity é open source para avaliações SAMM e roadmaps de AppSec.</span>
