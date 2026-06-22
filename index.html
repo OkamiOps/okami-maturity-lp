@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Okami Maturity transforma auditorias de AppSec em roadmap medido com OWASP SAMM: 5 funções, 15 práticas, 90 perguntas com evidências e níveis 0-3."
+    />
+    <meta name="theme-color" content="#060609" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Okami Maturity | AppSec Maturity Roadmap com SAMM" />
+    <meta
+      property="og:description"
+      content="Okami Maturity: ferramenta open source para avaliações SAMM, roadmap de maturidade AppSec para executivos e times de segurança."
+    />
+    <meta property="og:image" content="/assets/brand/okami-maturity-wordmark.svg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Okami Maturity | AppSec Maturity Roadmap com SAMM" />
+    <meta
+      name="twitter:description"
+      content="Avalie maturidade AppSec com SAMM, gere roadmap e evidências. Clone, rode e conecte para seus times."
+    />
+    <title>Okami Maturity | Maturidade de AppSec com OWASP SAMM</title>
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="stylesheet" href="/src/styles.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Okami Maturity",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web",
+        "description": "Open source AppSec maturity tool using OWASP SAMM: 90 questions, evidence mapping, maturity levels 0-3 for roadmap execution.",
+        "creator": {
+          "@type": "Organization",
+          "name": "OkamiOps",
+          "url": "https://okamiops.com"
+        },
+        "codeRepository": "https://github.com/OkamiOps/okami-maturity-lp"
+      }
+    </script>
+  </head>
+  <body data-page="home">
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="Okami Maturity home">
+        <span class="brand-text">Okami <strong>Maturity</strong></span>
+      </a>
+      <nav class="nav-links nav-console" aria-label="Main navigation">
+        <a class="nav-orange" href="#demo"><span>01</span><strong data-i18n="nav_demo">Avaliação</strong></a>
+        <a class="nav-magenta" href="#capabilities"><span>02</span><strong data-i18n="nav_capabilities">Práticas SAMM</strong></a>
+        <a class="nav-green" href="#intelligence"><span>03</span><strong data-i18n="nav_intel">Roadmap &amp; Evidências</strong></a>
+        <a class="nav-blue" href="#ecosystem"><span>04</span><strong data-i18n="nav_ecosystem">Governança</strong></a>
+        <a class="nav-cyan" href="/docs/"><span>05</span><strong data-i18n="nav_docs">Docs</strong></a>
+      </nav>
+      <div class="header-actions">
+        <span class="nav-status"><i></i> live preview</span>
+        <div class="language-toggle" aria-label="Language selector">
+          <button type="button" data-lang-button="pt">PT-BR</button>
+          <button type="button" data-lang-button="en">EN</button>
+        </div>
+        <a class="ok-btn ok-btn-primary" href="https://github.com/OkamiOps/okami-maturity-lp" target="_blank" rel="noreferrer">
+          GitHub
+        </a>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero grid-bg">
+        <div class="hero-copy">
+          <p class="section-label hero-kicker"><span>// open source</span><span>AppSec maturity roadmap</span></p>
+          <h1 class="hero-title">
+            <span class="lang lang-pt">Maturidade de AppSec que vira plano, não planilha.</span>
+            <span class="lang lang-en">AppSec maturity that becomes a roadmap, not a spreadsheet.</span>
+            <span class="hero-accent lang lang-pt">5 funções · 15 práticas · 90 perguntas · evidências 0-3.</span>
+            <span class="hero-accent lang lang-en">5 functions · 15 practices · 90 questions · 0-3 evidence.</span>
+          </h1>
+          <p class="hero-lede">
+            <span class="lang lang-pt">Okami Maturity usa OWASP SAMM para transformar avaliações em roadmap executável. Avalie, priorize e acompanhe maturidade AppSec.</span>
+            <span class="lang lang-en">Okami Maturity uses OWASP SAMM to turn assessments into an executable roadmap. Evaluate, prioritize and track AppSec maturity.</span>
+          </p>
+          <p class="hero-note">
+            <span class="lang lang-pt">// Avalie com o modelo SAMM. Gere roadmap e evidências sem planilhas.</span>
+            <span class="lang lang-en">// Assess with the SAMM model. Generate roadmap and evidence without spreadsheets.</span>
+          </p>
+          <div class="install-line" aria-label="Okami Maturity command">
+            <span>$</span>
+            <code>git clone https://github.com/OkamiOps/okami-maturity-lp.git</code>
+            <button type="button"><span class="lang lang-pt">copiar</span><span class="lang lang-en">copy</span></button>
+          </div>
+          <div class="hero-actions">
+            <a class="ok-btn ok-btn-primary" href="#demo" data-i18n="cta_watch">Ver avaliação</a>
+            <a class="ok-btn ok-btn-outline" href="/docs/#architecture" data-i18n="cta_docs">Ler documentação</a>
+          </div>
+          <div class="hero-proofbar" aria-label="Okami Maturity proof points">
+            <div class="nav-orange">
+              <b>5</b>
+              <span><span class="lang lang-pt">funções</span><span class="lang lang-en">functions</span></span>
+              <small>Governança · Design · Implementação</small>
+            </div>
+            <div class="nav-cyan">
+              <b>15</b>
+              <span><span class="lang lang-pt">práticas</span><span class="lang lang-en">practices</span></span>
+              <small>por função · evidências</small>
+            </div>
+            <div class="nav-magenta">
+              <b>90</b>
+              <span><span class="lang lang-pt">perguntas</span><span class="lang lang-en">questions</span></span>
+              <small>com evidências · 0-3</small>
+            </div>
+            <div class="nav-green">
+              <b>Roadmap</b>
+              <span><span class="lang lang-pt">executável</span><span class="lang lang-en">executable</span></span>
+              <small>níveis · priorização · governança</small>
+            </div>
+          </div>
+        </div>
+        <div class="hero-panel terminal-hero" id="demo-preview">
+          <div class="panel-topline">
+            <span>~/samm · appsec-maturity</span>
+            <span class="status-dot">session</span>
+          </div>
+          <div class="terminal-body" aria-label="Okami Maturity terminal preview">
+            <div class="terminal-brand">◆ Okami Maturity</div>
+            <div class="terminal-meta">SAMM · 5 funcs · 15 practices · 90 questions · /help</div>
+            <div class="terminal-rule"></div>
+            <div class="terminal-prompt"><span class="lang lang-pt">avalie maturidade sem planilhas</span><span class="lang lang-en">assess maturity without spreadsheets</span></div>
+            <div class="terminal-row accent-orange"><span class="lang lang-pt">5 funções · 15 práticas · evidências 0-3</span><span class="lang lang-en">5 functions · 15 practices · evidence 0-3</span></div>
+            <div class="terminal-row"><span class="lang lang-pt">roadmap gerado · níveis de maturidade · priorização</span><span class="lang lang-en">generated roadmap · maturity levels · prioritization</span></div>
+            <div class="terminal-row"><span class="lang lang-pt">90 perguntas · evidências · interpretação</span><span class="lang lang-en">90 questions · evidence · interpretation</span></div>
+            <div class="terminal-row accent-magenta"><span class="lang lang-pt">práticas por função · métricas · plano</span><span class="lang lang-en">practices per function · metrics · plan</span></div>
+            <div class="terminal-row accent-green"><span class="lang lang-pt">relatório executivo · export · integração</span><span class="lang lang-en">executive report · export · integration</span></div>
+            <div class="terminal-prompt"></div>
+          </div>
+          <div class="terminal-status">
+            <span>claude · strong</span>
+            <span>ctx 18%</span>
+            <span class="accent-green">● <span class="lang lang-pt">pronto</span><span class="lang lang-en">ready</span></span>
+            <span><span class="lang lang-pt">Ctrl-C cancela · Ctrl-D sai</span><span class="lang lang-en">Ctrl-C cancels · Ctrl-D exits</span></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section band proof-section" id="demo">
+        <div class="proof-hero">
+          <div>
+            <p class="section-label"><span>§01</span><span><span class="lang lang-pt">por que usar</span><span class="lang lang-en">why use it</span></span></p>
+            <h2>
+              <span class="lang lang-pt">Avalie com SAMM. Gere roadmap com evidências.</span>
+              <span class="lang lang-en">Assess with SAMM. Generate evidence-backed roadmap.</span>
+            </h2>
+          </div>
+          <p>
+            <span class="lang lang-pt">Okami Maturity usa o modelo OWASP SAMM para transformar avaliações em roadmap executável. 5 funções, 15 práticas, 90 perguntas com evidências e níveis de maturidade 0-3.</span>
+            <span class="lang lang-en">Okami Maturity uses the OWASP SAMM model to turn assessments into an executable roadmap. 5 functions, 15 practices, 90 evidence-backed questions and 0-3 maturity levels.</span>
+          </p>
+        </div>
+
+        <div class="proof-stage">
+          <div class="proof-card nav-orange">
+            <span class="proof-icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48"><path d="M8 34h32" /><path d="M12 30V16h8v14" /><path d="M24 30V10h8v20" /><path d="M36 30v-9h4v9" /></svg>
+            </span>
+            <span class="proof-kicker">01 / SAMM</span>
+            <h3><span class="lang lang-pt">5 funções de maturidade.</span><span class="lang lang-en">5 maturity functions.</span></h3>
+            <p><span class="lang lang-pt">Governança, Design, Implementação, Verificação e Operações cobrem o programa AppSec.</span><span class="lang lang-en">Governance, Design, Implementation, Verification and Operations cover the AppSec program.</span></p>
+          </div>
+          <div class="proof-card nav-magenta">
+            <span class="proof-icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48"><path d="M24 6l15 7v10c0 9-6 15-15 19C15 38 9 32 9 23V13z" /><path d="M18 24l4 4 9-10" /></svg>
+            </span>
+            <span class="proof-kicker">02 / Práticas</span>
+            <h3><span class="lang lang-pt">15 práticas com evidências.</span><span class="lang lang-en">15 practices with evidence.</span></h3>
+            <p><span class="lang lang-pt">Cada prática tem perguntas, critérios e exemplos para coletar evidências reais.</span><span class="lang lang-en">Each practice has questions, criteria and examples to collect real evidence.</span></p>
+          </div>
+          <div class="proof-card nav-cyan">
+            <span class="proof-icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48"><path d="M10 12h28v26H10z" /><path d="M16 19h16M16 25h12M16 31h8" /><path d="M34 34l6 6" /></svg>
+            </span>
+            <span class="proof-kicker">03 / Níveis</span>
+            <h3><span class="lang lang-pt">Níveis 0-3 e roadmap.</span><span class="lang lang-en">Levels 0-3 and roadmap.</span></h3>
+            <p><span class="lang lang-pt">Avalie, priorize e gere plano de melhoria com evidências por prática.</span><span class="lang lang-en">Assess, prioritize and generate improvement plan with evidence per practice.</span></p>
+          </div>
+        </div>
+
+        <div class="samm-showcase">
+          <p class="section-label"><span>§01</span><span>Sam m visual</span></p>
+          <div class="samm-levels">
+            <div class="level-card"><strong>Nível 0</strong><span>Incompleto</span></div>
+            <div class="level-card"><strong>Nível 1</strong><span>Inicial</span></div>
+            <div class="level-card"><strong>Nível 2</strong><span>Gerenciado</span></div>
+            <div class="level-card"><strong>Nível 3</strong><span>Otimizado</span></div>
+          </div>
+          <p><span class="lang lang-pt">5 funções SAMM · 15 práticas · 90 perguntas com evidências · Roadmap executável.</span><span class="lang lang-en">5 SAMM functions · 15 practices · 90 evidence-backed questions · Executable roadmap.</span></p>
+        </div>
+      </section>
+
+      <section class="section decision-modules" id="capabilities">
+        <div class="section-heading">
+          <div>
+            <p class="section-label magenta-label"><span>§02</span><span data-i18n="cap_label">Funções e Práticas</span></p>
+            <h2>
+              <span class="lang lang-pt">SAMM cobre o programa AppSec completo.</span>
+              <span class="lang lang-en">SAMM covers the full AppSec program.</span>
+            </h2>
+          </div>
+          <p>
+            <span class="lang lang-pt">5 funções, 15 práticas, perguntas com evidências e níveis 0-3. Foco em avaliação, priorização e roadmap de maturidade.</span>
+            <span class="lang lang-en">5 functions, 15 practices, evidence-backed questions and 0-3 levels. Focus on assessment, prioritization and maturity roadmap.</span>
+          </p>
+        </div>
+        <div class="module-grid">
+          <article class="module-card nav-cyan">
+            <span class="module-kicker">overview</span>
+            <span class="module-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M7 24s6-10 17-10 17 10 17 10-6 10-17 10S7 24 7 24z" /><circle cx="24" cy="24" r="4" /></svg></span>
+            <h3>Governança SAMM</h3>
+            <p><span class="lang lang-pt">Políticas, papéis, estratégia e métricas de maturidade AppSec.</span><span class="lang lang-en">Policies, roles, strategy and AppSec maturity metrics.</span></p>
+            <small>SSE · health · activity feed</small>
+          </article>
+          <article class="module-card nav-orange">
+            <span class="module-kicker">usage</span>
+            <span class="module-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M24 7v34" /><path d="M32 14H20a6 6 0 0 0 0 12h8a6 6 0 0 1 0 12H16" /></svg></span>
+            <h3>Governança</h3>
+            <p><span class="lang lang-pt">Requisitos de segurança, threat modeling e controles por prática.</span><span class="lang lang-en">Security requirements, threat modeling and controls per practice.</span></p>
+            <small>forecast · vendor mix · burn rate</small>
+          </article>
+          <article class="module-card nav-magenta">
+            <span class="module-kicker">logs</span>
+            <span class="module-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M24 6l15 7v10c0 9-6 15-15 19C15 38 9 32 9 23V13z" /><path d="M24 16v10" /><path d="M24 32h.01" /></svg></span>
+            <h3>Design</h3>
+            <p><span class="lang lang-pt">Testes, revisões, scans e coleta de evidências por nível.</span><span class="lang lang-en">Tests, reviews, scans and evidence collection per level.</span></p>
+            <small>logs · events · checks</small>
+          </article>
+          <article class="module-card nav-green">
+            <span class="module-kicker">coordinate</span>
+            <span class="module-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M10 12h8v24h-8zM20 12h8v24h-8zM30 12h8v24h-8z" /><path d="M13 18h2M23 25h2M33 20h2" /></svg></span>
+            <h3>Operações SAMM</h3>
+            <p><span class="lang lang-pt">Incidentes, correções e plano de ação por prática SAMM.</span><span class="lang lang-en">Incidents, fixes and action plan per SAMM practice.</span></p>
+            <small>queue · owner · blockers</small>
+          </article>
+          <article class="module-card nav-blue">
+            <span class="module-kicker">context</span>
+            <span class="module-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M14 6h15l7 7v29H14z" /><path d="M28 6v9h8" /><path d="M19 24h12M19 30h10M19 36h7" /></svg></span>
+            <h3>Profiles & Docs</h3>
+            <p><span class="lang lang-pt">Coleta e armazenamento de evidências para auditoria e roadmap.</span><span class="lang lang-en">Collect and store evidence for audit and roadmap.</span></p>
+            <small>SOUL.md · MEMORY.md · briefs</small>
+          </article>
+          <article class="module-card nav-cyan source-card">
+            <span class="module-kicker">sessions</span>
+            <span class="module-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M15 14a14 14 0 1 1-3 15" /><path d="M15 14h-7v-7" /><path d="M22 18v8l7 4" /></svg></span>
+            <h3>Verificação</h3>
+            <p><span class="lang lang-pt">Histórico de avaliações, mudanças de nível e plano de melhoria.</span><span class="lang lang-en">Assessment history, level changes and improvement plan.</span></p>
+            <small>session · tool call · artifact</small>
+          </article>
+        </div>
+      </section>
+
+      <section class="section band intelligence-room-section" id="intelligence">
+        <div class="section-heading">
+          <div>
+            <p class="section-label green-label"><span>§03</span><span data-i18n="intel_label">Sinais de maturidade</span></p>
+            <h2>
+              <span class="lang lang-pt">Menos adivinhação. Mais tela aberta.</span>
+              <span class="lang lang-en">Less guessing. More visible state.</span>
+            </h2>
+          </div>
+          <p>
+            <span class="lang lang-pt">Okami Maturity organiza avaliações SAMM que já existem no seu programa: práticas, evidências, níveis e roadmap. O objetivo é facilitar execução, não criar mais uma camada confusa.</span>
+            <span class="lang lang-en">Okami Maturity organizes SAMM assessments that already exist in your program: practices, evidence, levels and roadmap. The goal is to facilitate execution, not add another confusing layer.</span>
+          </p>
+        </div>
+        <div class="intel-room">
+          <div class="intel-feed">
+            <div class="terminal-windowbar">
+              <span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span>~/samm-intel · evidence feed</span>
+              <strong>watch</strong>
+            </div>
+            <div class="intel-feed-body">
+              <div class="feed-row critical"><b>log</b><span>gap detected in G-EG practice</span><small>review · hide</small></div>
+              <div class="feed-row high"><b>usage</b><span>evidence missing for V-ST level 2</span><small>open chart</small></div>
+              <div class="feed-row medium"><b>queue</b><span>gap in practice identified</span><small>assign</small></div>
+              <div class="feed-row ok"><b>docs</b><span>roadmap item prioritized</span><small>open file</small></div>
+            </div>
+          </div>
+          <div class="intervention-panel">
+            <span>// leitura de evidências</span>
+            <h3><span class="lang lang-pt">Quando algo muda, você sabe onde olhar.</span><span class="lang lang-en">When something changes, you know where to look.</span></h3>
+            <div class="intervention-stack">
+              <div><strong>01</strong><span><span class="lang lang-pt">Identify gap</span><span class="lang lang-en">Identify gap</span></span><small>practice gap · missing evidence</small></div>
+              <div><strong>02</strong><span><span class="lang lang-pt">Log evidence</span><span class="lang lang-en">Log evidence</span></span><small>assessment status · control weakness</small></div>
+              <div><strong>03</strong><span><span class="lang lang-pt">Criar entrada de evidência</span><span class="lang lang-en">Criar entrada de evidência</span></span><small>evidence · owner · roadmap priority</small></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section operation-flow-section" id="operation">
+        <div class="section-heading">
+          <div>
+            <p class="section-label"><span>§04</span><span data-i18n="workflow_label">Como usar</span></p>
+            <h2>
+              <span class="lang lang-pt">Comece em mock. Conecte dados reais quando fizer sentido.</span>
+              <span class="lang lang-en">Start in mock mode. Connect real data when it makes sense.</span>
+            </h2>
+          </div>
+          <p>
+            <span class="lang lang-pt">Rode local com dados mock. Colete avaliações SAMM, evidências e gere roadmap. Integração opcional via API para importar dados reais.</span>
+            <span class="lang lang-en">Run locally with mock data. Collect SAMM assessments, evidence and generate roadmap. Optional API integration to import real data.</span>
+          </p>
+        </div>
+        <div class="deployment-grid">
+          <div class="deployment-step nav-magenta"><span>01</span><strong><span class="lang lang-pt">Clonar</span><span class="lang lang-en">Clone</span></strong><p>github · MIT · local first</p></div>
+          <div class="deployment-step nav-cyan"><span>02</span><strong><span class="lang lang-pt">Rodar</span><span class="lang lang-en">Run</span></strong><p>npm install · dev:all · mock data</p></div>
+          <div class="deployment-step nav-orange"><span>03</span><strong><span class="lang lang-pt">Conectar</span><span class="lang lang-en">Connect</span></strong><p>Mock · API · Import</p></div>
+          <div class="deployment-step nav-green"><span>04</span><strong><span class="lang lang-pt">Acompanhar</span><span class="lang lang-en">Watch</span></strong><p>assessment status · evidence gaps · roadmap priority</p></div>
+        </div>
+        <div class="implementation-band nav-cyan">
+          <div>
+            <span><span class="lang lang-pt">// suporte opcional</span><span class="lang lang-en">// optional support</span></span>
+            <h3><span class="lang lang-pt">Contribuir com evidências ou perguntas para o modelo?</span><span class="lang lang-en">Contribute evidence or questions to the model?</span></h3>
+            <p><span class="lang lang-pt">O projeto é open source e pode ser usado pela comunidade. Se precisar de ajuda com arquitetura, segurança ou integração, a OkamiOps pode apoiar a implementação.</span><span class="lang lang-en">The project is open source and can be used by the community. If you need help with architecture, security or integration, OkamiOps can support implementation.</span></p>
+          </div>
+          <a href="https://okamiops.com" target="_blank" rel="noreferrer"><span>okamiops.com</span><strong><span class="lang lang-pt">Conhecer serviços</span><span class="lang lang-en">Explore services</span></strong><b>↗</b></a>
+        </div>
+      </section>
+
+      <section class="section band runtime-boundary-section" id="ecosystem">
+        <div class="section-heading compact">
+          <p class="section-label info-label"><span>§05</span><span><span class="lang lang-pt">open source</span><span class="lang lang-en">open source</span></span></p>
+          <h2>
+            <span class="lang lang-pt">Avalie maturidade local. Compartilhe evidências e roadmap.</span>
+            <span class="lang lang-en">Assess maturity locally. Share evidence and roadmap.</span>
+          </h2>
+        </div>
+        <div class="boundary-grid">
+          <div class="boundary-diagram" aria-label="Private runtime integration diagram">
+            <div class="boundary-node nav-green">
+              <span><span class="lang lang-pt">01 · seu ambiente</span><span class="lang lang-en">01 · your environment</span></span>
+              <strong><span class="lang lang-pt">Runtime dos agentes</span><span class="lang lang-en">Agent runtime</span></strong>
+              <small><span class="lang lang-pt">local · cloud · stack existente</span><span class="lang lang-en">local · cloud · existing stack</span></small>
+            </div>
+            <div class="boundary-link"><span><span class="lang lang-pt">sinais aprovados</span><span class="lang lang-en">approved signals</span></span></div>
+            <div class="boundary-node nav-magenta">
+              <span><span class="lang lang-pt">02 · ponte segura</span><span class="lang lang-en">02 · secure bridge</span></span>
+              <strong><span class="lang lang-pt">Coletor com política</span><span class="lang lang-en">Policy collector</span></strong>
+              <small><span class="lang lang-pt">redaction · escopo · permissões</span><span class="lang lang-en">redaction · scope · permissions</span></small>
+            </div>
+            <div class="boundary-link"><span><span class="lang lang-pt">estado ao vivo</span><span class="lang lang-en">live state</span></span></div>
+            <div class="boundary-node nav-cyan">
+              <span>03 · Avaliação</span>
+              <strong>Okami Maturity</strong>
+              <small><span class="lang lang-pt">sessões · tokens · logs · docs</span><span class="lang lang-en">sessions · tokens · logs · docs</span></small>
+            </div>
+          </div>
+          <div class="boundary-copy">
+            <span><span class="lang lang-pt">// integração opcional</span><span class="lang lang-en">// optional integration</span></span>
+            <h3><span class="lang lang-pt">Integre via API ou importe evidências.</span><span class="lang lang-en">Optional API integration for real evidence import.</span></h3>
+            <p><span class="lang lang-pt">Use mock para testar avaliações. Depois importe evidências reais via API para completar o roadmap SAMM.</span><span class="lang lang-en">Use mock to test assessments. Import real evidence via API to complete SAMM roadmap.</span></p>
+            <ul>
+              <li><span class="lang lang-pt">Rode 100% com dados mock enquanto testa a UI.</span><span class="lang lang-en">Run 100% with mock data while testing the UI.</span></li>
+              <li><span class="lang lang-pt">Aponte para sua API ou VPS quando quiser estado real.</span><span class="lang lang-en">Point it to your API or VPS when you want real state.</span></li>
+              <li><span class="lang lang-pt">Guarde configs e segredos no backend local, fora do Git.</span><span class="lang lang-en">Keep configs and secrets in the local backend, out of Git.</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section source-proof-section" id="source">
+        <div class="section-heading compact">
+          <p class="section-label"><span>§06</span><span><span class="lang lang-pt">open source</span><span class="lang lang-en">open source</span></span></p>
+          <h2><span class="lang lang-pt">Feito para a comunidade rodar, adaptar e melhorar.</span><span class="lang lang-en">Built for the community to run, adapt and improve.</span></h2>
+        </div>
+        <div class="origin-grid">
+          <a class="source-link nav-orange" href="https://github.com/OkamiOps/okami-maturity-lp" target="_blank" rel="noreferrer">
+            <span>source code</span>
+            <strong>Okami Maturity</strong>
+            <p><span class="lang lang-pt">Repositório MIT para avaliações SAMM. Clone, rode local, adapte e gere roadmaps de maturidade AppSec.</span><span class="lang lang-en">MIT repository for Okami Maturity. Clone, run locally, contribute questions and evidence to the SAMM model.</span></p>
+            <b>GitHub ↗</b>
+          </a>
+          <a class="source-link nav-magenta" href="https://okamiagent.com" target="_blank" rel="noreferrer">
+            <span>related product</span>
+            <strong>Okami Agent</strong>
+            <p><span class="lang lang-pt">Outro projeto da família Okami para avaliações SAMM local-first. Okami Maturity foca em roadmap AppSec open source.</span><span class="lang lang-en">Another Okami project for experimenting with local-first agents. Okami Maturity stays focused on the SAMM maturity model and AppSec roadmap.</span></p>
+            <b>okamiagent.com ↗</b>
+          </a>
+        </div>
+      </section>
+
+      <section class="section cta-section" id="cta">
+        <div class="closing-cta-v2">
+          <div class="closing-left">
+            <span class="lang lang-pt">comece pelo código</span><span class="lang lang-en">start with code</span></span></p>
+            <h2>
+              <span class="lang lang-pt">Clone o projeto e veja sua maturidade AppSec em um roadmap controlado.</span>
+              <span class="lang lang-en">Clone the project and see your AppSec maturity in a controlled roadmap.</span>
+            </h2>
+            <p>
+              <span class="lang lang-pt">Rode com dados mock, explore as avaliações SAMM, entenda o modelo e importe evidências quando quiser completar o roadmap.</span>
+              <span class="lang lang-en">Run with mock data, explore SAMM assessments, understand the model and import evidence when ready to complete the roadmap.</span>
+            </p>
+          </div>
+          <div class="closing-right">
+            <a class="closing-action-main" href="https://github.com/OkamiOps/okami-maturity-lp" target="_blank" rel="noreferrer">
+              <span class="closing-action-icon" aria-hidden="true">
+                <svg viewBox="0 0 48 48"><path d="M9 14h30v20H9z" /><path d="M15 24h10M29 24h4" /><path d="M18 39h12" /></svg>
+              </span>
+              <strong><span class="lang lang-pt">Abrir repositório</span><span class="lang lang-en">Open repository</span></strong>
+              <small><span class="lang lang-pt">Código MIT, quick start e backend opcional</span><span class="lang lang-en">MIT code, quick start and optional backend</span></small>
+              <b>→</b>
+            </a>
+            <div class="closing-action-grid">
+              <a href="/docs/#architecture">
+                <span>docs</span>
+                <strong><span class="lang lang-pt">Ler docs</span><span class="lang lang-en">Read docs</span></strong>
+              </a>
+              <a href="#demo">
+                <span>preview</span>
+                <strong><span class="lang lang-pt">Ver SAMM</span><span class="lang lang-en">View SAMM</span></strong>
+              </a>
+            </div>
+            <div class="closing-trust">
+              <span>mock-first</span>
+              <span>open source</span>
+              <span>SAMM · 0-3</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-main">
+        <div class="footer-brand">
+          <a class="footer-logo" href="/" aria-label="Okami Maturity home">
+            <span class="brand-text">Okami <strong>Maturity</strong></span>
+          </a>
+          <p>
+            <span class="lang lang-pt">Okami Maturity é open source para avaliações SAMM e roadmaps de AppSec.</span>
+            <span class="lang lang-en">Okami Maturity is open source for SAMM assessments and AppSec roadmaps.</span>
+          </p>
+        </div>
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <div>
+            <strong>Okami Maturity</strong>
+            <a href="#demo">Demo</a>
+            <a href="#ecosystem">Governança</a>
+            <a href="/docs/">Docs</a>
+          </div>
+          <div>
+            <strong>Network</strong>
+            <a href="https://github.com/OkamiOps/okami-maturity-lp" target="_blank" rel="noreferrer">GitHub ↗</a>
+            <a href="https://okamiops.com" target="_blank" rel="noreferrer">OkamiOps ↗</a>
+            <a href="https://okamiagent.com" target="_blank" rel="noreferrer">Okami Agent ↗</a>
+            <a href="https://cybersecnews.com.br" target="_blank" rel="noreferrer">CyberSecNews ↗</a>
+          </div>
+        </nav>
+      </div>
+
+      <div class="footer-bottom">
+        <span>Okami Maturity</span>
+        <span>OkamiOps · 2026</span>
+        <span>open source · mock-first · SAMM 0-3</span>
+      </div>
+    </footer>
+    <script type="module" src="/src/site.js"></script>
+  </body>
+</html>

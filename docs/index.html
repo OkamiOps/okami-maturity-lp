@@ -1,0 +1,576 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Entenda Okami Maturity: avaliações SAMM open source com 90 perguntas, evidências e níveis de maturidade 0-3 para AppSec."
+    />
+    <title>O que é Okami Maturity? | Docs</title>
+    <meta name="theme-color" content="#060609" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="stylesheet" href="/src/styles.css" />
+  </head>
+  <body class="ok docs-okami-agent" data-page="docs">
+    <header class="dx-nav">
+      <a class="dx-brand" href="/" aria-label="Okami Maturity home">
+        <span class="brand-text">Okami <strong>Maturity</strong></span>
+        <span class="dx-brand-sub">
+          <span class="lang lang-pt">Documentação</span>
+          <span class="lang lang-en">Documentation</span>
+        </span>
+      </a>
+      <label class="dx-search" aria-label="Buscar nos docs" data-i18n-aria-label="docs_search_label">
+        <span class="mag">⌕</span>
+        <input
+          type="search"
+          placeholder="Buscar nos docs..."
+          aria-label="Buscar nos docs"
+          data-i18n-placeholder="docs_search_placeholder"
+          data-i18n-aria-label="docs_search_label"
+        />
+        <span class="kbd">⌘K</span>
+      </label>
+      <div class="dx-nav-right">
+        <div class="language-toggle" aria-label="Language selector">
+          <button type="button" data-lang-button="pt">PT-BR</button>
+          <button type="button" data-lang-button="en">EN</button>
+        </div>
+        <a class="ok-btn ghost sm" href="/">← Site</a>
+        <a class="ok-btn solid sm" href="https://github.com/OkamiOps/okami-maturity-lp" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+    </header>
+
+    <main class="dx-shell">
+      <aside class="dx-side">
+        <div class="dx-group">
+          <p class="dx-group-h" data-i18n="docs_group_start">Começar</p>
+          <ul>
+            <li><a class="active" href="#overview" data-i18n="docs_side_overview" aria-current="true">Visão geral</a></li>
+            <li><a href="#quickstart" data-i18n="docs_side_quickstart">Quick start</a></li>
+            <li><a href="#environment" data-i18n="docs_side_environment">Ambiente</a></li>
+            <li><a href="#project-map" data-i18n="docs_side_project_map">Mapa do projeto</a></li>
+          </ul>
+        </div>
+        <div class="dx-group">
+          <p class="dx-group-h" data-i18n="docs_group_product">SAMM Model</p>
+          <ul>
+            <li><a href="#maturity" data-i18n="docs_side_maturity">Maturidade SAMM</a></li>
+            <li><a href="#modules" data-i18n="docs_side_modules">5 Funções &amp; 15 Práticas</a></li>
+            <li><a href="#appsec" data-i18n="docs_side_overview">Visão geral &amp; Scoring 0-3</a></li>
+          </ul>
+        </div>
+        <div class="dx-group">
+          <p class="dx-group-h" data-i18n="docs_group_integration">Evidence &amp; Assessment</p>
+          <ul>
+            <li><a href="#quickstart" data-i18n="docs_side_quickstart">Evidence model</a></li>
+            <li><a href="#project-map" data-i18n="docs_side_project_map">Assessment workflow</a></li>
+            <li><a href="#state-model" data-i18n="docs_side_state_model">Roadmap &amp; reporting</a></li>
+            <li><a href="#environment" data-i18n="docs_side_environment">Import evidence</a></li>
+          </ul>
+        </div>
+        <div class="dx-group">
+          <p class="dx-group-h" data-i18n="docs_group_operation">Operations</p>
+          <ul>
+            <li><a href="#design-system" data-i18n="docs_side_design_system">Design system</a></li>
+            <li><a href="#security" data-i18n="docs_side_security">Security &amp; Privacy</a></li>
+            <li><a href="#contribute" data-i18n="docs_side_contribute">Contributing questions</a></li>
+            <li><a href="#troubleshooting" data-i18n="docs_side_troubleshooting">Running locally</a></li>
+          </ul>
+        </div>
+      </aside>
+
+      <article class="dx-main tone-orange">
+        <section class="docs-hero" id="overview" data-doc-accent="orange">
+          <div class="dx-crumb">
+            <span data-i18n="docs_breadcrumb_start">Começar</span>
+            <span class="sep">/</span>
+            <span class="cur" data-i18n="docs_breadcrumb_overview">Visão geral</span>
+          </div>
+          <p class="dx-kicker"><span data-i18n="docs_kicker_start">// começar · 01</span></p>
+          <h1 class="dx-title">
+            <span class="lang lang-pt">O que é Okami Maturity?</span>
+            <span class="lang lang-en">What is Okami Maturity?</span>
+          </h1>
+          <p class="dx-intro">
+            <span class="lang lang-pt">Okami Maturity usa o modelo OWASP SAMM para avaliações de AppSec: 90 perguntas estruturadas por prática e nível de maturidade 0-3, com evidências e interpretação.</span>
+            <span class="lang lang-en">Okami Maturity uses the OWASP SAMM model for AppSec assessments: 90 questions structured by practice and maturity level 0-3, with evidence and interpretation.</span>
+          </p>
+          <div class="dx-actions">
+            <a class="dx-action primary" href="#quickstart">
+              <span class="lang lang-pt">Instalar local</span>
+              <span class="lang lang-en">Install locally</span>
+            </a>
+            <a class="dx-action" href="#state-model">
+              <span class="lang lang-pt">Contrato de estado</span>
+              <span class="lang lang-en">State contract</span>
+            </a>
+            <a class="dx-action" href="#api">
+              <span class="lang lang-pt">Ver API</span>
+              <span class="lang lang-en">View API</span>
+            </a>
+            <a class="dx-action" href="https://github.com/OkamiOps/okami-maturity-lp" target="_blank" rel="noreferrer">GitHub</a>
+          </div>
+          <div class="dx-note info">
+            <span class="ico">i</span>
+            <div class="txt">
+              <span class="ttl">
+                <span class="lang lang-pt">Escolha o caminho certo para o que você quer fazer</span>
+                <span class="lang lang-en">Choose the right path for what you want to do</span>
+              </span>
+              <span class="lang lang-pt">Quer apenas ver a interface funcionando? Comece pelo quick start. Leia o contrato de assessment, as rotas de maturidade e o stream de evidências. Vá para conectores para importar evidências reais.</span>
+              <span class="lang lang-en">Just want to see the interface running? Start with quickstart. Read the assessment contract, maturity routes and evidence stream. Go to connectors to import real evidence.</span>
+            </div>
+          </div>
+          <div class="dx-cards">
+            <a class="dx-card" href="#quickstart">
+              <div class="dx-card-t">Quickstart <span class="arr">→</span></div>
+              <div class="dx-card-d"><span class="lang lang-pt">Suba a UI, abra a interface e teste avaliações SAMM com dados mock.</span><span class="lang lang-en">Start the UI, open the interface and test SAMM assessments with mock data.</span></div>
+            </a>
+            <a class="dx-card" href="#modules">
+              <div class="dx-card-t"><span class="lang lang-pt">Módulos da UI</span><span class="lang lang-en">UI modules</span> <span class="arr">→</span></div>
+              <div class="dx-card-d"><span class="lang lang-pt">Veja o que cada seção mostra: visão geral, práticas SAMM, níveis 0-3, evidências e roadmap.</span><span class="lang lang-en">See what each section shows: overview, SAMM practices, 0-3 levels, evidence and roadmap.</span></div>
+            </a>
+            <a class="dx-card" href="#state-model">
+              <div class="dx-card-t"><span class="lang lang-pt">Contrato de estado</span><span class="lang lang-en">State contract</span> <span class="arr">→</span></div>
+              <div class="dx-card-d"><span class="lang lang-pt">Entenda o JSON mínimo que qualquer backend precisa entregar ao modelo de maturidade.</span><span class="lang lang-en">Understand the minimum JSON any backend needs to deliver to the maturity model.</span></div>
+            </a>
+            <a class="dx-card" href="#api">
+              <div class="dx-card-t"><span class="lang lang-pt">Integração real</span><span class="lang lang-en">Real integration</span> <span class="arr">→</span></div>
+              <div class="dx-card-d"><span class="lang lang-pt">Veja rotas de maturidade, store de evidências, secrets e cuidados antes de conectar fontes reais.</span><span class="lang lang-en">See maturity routes, evidence store, secrets and safety notes before connecting real sources.</span></div>
+            </a>
+          </div>
+        </section>
+
+        <section class="doc-section" id="quickstart" data-doc-accent="cyan">
+          <p class="section-label"><span>01</span><span>quick start</span></p>
+          <h2>
+            <span class="lang lang-pt">Rode primeiro em modo mock. Conecte depois.</span>
+            <span class="lang lang-en">Run mock mode first. Connect later.</span>
+          </h2>
+          <p>
+            <span class="lang lang-pt">A interface carrega dados mock para demonstrar as avaliações SAMM sem backend. Permite testar o questionário de 90 perguntas, níveis de maturidade 0-3, evidências e roadmap antes de integrar fontes reais de assessment.</span>
+            <span class="lang lang-en">The interface loads mock data to demonstrate SAMM assessments without a backend. It lets you test the 90-question questionnaire, 0-3 maturity levels, evidence and roadmap before integrating real assessment sources.</span>
+          </p>
+          <div class="terminal-card">
+            <div class="terminal-top"><span>install</span><span>node >= 18</span></div>
+            <pre><code>git clone https://github.com/OkamiOps/okami-maturity-lp.git
+cd okami-maturity
+npm install
+npm run dev</code></pre>
+          </div>
+          <div class="doc-steps">
+            <div class="accent-cyan">
+              <span>01</span>
+              <strong><span class="lang lang-pt">Abrir UI de maturidade</span><span class="lang lang-en">Open maturity UI</span></strong>
+              <p><span class="lang lang-pt">Vite sobe em <code>http://localhost:5173</code> com questionário SAMM.</span><span class="lang lang-en">Vite runs at <code>http://localhost:5173</code> with SAMM questionnaire.</span></p>
+            </div>
+            <div class="accent-orange">
+              <span>02</span>
+              <strong><span class="lang lang-pt">Carregar SAMM</span><span class="lang lang-en">Load SAMM</span></strong>
+              <p><span class="lang lang-pt">90 perguntas, 15 práticas e níveis 0-3 disponíveis offline.</span><span class="lang lang-en">90 questions, 15 practices and 0-3 levels available offline.</span></p>
+            </div>
+            <div class="accent-magenta">
+              <span>03</span>
+              <strong><span class="lang lang-pt">Explorar evidências</span><span class="lang lang-en">Explore evidence</span></strong>
+              <p><span class="lang lang-pt">Clique nas perguntas para ver intenção, evidência e interpretação.</span><span class="lang lang-en">Click questions to see intent, evidence and interpretation.</span></p>
+            </div>
+            <div class="accent-green">
+              <span>04</span>
+              <strong><span class="lang lang-pt">Gerar roadmap</span><span class="lang lang-en">Generate roadmap</span></strong>
+              <p><span class="lang lang-pt">Use os scores para priorizar melhorias de AppSec.</span><span class="lang lang-en">Use scores to prioritize AppSec improvements.</span></p>
+            </div>
+          </div>
+        </section>
+
+        <section class="doc-section" id="environment" data-doc-accent="magenta">
+          <p class="section-label"><span>02</span><span>environment</span></p>
+          <h2>
+            <span class="lang lang-pt">Variáveis para o fluxo de avaliação SAMM.</span>
+            <span class="lang lang-en">Variables for the SAMM assessment workflow.</span>
+          </h2>
+          <p>
+            <span class="lang lang-pt">O demo usa mock por padrão. Variáveis controlam fontes de evidência, render de níveis e export de roadmaps.</span>
+            <span class="lang lang-en">The demo uses mock by default. Variables control evidence sources, level rendering and roadmap exports.</span>
+          </p>
+          <div class="doc-table doc-table-wide">
+            <div><strong>VITE_SAMM_MOCK</strong><span><span class="lang lang-pt">Ativa o dataset completo de 90 perguntas e 15 práticas.</span><span class="lang lang-en">Enables the full 90-question / 15-practice dataset.</span></span></div>
+            <div><strong>VITE_EVIDENCE_URL</strong><span><span class="lang lang-pt">Endpoint ou arquivo JSON para carregar evidências reais.</span><span class="lang lang-en">Endpoint or JSON file to load real evidence.</span></span></div>
+            <div><strong>SAMM_LEVELS</strong><span><span class="lang lang-pt">0-3: initial, basic, advanced, optimized.</span><span class="lang lang-en">0-3: initial, basic, advanced, optimized.</span></span></div>
+          </div>
+        </section>
+
+        <section class="doc-section" id="project-map" data-doc-accent="green">
+          <p class="section-label"><span>03</span><span>project map</span></p>
+          <h2>
+            <span class="lang lang-pt">Estrutura do projeto para maturidade AppSec.</span>
+            <span class="lang lang-en">Project structure for AppSec maturity.</span>
+          </h2>
+          <div class="doc-file-tree">
+            <div><code>src/site.js</code><span><span class="lang lang-pt">sammData: 90 perguntas, 15 práticas, níveis 0-3 com evidências.</span><span class="lang lang-en">sammData: 90 questions, 15 practices, 0-3 levels with evidence.</span></span></div>
+            <div><code>docs/index.html</code><span><span class="lang lang-pt">Documentação + render do questionário SAMM.</span><span class="lang lang-en">Documentation + SAMM questionnaire renderer.</span></span></div>
+            <div><code>src/styles.css</code><span><span class="lang lang-pt">Tokens visuais e layout responsivo para assessments.</span><span class="lang lang-en">Visual tokens and responsive layout for assessments.</span></span></div>
+            <div><code>public/assets</code><span><span class="lang lang-pt">SVGs de níveis de maturidade e brand.</span><span class="lang lang-en">Maturity level SVGs and brand assets.</span></span></div>
+            <div><code>evidence/</code><span><span class="lang lang-pt">Store de evidências e roadmaps exportados (futuro).</span><span class="lang lang-en">Evidence store and exported roadmaps (future).</span></span></div>
+          </div>
+        </section>
+
+        <section class="doc-section" id="modules" data-doc-accent="magenta">
+          <p class="section-label"><span>04</span><span>modules</span></p>
+          <h2>
+            <span class="lang lang-pt">5 Funções &amp; 15 Práticas SAMM.</span>
+            <span class="lang lang-en">5 Functions &amp; 15 SAMM Practices.</span>
+          </h2>
+          <p>
+            <span class="lang lang-pt">O modelo OWASP SAMM organiza AppSec em 5 funções de negócio com 3 práticas cada. O UI renderiza scores 0-3 por prática com evidências.</span>
+            <span class="lang lang-en">The OWASP SAMM model organizes AppSec into 5 business functions with 3 practices each. The UI renders 0-3 scores per practice with evidence.</span>
+          </p>
+          <div class="doc-module-list">
+            <div class="accent-orange"><span>G</span><strong>Governança</strong><p><span class="lang lang-pt">Strategy &amp; Metrics, Policy &amp; Compliance, Education &amp; Guidance.</span><span class="lang lang-en">Strategy &amp; Metrics, Policy &amp; Compliance, Education &amp; Guidance.</span></p></div>
+            <div class="accent-magenta"><span>D</span><strong>Design</strong><p><span class="lang lang-pt">Threat Assessment, Security Requirements, Secure Architecture.</span><span class="lang lang-en">Threat Assessment, Security Requirements, Secure Architecture.</span></p></div>
+            <div class="accent-green"><span>I</span><strong>Implementação</strong><p><span class="lang lang-pt">Secure Build, Secure Deployment, Defect Management.</span><span class="lang lang-en">Secure Build, Secure Deployment, Defect Management.</span></p></div>
+            <div class="accent-cyan"><span>V</span><strong>Verificação</strong><p><span class="lang lang-pt">Security Testing, Vulnerability Management, Risk Assessment.</span><span class="lang lang-en">Security Testing, Vulnerability Management, Risk Assessment.</span></p></div>
+            <div class="accent-orange"><span>O</span><strong>Operações</strong><p><span class="lang lang-pt">Operations, Incident Management, Environment Management.</span><span class="lang lang-en">Operations, Incident Management, Environment Management.</span></p></div>
+          </div>
+        </section>
+
+        <section class="doc-section" id="frontend" data-doc-accent="cyan">
+          <p class="section-label"><span>05</span><span>frontend</span></p>
+          <h2>
+            <span class="lang lang-pt">Fluxo da UI de assessment.</span>
+            <span class="lang lang-en">Assessment UI data flow.</span>
+          </h2>
+          <div class="architecture-map architecture-map-wide">
+            <div><span>01</span><strong>App.jsx / site.js</strong><small>hash routing + SAMM render</small></div>
+            <div><span>02</span><strong>sammData</strong><small>90 questions + maturity levels</small></div>
+            <div><span>03</span><strong>renderSAMMQuestions</strong><small>interactive 0-3 scoring</small></div>
+            <div><span>04</span><strong>Evidence model</strong><small>per-practice evidence</small></div>
+          </div>
+          <div class="architecture-detail">
+            <div>
+              <h3><span class="lang lang-pt">Render</span><span class="lang lang-en">Render</span></h3>
+              <p><span class="lang lang-pt">O container #samm-question-root recebe o HTML gerado com 90 itens clicáveis.</span><span class="lang lang-en">The #samm-question-root container receives generated HTML with 90 clickable items.</span></p>
+            </div>
+            <div>
+              <h3><span class="lang lang-pt">Interação</span><span class="lang lang-en">Interaction</span></h3>
+              <p><span class="lang lang-pt">Clique expande intenção, evidência sugerida e interpretação do nível 0-3.</span><span class="lang lang-en">Click expands intent, suggested evidence and 0-3 level interpretation.</span></p>
+            </div>
+            <div>
+              <h3><span class="lang lang-pt">Estado</span><span class="lang lang-en">State</span></h3>
+              <p><span class="lang lang-pt">Scores são mantidos localmente para gerar roadmap e export.</span><span class="lang lang-en">Scores are kept locally to generate roadmap and export.</span></p>
+            </div>
+          </div>
+        </section>
+
+        <section class="doc-section" id="state-model" data-doc-accent="green">
+          <p class="section-label"><span>06</span><span>state model</span></p>
+          <h2>
+            <span class="lang lang-pt">Contrato de assessment e evidências.</span>
+            <span class="lang lang-en">Assessment and evidence contract.</span>
+          </h2>
+          <p>
+            <span class="lang lang-pt">O JSON mínimo que qualquer fonte de dados deve entregar para alimentar o modelo de maturidade.</span>
+            <span class="lang lang-en">The minimum JSON any data source must deliver to feed the maturity model.</span>
+          </p>
+          <div class="terminal-card">
+            <div class="terminal-top"><span>assessment contract</span><span>minimum shape</span></div>
+            <pre><code>{
+  "assessments": [{
+    "practice": "G-EG",
+    "level": 2,
+    "evidence": ["policy doc v3", "training records"],
+    "score": 2.5,
+    "notes": "partial adoption"
+  }],
+  "practices": 15,
+  "functions": 5,
+  "roadmap": [{"practice": "D-TA", "target": 3, "priority": "high"}],
+  "evidence": [{"id": "e1", "type": "doc", "link": "..."}]
+}</code></pre>
+          </div>
+        </section>
+
+        <section class="doc-section" id="api" data-doc-accent="cyan">
+          <p class="section-label"><span>07</span><span>api</span></p>
+          <h2>
+            <span class="lang lang-pt">Maturity API para assessments e evidências.</span>
+            <span class="lang lang-en">Maturity API for assessments and evidence.</span>
+          </h2>
+          <p>
+            <span class="lang lang-pt">Endpoints para importar/exportar assessments, evidências e roadmaps.</span>
+            <span class="lang lang-en">Endpoints to import/export assessments, evidence and roadmaps.</span>
+          </p>
+          <div class="route-table">
+            <div><b>GET</b><code>/api/maturity/assessments</code><span><span class="lang lang-pt">Lista de avaliações por prática.</span><span class="lang lang-en">List of assessments by practice.</span></span></div>
+            <div><b>PUT</b><code>/api/maturity/assessments/:practice</code><span><span class="lang lang-pt">Salva score + evidência para uma prática.</span><span class="lang lang-en">Saves score + evidence for a practice.</span></span></div>
+            <div><b>GET</b><code>/api/maturity/roadmap</code><span><span class="lang lang-pt">Roadmap gerado a partir dos scores.</span><span class="lang lang-en">Roadmap generated from scores.</span></span></div>
+            <div><b>POST</b><code>/api/maturity/evidence/import</code><span><span class="lang lang-pt">Importa evidências de CI, Git ou conector.</span><span class="lang lang-en">Imports evidence from CI, Git or connector.</span></span></div>
+            <div><b>GET</b><code>/api/maturity/export</code><span><span class="lang lang-pt">Exporta JSON ou relatório para stakeholder.</span><span class="lang lang-en">Exports JSON or report for stakeholders.</span></span></div>
+          </div>
+        </section>
+
+        <section class="doc-section" id="sse" data-doc-accent="magenta">
+          <p class="section-label"><span>08</span><span>event stream</span></p>
+          <h2>
+            <span class="lang lang-pt">Stream de eventos de maturidade e roadmap.</span>
+            <span class="lang lang-en">Maturity and roadmap event stream.</span>
+          </h2>
+          <div class="terminal-card">
+            <div class="terminal-top"><span>roadmap events</span><span>text/event-stream</span></div>
+            <pre><code>event: assessment-updated
+data: {"practice":"G-EG","level":2}
+
+event: roadmap-prioritized
+data: {"items":[...]}
+
+event: evidence-added
+data: {"practice":"D-TA","count":3}</code></pre>
+          </div>
+          <p>
+            <span class="lang lang-pt">O stream permite UI reativa quando novas evidências chegam ou scores mudam.</span>
+            <span class="lang lang-en">The stream enables reactive UI when new evidence arrives or scores change.</span>
+          </p>
+        </section>
+
+        <section class="doc-section" id="registries" data-doc-accent="green">
+          <p class="section-label"><span>09</span><span>evidence registries</span></p>
+          <h2>
+            <span class="lang lang-pt">Store local de evidências e roadmaps.</span>
+            <span class="lang lang-en">Local evidence and roadmap store.</span>
+          </h2>
+          <p>
+            <span class="lang lang-pt">Evidências e configurações de assessment são armazenadas localmente para uso offline e export.</span>
+            <span class="lang lang-en">Evidence and assessment configs are stored locally for offline use and export.</span>
+          </p>
+          <div class="source-grid">
+            <div><span>samm-data.json</span><strong>questions + levels</strong><small>embedded or loaded</small></div>
+            <div><span>evidence.json</span><strong>user evidence</strong><small>per practice</small></div>
+            <div><span>roadmap.json</span><strong>prioritized items</strong><small>target levels</small></div>
+            <div><span>exports/</span><strong>reports</strong><small>JSON / markdown</small></div>
+          </div>
+        </section>
+
+        <section class="doc-section" id="connectors" data-doc-accent="cyan">
+          <p class="section-label"><span>10</span><span>import connectors</span></p>
+          <h2>
+            <span class="lang lang-pt">Conectores para importar evidências de fontes externas.</span>
+            <span class="lang lang-en">Connectors to import evidence from external sources.</span>
+          </h2>
+          <p>
+            <span class="lang lang-pt">Exemplos de conectores para CI/CD, repositórios, scanners e ferramentas de AppSec.</span>
+            <span class="lang lang-en">Example connectors for CI/CD, repos, scanners and AppSec tools.</span>
+          </p>
+          <div class="doc-table doc-table-wide">
+            <div><strong>Git / GitHub</strong><span><span class="lang lang-pt">Parse SECURITY.md, policy files, PR reviews.</span><span class="lang lang-en">Parse SECURITY.md, policy files, PR reviews.</span></span></div>
+            <div><strong>CI Artifacts</strong><span><span class="lang lang-pt">Import SARIF, OWASP ZAP reports, SAST results.</span><span class="lang lang-en">Import SARIF, OWASP ZAP reports, SAST results.</span></span></div>
+            <div><strong>Scanners</strong><span><span class="lang lang-pt">Conectores para ferramentas de DAST/SAST e dependency.</span><span class="lang lang-en">Connectors for DAST/SAST and dependency tools.</span></span></div>
+            <div><strong>Manual</strong><span><span class="lang lang-pt">Upload de evidências via UI ou CLI.</span><span class="lang lang-en">Upload evidence via UI or CLI.</span></span></div>
+          </div>
+        </section>
+
+        </section>
+
+        <section class="doc-section" id="appsec" data-doc-accent="green">
+          <p class="section-label"><span>11</span><span>appsec maturity</span></p>
+          <h2>
+            <span class="lang lang-pt">Maturidade AppSec com OWASP SAMM.</span>
+            <span class="lang lang-en">AppSec Maturity with OWASP SAMM.</span>
+          </h2>
+          <p>
+            <span class="lang lang-pt">O projeto foca em avaliações de maturidade open source SAMM: 5 funções de negócio, 15 práticas, 90 perguntas com intenção, evidências e interpretação de níveis 0-3. Base para roadmaps de AppSec e Okami Maturity.</span>
+            <span class="lang lang-en">The project focuses on open source SAMM maturity assessments: 5 business functions, 15 practices, 90 questions with intent, evidence and 0-3 maturity level interpretation. Baseline for AppSec roadmaps and Okami Maturity.</span>
+          </p>
+          <div class="source-grid">
+            <div><span>SAMM</span><strong>90 perguntas</strong><small>modelo oficial OWASP</small></div>
+            <div><span>Funções</span><strong>5</strong><small>Governance, Design, Implementation, Verification, Operations</small></div>
+            <div><span>Práticas</span><strong>15</strong><small>3 por função</small></div>
+            <div><span>Níveis</span><strong>0-3</strong><small>initial a advanced</small></div>
+          </div>
+        </section>
+
+        <section class="doc-section" id="design-system" data-doc-accent="cyan">
+          <p class="section-label"><span>12</span><span>design system</span></p>
+          <h2>
+            <span class="lang lang-pt">Tokens visuais e convenções de UI.</span>
+            <span class="lang lang-en">Visual tokens and UI conventions.</span>
+          </h2>
+          <div class="doc-table doc-table-wide">
+            <div><strong>Colors</strong><span><code>--ok-bg-0..3</code>, <code>--ok-fg*</code>, <code>--ok-orange</code>, <code>--ok-magenta</code>, <code>--ok-cyan</code>, <code>--ok-success</code>.</span></div>
+            <div><strong>Type</strong><span><span class="lang lang-pt">Space Grotesk para títulos; JetBrains Mono para labels, comandos e tabelas.</span><span class="lang lang-en">Space Grotesk for titles; JetBrains Mono for labels, commands and tables.</span></span></div>
+            <div><strong>Shape</strong><span><span class="lang lang-pt">Cantos retos por padrão. Pílulas só quando representam status curto.</span><span class="lang lang-en">Sharp corners by default. Pills only for short status labels.</span></span></div>
+            <div><strong>Color rhythm</strong><span><span class="lang lang-pt">Ciano, magenta, laranja e verde devem alternar função; evite seção inteira monocromática.</span><span class="lang lang-en">Cyan, magenta, orange and green should rotate by function; avoid fully monochrome sections.</span></span></div>
+            <div><strong>Motion</strong><span><span class="lang lang-pt">Transições curtas com <code>--ok-ease</code>; evite animação que esconda informação.</span><span class="lang lang-en">Short transitions with <code>--ok-ease</code>; avoid animation that hides information.</span></span></div>
+            <div><strong>Components</strong><span><span class="lang lang-pt">Botões, cards, tabs, filter bars, modal, toast, skeleton, markdown lite e terminal cards.</span><span class="lang lang-en">Buttons, cards, tabs, filter bars, modal, toast, skeleton, markdown lite and terminal cards.</span></span></div>
+          </div>
+        </section>
+
+        <section class="doc-section" id="deploy" data-doc-accent="orange">
+          <p class="section-label"><span>13</span><span>deploy</span></p>
+          <h2>
+            <span class="lang lang-pt">Build, preview e proxy de produção.</span>
+            <span class="lang lang-en">Build, preview and production proxy.</span>
+          </h2>
+          <div class="terminal-card">
+            <div class="terminal-top"><span>production build</span><span>vite</span></div>
+            <pre><code>npm run build
+npm run preview</code></pre>
+          </div>
+          <p>
+            <span class="lang lang-pt">O repositório inclui <code>functions/api/[[path]].js</code> para Cloudflare Pages. A função copia headers seguros, remove hop-by-hop headers, injeta <code>x-okami-proxy-token</code> e encaminha chamadas para <code>OKAMI_BACKEND_URL</code>. Se o proxy não estiver configurado, retorna <code>503</code>.</span>
+            <span class="lang lang-en">The repository includes <code>functions/api/[[path]].js</code> for Cloudflare Pages. The function copies safe headers, removes hop-by-hop headers, injects <code>x-okami-proxy-token</code> and forwards calls to <code>OKAMI_BACKEND_URL</code>. If the proxy is not configured, it returns <code>503</code>.</span>
+          </p>
+          <div class="security-grid">
+            <div class="accent-cyan"><span>headers</span><strong>public/_headers</strong><small>X-Frame-Options, nosniff, no-referrer, permissions policy</small></div>
+            <div class="accent-magenta"><span>proxy</span><strong>same-origin /api</strong><small>frontend can call /api without public backend URL</small></div>
+            <div class="accent-orange"><span>token</span><strong>backend proxy token</strong><small>required when production backend is protected</small></div>
+          </div>
+        </section>
+
+        <section class="doc-section" id="security" data-doc-accent="green">
+          <p class="section-label"><span>14</span><span>security</span></p>
+          <h2>
+            <span class="lang lang-pt">Cuidados de segurança ao conectar dados reais.</span>
+            <span class="lang lang-en">Security notes for real data integrations.</span>
+          </h2>
+          <ul class="doc-list">
+            <li><span class="lang lang-pt">Não versione <code>assessment data store (local JSON)</code>, <code>.env.local</code>, private keys, senhas ou dumps de sessão.</span><span class="lang lang-en">Do not version <code>assessment data store (local JSON)</code>, <code>.env.local</code>, private keys, passwords or session dumps.</span></li>
+            <li><span class="lang lang-pt">Prefira usuário SSH com permissões mínimas para leitura e comandos específicos.</span><span class="lang lang-en">Prefer an SSH user with minimal permissions for reading and specific commands.</span></li>
+            <li><span class="lang lang-pt">Revise as rotas de import de evidências e comandos permitidos antes de expor a terceiros.</span><span class="lang lang-en">Review evidence import routes and allowed commands before exposing to others.</span></li>
+            <li><span class="lang lang-pt">Mantenha o backend atrás de token, VPN, Cloudflare Access ou rede privada quando usar dados reais.</span><span class="lang lang-en">Keep the backend behind a token, VPN, Cloudflare Access or private network when using real data.</span></li>
+            <li><span class="lang lang-pt">Redija logs e documentos antes de renderizar conteúdo em ambientes compartilhados.</span><span class="lang lang-en">Redact logs and documents before rendering content in shared environments.</span></li>
+          </ul>
+        </section>
+
+        <section class="doc-section" id="troubleshooting" data-doc-accent="magenta">
+          <p class="section-label"><span>15</span><span>troubleshooting</span></p>
+          <h2>
+            <span class="lang lang-pt">Problemas comuns.</span>
+            <span class="lang lang-en">Common issues.</span>
+          </h2>
+          <div class="playbook-grid">
+            <div class="playbook-card accent-cyan">
+              <span>mock</span>
+              <h3><span class="lang lang-pt">A UI só mostra dados mock.</span><span class="lang lang-en">The UI only shows mock data.</span></h3>
+              <p><span class="lang lang-pt">Verifique se o mock SAMM está carregado e se #samm-question-root renderizou as 90 perguntas.</span><span class="lang lang-en">Verify that SAMM mock is loaded and that #samm-question-root rendered the 90 questions.</span></p>
+            </div>
+            <div class="playbook-card accent-magenta">
+              <span>sse</span>
+              <h3><span class="lang lang-pt">Stream fecha ou não atualiza.</span><span class="lang lang-en">Stream closes or does not update.</span></h3>
+              <p><span class="lang lang-pt">Teste <code>/stream</code>, confirme proxy sem buffering e reduza temporariamente <code>OKAMI_STREAM_INTERVAL_MS</code>.</span><span class="lang lang-en">Test <code>/stream</code>, confirm proxy without buffering and temporarily reduce <code>OKAMI_STREAM_INTERVAL_MS</code>.</span></p>
+            </div>
+            <div class="playbook-card accent-orange">
+              <span>import</span>
+              <h3><span class="lang lang-pt">Falha no import de evidências.</span><span class="lang lang-en">Evidence import fails.</span></h3>
+              <p><span class="lang lang-pt">Confira o conector de import de evidências e as fontes configuradas (Git, CI artifacts ou upload manual).</span><span class="lang lang-en">Confirm the connector for evidence import and configured sources (Git, CI artifacts or manual upload).</span></p>
+            </div>
+            <div class="playbook-card accent-green">
+              <span>samm</span>
+              <h3><span class="lang lang-pt">Seção de maturidade não renderiza.</span><span class="lang lang-en">Maturity section does not render.</span></h3>
+              <p><span class="lang lang-pt">Confira se id="samm-question-root" existe no HTML e se renderSAMMQuestions() executou sem erro.</span><span class="lang lang-en">Check that id="samm-question-root" exists in HTML and renderSAMMQuestions() ran without error.</span></p>
+            </div>
+            <div class="playbook-card accent-cyan">
+              <span>write</span>
+              <h3><span class="lang lang-pt">Arquivo não salva.</span><span class="lang lang-en">File does not save.</span></h3>
+              <p><span class="lang lang-pt">O import de evidências respeita escopos permitidos. Ajuste o caminho conscientemente.</span><span class="lang lang-en">Evidence import respects allowed scopes. Adjust the path intentionally.</span></p>
+            </div>
+            <div class="playbook-card accent-magenta">
+              <span>build</span>
+              <h3><span class="lang lang-pt">Build quebra.</span><span class="lang lang-en">Build fails.</span></h3>
+              <p><span class="lang lang-pt">Rode <code>npm install</code>, confirme Node >= 18 e execute <code>npm run build</code> antes de abrir PR.</span><span class="lang lang-en">Run <code>npm install</code>, confirm Node >= 18 and execute <code>npm run build</code> before opening a PR.</span></p>
+            </div>
+          </div>
+        </section>
+
+        <section class="doc-section" id="contribute" data-doc-accent="cyan">
+          <p class="section-label"><span>16</span><span>contribute</span></p>
+          <h2>
+            <span class="lang lang-pt">Como contribuir com perguntas, evidências e documentação SAMM.</span>
+            <span class="lang lang-en">How to contribute SAMM questions, evidence and documentation.</span>
+          </h2>
+          <div class="release-checklist">
+            <h3><span class="lang lang-pt">Checklist de PR</span><span class="lang lang-en">PR checklist</span></h3>
+            <ul>
+              <li><span class="lang lang-pt">Preserve o modo mock-first: o questionário SAMM deve carregar sem backend.</span><span class="lang lang-en">Preserve mock-first: the SAMM questionnaire must load without backend.</span></li>
+              <li><span class="lang lang-pt">Não introduza segredos em arquivos versionados.</span><span class="lang lang-en">Do not introduce secrets into versioned files.</span></li>
+              <li><span class="lang lang-pt">Use tokens <code>--ok-*</code> e mantenha ciano, magenta, laranja e verde em equilíbrio.</span><span class="lang lang-en">Use <code>--ok-*</code> tokens and keep cyan, magenta, orange and green balanced.</span></li>
+              <li><span class="lang lang-pt">Para nova pergunta SAMM, adicione em sammData no src/site.js com intenção, evidência e níveis 0-3.</span><span class="lang lang-en">For a new SAMM question, add to sammData in src/site.js with intent, evidence and 0-3 levels.</span></li>
+              <li><span class="lang lang-pt">Para novo conector, documente método, payload e exemplo de evidência importada.</span><span class="lang lang-en">For a new connector, document method, payload and example imported evidence.</span></li>
+              <li><span class="lang lang-pt">Rode <code>npm run build</code> e teste a seção de 90 perguntas, troca PT/EN e responsividade.</span><span class="lang lang-en">Run <code>npm run build</code> and test the 90-question section, PT/EN toggle and responsiveness.</span></li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="doc-section" id="maturity" data-doc-accent="orange">
+          <p class="section-label"><span>17</span><span>maturity</span></p>
+          <h2>
+            <span class="lang lang-pt">Maturidade com OWASP SAMM — 90 perguntas</span>
+            <span class="lang lang-en">Maturity with OWASP SAMM — 90 questions</span>
+          </h2>
+          <p>
+            <span class="lang lang-pt">Estrutura completa das 90 perguntas do modelo SAMM (5 funções de negócio, 15 práticas). Algumas expandidas com intenção, evidências e interpretação de maturidade 0-3. Clique para detalhes.</span>
+            <span class="lang lang-en">Full structure of the 90 SAMM model questions (5 business functions, 15 practices). Some expanded with intent, evidence and maturity level 0-3 interpretation. Click to expand details.</span>
+          </p>
+          <style>
+.samm-root { font-size: 0.95rem; line-height: 1.4; }
+.samm-stats { background: #f8f8f8; padding: 8px; border-radius: 4px; margin-bottom: 12px; }
+.samm-practice { margin-bottom: 16px; border: 1px solid #ddd; border-radius: 4px; padding: 8px; }
+.samm-practice h4 { margin: 0 0 8px; font-size: 1rem; }
+.samm-qlist { list-style: none; padding: 0; margin: 0; }
+.samm-q { padding: 4px 0; border-bottom: 1px solid #eee; }
+.samm-q.full { background: #f0fff0; }
+.q-head { display: flex; gap: 8px; align-items: flex-start; }
+.q-text { flex: 1; }
+.samm-toggle { font-size: 0.8rem; padding: 2px 6px; cursor: pointer; }
+.q-details { margin-top: 6px; padding: 8px; background: #fff; border: 1px solid #ccc; border-radius: 3px; font-size: 0.85rem; }
+.maturity-levels { margin-top: 4px; }
+.ml { padding: 2px 0; }
+.ml-label { font-weight: bold; display: inline-block; width: 60px; }
+.ph { color: #888; font-size: 0.8rem; }
+</style>
+<div id="samm-question-root" class="samm-root"></div>
+          <div class="dx-note info">
+            <span class="ico">i</span>
+            <div class="txt">
+              <span class="lang lang-pt">Fonte: modelo oficial OWASP SAMM (work-owaspsamm). Placeholders nomeados para as demais perguntas.</span>
+              <span class="lang lang-en">Source: official OWASP SAMM model (work-owaspsamm). Named placeholders for remaining questions.</span>
+            </div>
+          </div>
+        </section>
+      </article>
+
+      <nav class="dx-toc" aria-label="Nesta página" data-i18n-aria-label="docs_toc_label">
+        <p class="dx-toc-h">
+          <span class="lang lang-pt">Nesta página</span>
+          <span class="lang lang-en">On this page</span>
+        </p>
+        <ul>
+          <li><a class="active" href="#overview" aria-current="true">
+            <span class="lang lang-pt">Visão geral</span>
+            <span class="lang lang-en">Overview</span>
+          </a></li>
+          <li><a href="#quickstart">Quick start</a></li>
+          <li><a href="#environment"><span class="lang lang-pt">Ambiente</span><span class="lang lang-en">Environment</span></a></li>
+          <li><a href="#project-map"><span class="lang lang-pt">Mapa do projeto</span><span class="lang lang-en">Project map</span></a></li>
+          <li><a href="#modules"><span class="lang lang-pt">15 Práticas SAMM</span><span class="lang lang-en">15 SAMM practices</span></a></li>
+          <li><a href="#frontend"><span class="lang lang-pt">Fluxo da UI</span><span class="lang lang-en">UI flow</span></a></li>
+          <li><a href="#state-model"><span class="lang lang-pt">Contrato de assessment</span><span class="lang lang-en">Assessment contract</span></a></li>
+          <li><a href="#api">Maturity API</a></li>
+          <li><a href="#sse">Event stream</a></li>
+          <li><a href="#registries">Evidence store</a></li>
+          <li><a href="#connectors">Import connectors</a></li>
+          <li><a href="#appsec">Maturidade AppSec</a></li>
+          <li><a href="#security"><span class="lang lang-pt">Segurança</span><span class="lang lang-en">Security</span></a></li>
+          <li><a href="#maturity"><span data-i18n="docs_side_maturity">Maturidade SAMM</span></a></li>
+          <li><a href="#contribute"><span class="lang lang-pt">Contribuir</span><span class="lang lang-en">Contribute</span></a></li>
+        </ul>
+        <a class="edit" href="https://github.com/OkamiOps/okami-maturity-lp" target="_blank" rel="noreferrer" data-i18n="docs_edit_github">Editar no GitHub →</a>
+      </nav>
+    </main>
+
+    <script type="module" src="/src/site.js"></script>
+  </body>
+</html>
