@@ -1,564 +1,888 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Entenda Okami Maturity: avaliações SAMM open source com 90 perguntas, evidências e níveis de maturidade 0-3 para AppSec."
-    />
-    <title>O que é Okami Maturity? | Docs</title>
-    <meta name="theme-color" content="#060609" />
-    <link rel="icon" href="/favicon.ico" sizes="any" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="stylesheet" href="/src/styles.css" />
-  </head>
-  <body data-page="docs" class="docs-okami-agent">
-    <header class="dx-nav">
-      <a class="dx-brand" href="/" aria-label="Okami Maturity home">
-        <img src="/assets/brand/okami-maturity-logo-light-transparent-v2.png" alt="Okami Maturity" class="brand-logo" style="height: 28px; width: auto;" />
-        <span class="dx-brand-sub">
-          <span class="lang lang-pt">Documentação</span>
-          <span class="lang lang-en">Documentation</span>
-        </span>
-      </a>
-      <label class="dx-search" aria-label="Buscar nos docs" data-i18n-aria-label="docs_search_label">
-        <span class="mag">⌕</span>
-        <input
-          type="search"
-          placeholder="Buscar nos docs..."
-          aria-label="Buscar nos docs"
-          data-i18n-placeholder="docs_search_placeholder"
-          data-i18n-aria-label="docs_search_label"
-        />
-        <span class="kbd">⌘K</span>
-      </label>
-      <div class="dx-nav-right">
-        <div class="language-toggle" aria-label="Language selector">
-          <button type="button" data-lang-button="pt">PT-BR</button>
-          <button type="button" data-lang-button="en">EN</button>
-        </div>
-        <a class="ok-btn ghost sm" href="/">← Site</a>
-        <a class="ok-btn solid sm" href="https://github.com/OkamiOps/okami-maturity-lp" target="_blank" rel="noreferrer">GitHub</a>
+<head>
+<meta charset="utf-8">
+<title>Okami Maturity Docs | OWASP SAMM</title>
+<meta name="description" content="Documentação do Okami Maturity: instalação, self-host, scoring, API, MCP/ACP e as 90 perguntas OWASP SAMM em PT-BR e EN." />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="/support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="icon" type="image/png" href="/assets/okami-maturity-dark.png" />
+<link rel="stylesheet" href="/okami.css" />
+<link rel="stylesheet" href="/okami-patterns.css" />
+<script src="/samm-questions.js"></script>
+<style>
+  body{ margin:0; background:var(--ok-bg-0); }
+  .docs{ --ok-glow:0.5; position:relative; min-height:100vh; color:var(--ok-fg); font-family:var(--ok-display);
+    -webkit-font-smoothing:antialiased; background:
+      radial-gradient(800px 480px at 92% -4%, color-mix(in oklch, var(--ok-magenta) calc(7% * var(--ok-glow)), transparent), transparent 62%),
+      radial-gradient(700px 420px at -4% 8%, color-mix(in oklch, var(--ok-cyan) calc(6% * var(--ok-glow)), transparent), transparent 60%),
+      var(--ok-bg-0); }
+  .docs::before{ content:""; position:fixed; inset:0; pointer-events:none; z-index:0;
+    background-image:linear-gradient(var(--ok-grid) 1px,transparent 1px),linear-gradient(90deg,var(--ok-grid) 1px,transparent 1px);
+    background-size:64px 64px; mask-image:radial-gradient(ellipse at 50% 0%, black 30%, transparent 80%); opacity:.7; }
+  .docs > *{ position:relative; z-index:1; }
+
+  /* top bar */
+  .docs-top{ position:sticky; top:0; z-index:60; display:flex; align-items:center; gap:18px;
+    padding:12px 24px; border-bottom:1px solid var(--ok-line);
+    background:color-mix(in srgb, var(--ok-bg-0) 86%, transparent); backdrop-filter:blur(14px); }
+  .docs-brand{ display:flex; align-items:center; gap:11px; flex-shrink:0; }
+  .docs-brand img{ height:26px; width:auto; }
+  .docs-brand .doctag{ font-family:var(--ok-mono); font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--ok-fg-mute); padding:3px 7px; border:1px solid var(--ok-line); }
+  .docs-search{ flex:1; max-width:560px; display:flex; align-items:center; gap:10px; padding:8px 12px; border:1px solid var(--ok-line); background:var(--ok-bg-1); }
+  .docs-search:focus-within{ border-color:color-mix(in oklch,var(--ok-cyan) 45%,var(--ok-line)); box-shadow:0 0 0 1px color-mix(in oklch,var(--ok-cyan) 35%,transparent); }
+  .docs-search svg{ width:14px; height:14px; color:var(--ok-fg-mute); flex-shrink:0; }
+  .docs-search input{ flex:1; background:transparent; border:0; outline:none; color:var(--ok-fg); font-family:var(--ok-mono); font-size:13px; }
+  .docs-search input::placeholder{ color:var(--ok-fg-dim); }
+  .docs-search .kbd{ font-family:var(--ok-mono); font-size:10px; letter-spacing:.08em; color:var(--ok-fg-mute); border:1px solid var(--ok-line); padding:2px 6px; }
+  .docs-top-right{ margin-left:auto; display:flex; align-items:center; gap:14px; }
+  .docs-ghlink{ font-family:var(--ok-mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--ok-fg-soft); transition:color .15s; }
+  .docs-ghlink:hover{ color:var(--ok-cyan); }
+  .lang-pills{ padding:3px; }
+  .lang-pills .ok-pill{ padding:5px 9px; }
+
+  /* layout */
+  .docs-grid{ max-width:1340px; margin:0 auto; display:grid; grid-template-columns:236px minmax(0,1fr) 200px; gap:44px; padding:0 24px; align-items:start; }
+
+  /* sidebar */
+  .docs-side{ position:sticky; top:73px; max-height:calc(100vh - 73px); overflow-y:auto; padding:34px 0 60px; }
+  .docs-side-group{ margin-bottom:26px; }
+  .docs-side-group > .gl{ display:flex; align-items:center; gap:9px; font-family:var(--ok-mono); font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--ok-fg-mute); margin:0 0 12px 14px; }
+  .docs-side-group > .gl::before{ content:""; width:14px; height:1px; background:var(--gm,var(--ok-fg-mute)); }
+  .docs-side-group.gov{ --gm:var(--ok-orange); } .docs-side-group.des{ --gm:var(--ok-cyan); }
+  .docs-side-group.imp{ --gm:var(--ok-magenta); } .docs-side-group.ops{ --gm:var(--ok-success); }
+  .docs-side a{ display:block; font-size:13.5px; color:var(--ok-fg-soft); padding:7px 14px; border-left:2px solid transparent; transition:all .15s; }
+  .docs-side a:hover{ color:var(--ok-fg); background:color-mix(in srgb,var(--ok-bg-2) 60%,transparent); }
+  .docs-side a.active{ color:var(--ok-fg); font-weight:500; border-left-color:var(--ok-orange);
+    background:linear-gradient(90deg, color-mix(in oklch,var(--ok-orange) 14%,transparent), transparent); }
+
+  /* main */
+  .docs-main{ padding:34px 0 90px; min-width:0; }
+  .docs-bc{ font-family:var(--ok-mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--ok-fg-mute); margin-bottom:26px; }
+  .docs-bc b{ color:var(--ok-accent); font-weight:500; }
+  .docs-eyebrow{ display:flex; width:fit-content; align-items:center; gap:12px; font-family:var(--ok-mono); font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--ok-accent); margin-bottom:18px; }
+  .docs-eyebrow::before{ content:""; width:26px; height:1px; background:currentColor; }
+  .docs-eyebrow.cy{ color:var(--ok-cyan); } .docs-eyebrow.mg{ color:var(--ok-magenta); }
+  .docs-h1{ font-family:var(--ok-display); font-weight:500; font-size:clamp(38px,4.6vw,56px); letter-spacing:-.035em; line-height:1; margin:0 0 22px; }
+  .docs-lead{ font-size:17px; line-height:1.65; color:var(--ok-fg-soft); max-width:64ch; margin:0 0 26px; }
+  .docs-actions{ display:flex; gap:10px; flex-wrap:wrap; margin-bottom:34px; }
+
+  .docs-callout{ position:relative; border:1px solid var(--ok-line); background:var(--ok-bg-1); padding:18px 22px 18px 24px; margin:0 0 40px; display:grid; grid-template-columns:24px 1fr; gap:14px; align-items:start; }
+  .docs-callout::before{ content:""; position:absolute; left:0; top:0; bottom:0; width:2px; background:var(--ok-cyan); box-shadow:0 0 calc(10px*var(--ok-glow)) var(--ok-cyan); }
+  .docs-callout .ic{ width:22px; height:22px; display:grid; place-items:center; border:1px solid var(--ok-cyan); color:var(--ok-cyan); font-family:var(--ok-mono); font-size:12px; font-weight:700; font-style:italic; }
+  .docs-callout b{ display:block; font-family:var(--ok-display); font-weight:500; font-size:15px; margin-bottom:5px; color:var(--ok-fg); }
+  .docs-callout p{ margin:0; font-size:13.5px; line-height:1.6; color:var(--ok-fg-soft); }
+
+  .docs-cards{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:0 0 14px; }
+  .docs-card{ --cc:var(--ok-orange); position:relative; border:1px solid var(--ok-line); background:color-mix(in srgb,var(--ok-bg-1) 70%,transparent); padding:22px 22px 24px; overflow:hidden; transition:all .2s; }
+  .docs-card::before{ content:""; position:absolute; left:-1px; top:-1px; right:-1px; height:2px; background:var(--cc); box-shadow:0 0 calc(10px*var(--ok-glow)) var(--cc); }
+  .docs-card.cy{ --cc:var(--ok-cyan); } .docs-card.mg{ --cc:var(--ok-magenta); } .docs-card.gr{ --cc:var(--ok-success); }
+  .docs-card:hover{ background:var(--ok-bg-2); }
+  .docs-card h4{ font-family:var(--ok-display); font-weight:500; font-size:17px; margin:0 0 8px; display:flex; align-items:center; gap:9px; }
+  .docs-card h4 .ar{ color:var(--cc); transition:transform .2s; }
+  .docs-card:hover h4 .ar{ transform:translateX(4px); }
+  .docs-card p{ margin:0; font-size:13px; line-height:1.55; color:var(--ok-fg-soft); }
+
+  .docs-sec{ padding-top:52px; margin-top:8px; }
+  .docs-h2{ font-family:var(--ok-display); font-weight:500; font-size:clamp(26px,3vw,34px); letter-spacing:-.02em; line-height:1.1; margin:0 0 8px; position:relative; display:inline-block; }
+  .docs-h2::after{ content:""; position:absolute; left:0; bottom:-9px; height:2px; width:64px; background:linear-gradient(90deg,var(--ok-magenta),transparent); }
+  .docs-p{ font-size:15px; line-height:1.7; color:var(--ok-fg-soft); max-width:64ch; margin:22px 0 18px; }
+  .docs-p code, .ic-code{ font-family:var(--ok-mono); font-size:.86em; background:var(--ok-bg-2); border:1px solid var(--ok-line); padding:1px 6px; color:var(--ok-cyan); }
+
+  /* code block */
+  .docs-code{ border:1px solid var(--ok-line); background:var(--ok-bg-0); margin:18px 0 8px; overflow:hidden;
+    box-shadow:0 0 calc(28px*var(--ok-glow)) -16px color-mix(in oklch,var(--ok-cyan) 60%,transparent); }
+  .docs-code-h{ display:flex; align-items:center; justify-content:space-between; padding:9px 14px; border-bottom:1px solid var(--ok-line); background:linear-gradient(180deg,var(--ok-bg-1),var(--ok-bg-0)); font-family:var(--ok-mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--ok-fg-mute); }
+  .docs-code-b{ padding:15px 18px; font-family:var(--ok-mono); font-size:13px; line-height:1.85; color:var(--ok-fg-soft); overflow-x:auto; }
+  .docs-code-b .cl{ white-space:pre; display:block; }
+  .docs-code .c1{ color:var(--ok-fg-mute); } .docs-code .c2{ color:var(--ok-cyan); } .docs-code .c3{ color:var(--ok-fg); } .docs-code .c4{ color:var(--ok-success); } .docs-code .c5{ color:var(--ok-accent); }
+
+  /* level list / routes / tools */
+  .docs-levels{ display:grid; gap:8px; margin:18px 0; }
+  .docs-level{ display:grid; grid-template-columns:46px 1fr; gap:16px; align-items:baseline; padding:12px 0; border-top:1px solid var(--ok-line); }
+  .docs-level:first-child{ border-top:0; }
+  .docs-level .ln{ font-family:var(--ok-display); font-weight:600; font-size:26px; letter-spacing:-.02em; }
+  .docs-level:nth-child(1) .ln{ color:var(--ok-fg-mute); } .docs-level:nth-child(2) .ln{ color:var(--ok-cyan); }
+  .docs-level:nth-child(3) .ln{ color:var(--ok-magenta); } .docs-level:nth-child(4) .ln{ color:var(--ok-accent); }
+  .docs-level .lt{ font-family:var(--ok-display); font-weight:500; font-size:15px; color:var(--ok-fg); }
+  .docs-level .ld{ font-family:var(--ok-mono); font-size:12px; color:var(--ok-fg-mute); display:block; margin-top:3px; line-height:1.5; }
+
+  .docs-routes{ font-family:var(--ok-mono); font-size:12.5px; margin:18px 0; border:1px solid var(--ok-line); }
+  .docs-route{ display:grid; grid-template-columns:64px 1.4fr 1fr; gap:14px; align-items:center; padding:10px 14px; border-top:1px dashed var(--ok-line-soft); }
+  .docs-route:first-child{ border-top:0; }
+  .docs-route .m{ font-size:10px; letter-spacing:.1em; padding:2px 6px; border:1px solid currentColor; text-align:center; color:var(--ok-cyan); }
+  .docs-route .m.post{ color:var(--ok-success); } .docs-route .m.put{ color:var(--ok-warning); } .docs-route .m.del{ color:var(--ok-magenta); }
+  .docs-route .rp{ color:var(--ok-fg); } .docs-route .rd{ color:var(--ok-fg-mute); }
+
+  .docs-tools{ display:flex; flex-wrap:wrap; gap:8px; margin:18px 0; }
+  .docs-tool{ font-family:var(--ok-mono); font-size:11.5px; padding:6px 11px; border:1px solid var(--ok-line); background:var(--ok-bg-1); color:var(--ok-cyan); }
+
+  .docs-h3{ font-family:var(--ok-display); font-weight:500; font-size:18px; letter-spacing:-.01em; color:var(--ok-fg); margin:34px 0 4px; display:flex; align-items:center; gap:11px; }
+  .docs-h3::before{ content:""; width:15px; height:1px; background:var(--ok-magenta); }
+  .docs-provs{ display:flex; flex-direction:column; border:1px solid var(--ok-line); margin:18px 0; background:var(--ok-bg-1); }
+  .docs-prov{ display:grid; grid-template-columns:150px 104px 1fr; gap:16px; align-items:center; padding:13px 16px; border-top:1px solid var(--ok-line-soft); font-family:var(--ok-mono); font-size:12.5px; }
+  .docs-prov:first-child{ border-top:0; }
+  .docs-prov .pn{ color:var(--ok-fg); font-weight:500; }
+  .docs-prov .pa{ font-size:9.5px; letter-spacing:.1em; text-transform:uppercase; padding:3px 8px; border:1px solid currentColor; justify-self:start; white-space:nowrap; }
+  .docs-prov .pa.oauth{ color:var(--ok-cyan); } .docs-prov .pa.key{ color:var(--ok-orange); } .docs-prov .pa.both{ color:var(--ok-magenta); }
+  .docs-prov .pd{ color:var(--ok-fg-soft); line-height:1.45; }
+  .docs-list{ list-style:none; margin:8px 0 18px; padding:0; display:flex; flex-direction:column; gap:9px; }
+  .docs-list li{ font-size:14.5px; line-height:1.6; color:var(--ok-fg-soft); padding-left:22px; position:relative; max-width:64ch; }
+  .docs-list li::before{ content:"\2192"; position:absolute; left:0; color:var(--ok-magenta); font-family:var(--ok-mono); }
+  @media (max-width:560px){ .docs-prov{ grid-template-columns:1fr; gap:6px; } }
+  .docs-faq{ display:flex; flex-direction:column; border:1px solid var(--ok-line); margin:18px 0; background:var(--ok-bg-1); }
+  .docs-faq-item{ padding:18px 20px; border-top:1px solid var(--ok-line-soft); }
+  .docs-faq-item:first-child{ border-top:0; }
+  .docs-faq-item .q{ font-family:var(--ok-display); font-weight:500; font-size:15.5px; color:var(--ok-fg); margin:0 0 6px; display:flex; gap:10px; align-items:baseline; }
+  .docs-faq-item .q::before{ content:"?"; font-family:var(--ok-mono); font-size:13px; color:var(--ok-magenta); }
+  .docs-faq-item .a{ margin:0; font-size:14px; line-height:1.6; color:var(--ok-fg-soft); max-width:72ch; }
+
+  /* toc */
+  .docs-toc{ position:sticky; top:73px; padding:38px 0 60px; font-family:var(--ok-mono); }
+  .docs-toc .tt{ font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--ok-fg-mute); margin-bottom:16px; }
+  .docs-toc a{ display:block; font-size:12px; color:var(--ok-fg-mute); padding:6px 0 6px 14px; border-left:1px solid var(--ok-line); transition:all .15s; line-height:1.4; }
+  .docs-toc a:hover{ color:var(--ok-fg-soft); }
+  .docs-toc a.active{ color:var(--ok-accent); border-left-color:var(--ok-accent); }
+  .docs-toc .edit{ margin-top:22px; padding-top:18px; border-top:1px solid var(--ok-line); }
+  .docs-toc .edit a{ border-left:0; padding-left:0; color:var(--ok-fg-soft); font-size:11px; letter-spacing:.08em; text-transform:uppercase; }
+  .docs-toc .edit a:hover{ color:var(--ok-cyan); }
+
+  @media (max-width:1080px){ .docs-grid{ grid-template-columns:210px minmax(0,1fr); } .docs-toc{ display:none; } }
+  @media (max-width:760px){ .docs-top{ gap:10px; padding:10px 16px; overflow-x:auto; } .docs-brand img{ height:22px; } .docs-search{ display:none; } .docs-grid{ grid-template-columns:1fr; padding:0 22px; } .docs-side{ display:none; } .docs-main{ padding-top:28px; } .docs-cards{ grid-template-columns:1fr; } .docs-search .kbd{ display:none; } }
+
+  /* questions explorer */
+  .qscale{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin:14px 0 32px; }
+  .qscale-item{ border:1px solid var(--ok-line); background:var(--ok-bg-1); padding:14px 15px; }
+  .qscale-item .w{ font-family:var(--ok-display); font-weight:600; font-size:22px; color:var(--ok-cyan); display:block; line-height:1; letter-spacing:-.02em; }
+  .qscale-item .l{ font-family:var(--ok-mono); font-size:10.5px; color:var(--ok-fg-soft); display:block; margin-top:9px; line-height:1.45; }
+  .qscale-item:nth-child(1) .w{ color:var(--ok-fg-mute); } .qscale-item:nth-child(2) .w{ color:var(--ok-warning); } .qscale-item:nth-child(4) .w{ color:var(--ok-success); }
+  .qtabs{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px; }
+  .qtab{ font-family:var(--ok-mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; padding:9px 14px; border:1px solid var(--ok-line); background:var(--ok-bg-1); color:var(--ok-fg-mute); cursor:pointer; transition:all .15s; }
+  .qtab:hover{ color:var(--ok-fg-soft); border-color:var(--ok-fg-dim); }
+  .qtab.active{ --tc:var(--ok-orange); color:var(--ok-bg-0); background:var(--tc); border-color:var(--tc); font-weight:600; box-shadow:0 0 calc(16px*var(--ok-glow)) -4px var(--tc); }
+  .qtab.gov.active{ --tc:var(--ok-orange); } .qtab.des.active{ --tc:var(--ok-cyan); } .qtab.imp.active{ --tc:var(--ok-magenta); } .qtab.ver.active{ --tc:var(--ok-warning); } .qtab.ops.active{ --tc:var(--ok-success); }
+  .qpractices{ display:flex; flex-direction:column; gap:16px; }
+  .qpractice{ --pc:var(--ok-orange); border:1px solid var(--ok-line); border-left:2px solid var(--pc); background:color-mix(in srgb,var(--ok-bg-1) 70%,transparent); padding:20px 22px; }
+  .qpractice.gov{ --pc:var(--ok-orange); } .qpractice.des{ --pc:var(--ok-cyan); } .qpractice.imp{ --pc:var(--ok-magenta); } .qpractice.ver{ --pc:var(--ok-warning); } .qpractice.ops{ --pc:var(--ok-success); }
+  .qph{ display:flex; align-items:center; gap:12px; margin-bottom:8px; }
+  .qph-code{ font-family:var(--ok-mono); font-size:11px; letter-spacing:.1em; color:var(--pc); border:1px solid var(--pc); padding:2px 7px; }
+  .qph-name{ font-family:var(--ok-display); font-weight:500; font-size:18px; letter-spacing:-.01em; }
+  .qstreams{ display:flex; flex-wrap:wrap; gap:16px; margin-bottom:10px; padding-bottom:6px; }
+  .qstream{ font-family:var(--ok-mono); font-size:10.5px; letter-spacing:.04em; color:var(--ok-fg-mute); }
+  .qstream b{ color:var(--ok-fg-soft); font-weight:500; }
+  .qlist{ display:flex; flex-direction:column; }
+  .qitem{ border-top:1px dashed var(--ok-line-soft); }
+  .qitem:first-child{ border-top:0; }
+  .qq{ width:100%; display:grid; grid-template-columns:auto 1fr auto; gap:13px; align-items:center; background:transparent; border:0; padding:13px 0; text-align:left; cursor:pointer; color:var(--ok-fg-soft); transition:color .15s; }
+  .qq:hover{ color:var(--ok-fg); }
+  .qbadge{ font-family:var(--ok-mono); font-size:9px; letter-spacing:.06em; padding:3px 6px; border:1px solid var(--ok-line); color:var(--ok-cyan); white-space:nowrap; }
+  .qbadge.b{ color:var(--ok-magenta); }
+  .qtext{ font-family:var(--ok-display); font-size:14px; line-height:1.45; }
+  .qchev{ font-family:var(--ok-mono); font-size:18px; color:var(--ok-fg-mute); transition:transform .2s,color .2s; line-height:1; }
+  .qitem.open .qchev{ transform:rotate(45deg); color:var(--pc); }
+  .qguide{ display:none; padding:2px 0 16px 35px; }
+  .qitem.open .qguide{ display:block; }
+  .qguide-h{ font-family:var(--ok-mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--ok-fg-mute); margin-bottom:9px; }
+  .qguide ul{ margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:7px; }
+  .qguide li{ font-size:13px; line-height:1.5; color:var(--ok-fg-soft); padding-left:18px; position:relative; }
+  .qguide li::before{ content:"\2192"; position:absolute; left:0; color:var(--pc); }
+  @media (max-width:760px){ .qscale{ grid-template-columns:1fr 1fr; } }
+</style>
+</helmet>
+
+<div class="docs">
+  <div class="docs-top">
+    <a class="docs-brand" href="/">
+      <img src="/assets/okami-maturity-dark.png" alt="Okami Maturity" />
+      <span class="doctag">docs</span>
+    </a>
+    <label class="docs-search">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="7" cy="7" r="5"></circle><path d="M11 11l4 4"></path></svg>
+      <input type="text" placeholder="{{ t.search }}" />
+      <span class="kbd">⌘K</span>
+    </label>
+    <div class="docs-top-right">
+      <a class="docs-ghlink" href="https://github.com/OkamiOps/okami-SAMM" target="_blank" rel="noopener">★ GitHub</a>
+      <div class="ok-pills lang-pills">
+        <div class="ok-pill {{ ptActive }}" onClick="{{ setPt }}">PT</div>
+        <div class="ok-pill {{ enActive }}" onClick="{{ setEn }}">EN</div>
       </div>
-    </header>
+    </div>
+  </div>
 
-    <main class="dx-shell">
-      <aside class="dx-side">
-        <div class="dx-group">
-          <p class="dx-group-h" data-i18n="docs_group_start">Começar</p>
-          <ul>
-            <li><a class="active" href="#overview" data-i18n="docs_side_overview" aria-current="true">Visão geral</a></li>
-            <li><a href="#quickstart" data-i18n="docs_side_quickstart">Quick start</a></li>
-            <li><a href="#environment" data-i18n="docs_side_environment">Ambiente</a></li>
-            <li><a href="#project-map" data-i18n="docs_side_project_map">Mapa do projeto</a></li>
-          </ul>
+  <div class="docs-grid">
+    <aside class="docs-side">
+      <sc-for list="{{ t.side }}" as="grp" hint-placeholder-count="4">
+        <div class="docs-side-group {{ grp.tone }}">
+          <div class="gl">{{ grp.label }}</div>
+          <sc-for list="{{ grp.items }}" as="it" hint-placeholder-count="3">
+            <a class="{{ it.cls }}" href="{{ it.href }}" data-side="{{ it.href }}">{{ it.label }}</a>
+          </sc-for>
         </div>
-        <div class="dx-group">
-          <p class="dx-group-h" data-i18n="docs_group_product">SAMM Model</p>
-          <ul>
-            <li><a href="#maturity" data-i18n="docs_side_maturity">Maturidade SAMM</a></li>
-            <li><a href="#modules" data-i18n="docs_side_modules">5 Funções &amp; 15 Práticas</a></li>
-            <li><a href="#appsec" data-i18n="docs_side_overview">Scoring 0-3</a></li>
-          </ul>
+      </sc-for>
+    </aside>
+
+    <main class="docs-main">
+      <div class="docs-bc">{{ t.bcRoot }} / <b>{{ t.bcHere }}</b></div>
+
+      <section id="overview">
+        <div class="docs-eyebrow">// {{ t.ov.kicker }} · 01</div>
+        <h1 class="docs-h1">{{ t.ov.h1 }}</h1>
+        <p class="docs-lead">{{ t.ov.lead }}</p>
+        <div class="docs-actions">
+          <a class="ok-btn solid" href="#selfhost">{{ t.ov.bInstall }} →</a>
+          <a class="ok-btn ghost" href="https://github.com/OkamiOps/okami-SAMM" target="_blank" rel="noopener">GitHub</a>
+          <a class="ok-btn ghost" href="#api">API · /docs</a>
+          <a class="ok-btn ghost" href="/">{{ t.ov.bSite }}</a>
         </div>
-        <div class="dx-group">
-          <p class="dx-group-h" data-i18n="docs_group_integration">Evidence &amp; Assessment</p>
-          <ul>
-            <li><a href="#state-model" data-i18n="docs_side_state_model">Modelo de evidências</a></li>
-            <li><a href="#registries" data-i18n="docs_side_registries">Roadmap &amp; reporting</a></li>
-            <li><a href="#connectors" >Import evidence</a></li>
-          </ul>
+        <div class="docs-callout">
+          <span class="ic">i</span>
+          <div><b>{{ t.ov.calloutTitle }}</b><p>{{ t.ov.calloutBody }}</p></div>
         </div>
-        <div class="dx-group">
-          <p class="dx-group-h" data-i18n="docs_group_operation">Operations</p>
-          <ul>
-            <li><a href="#design-system" data-i18n="docs_side_design_system">Design system</a></li>
-            <li><a href="#security" data-i18n="docs_side_security">Security &amp; Privacy</a></li>
-            <li><a href="#contribute" data-i18n="docs_side_contribute">Contributing questions</a></li>
-            <li><a href="#troubleshooting" data-i18n="docs_side_troubleshooting">Running locally</a></li>
-          </ul>
+        <div class="docs-cards">
+          <a class="docs-card" href="#quickstart"><h4>{{ t.ov.c1t }} <span class="ar">→</span></h4><p>{{ t.ov.c1d }}</p></a>
+          <a class="docs-card cy" href="#assess"><h4>{{ t.ov.c2t }} <span class="ar">→</span></h4><p>{{ t.ov.c2d }}</p></a>
+          <a class="docs-card mg" href="#scoring"><h4>{{ t.ov.c3t }} <span class="ar">→</span></h4><p>{{ t.ov.c3d }}</p></a>
+          <a class="docs-card gr" href="#mcp"><h4>{{ t.ov.c4t }} <span class="ar">→</span></h4><p>{{ t.ov.c4d }}</p></a>
         </div>
-        <div class="dx-group">
-          <p class="dx-group-h">SAMM Questions</p>
-          <ul>
-            <li><a href="#samm-question-root">90 perguntas interativas</a></li>
-          </ul>
+      </section>
+
+      <section class="docs-sec" id="quickstart">
+        <div class="docs-eyebrow cy">// 01 · {{ t.qs.kicker }}</div>
+        <h2 class="docs-h2">{{ t.qs.h2 }}</h2>
+        <p class="docs-p">{{ t.qs.lead }}</p>
+        <div class="docs-code">
+          <div class="docs-code-h"><span>{{ t.qs.codeLabel }}</span><span>node ≥ 18</span></div>
+          <div class="docs-code-b">
+            <span class="cl"><span class="c1"># {{ t.qs.cm1 }}</span></span>
+            <span class="cl"><span class="c3">npm install</span></span>
+            <span class="cl"><span class="c1"># {{ t.qs.cm2 }}</span></span>
+            <span class="cl"><span class="c3">npx playwright install chromium</span></span>
+            <span class="cl"><span class="c3">cp</span> .env.example .env</span>
+            <span class="cl"><span class="c3">npm start</span> <span class="c1"># http://localhost:3000</span></span>
+          </div>
         </div>
-      </aside>
+        <p class="docs-p">{{ t.qs.note }}</p>
+      </section>
 
-      <article class="dx-main tone-orange">
-        <section class="docs-hero" id="overview" data-doc-accent="orange">
-          <div class="dx-crumb">
-            <span data-i18n="docs_breadcrumb_start">Começar</span>
-            <span class="sep">/</span>
-            <span class="cur" data-i18n="docs_breadcrumb_overview">Visão geral</span>
+      <section class="docs-sec" id="selfhost">
+        <div class="docs-eyebrow cy">// 02 · {{ t.sh.kicker }}</div>
+        <h2 class="docs-h2">{{ t.sh.h2 }}</h2>
+        <p class="docs-p">{{ t.sh.lead }}</p>
+        <div class="docs-code">
+          <div class="docs-code-h"><span>docker</span><span>{{ t.sh.codeMeta }}</span></div>
+          <div class="docs-code-b">
+            <span class="cl"><span class="c3">docker compose up -d</span> <span class="c1"># → http://localhost:3000</span></span>
+            <span class="cl"><span class="c1"># {{ t.sh.cm1 }} ./data/okami-samm.db</span></span>
           </div>
-          <p class="dx-kicker"><span data-i18n="docs_kicker_start">// começar · 01</span></p>
-          <h1 class="dx-title">
-            <span class="lang lang-pt">O que é Okami Maturity?</span>
-            <span class="lang lang-en">What is Okami Maturity?</span>
-          </h1>
-          <p class="dx-intro">
-            <span class="lang lang-pt">Okami Maturity usa o modelo OWASP SAMM para avaliações de AppSec: 90 perguntas estruturadas por prática e nível de maturidade 0-3, com evidências e interpretação.</span>
-            <span class="lang lang-en">Okami Maturity uses the OWASP SAMM model for AppSec assessments: 90 questions structured by practice and maturity level 0-3, with evidence and interpretation.</span>
-          </p>
-          <div class="dx-actions">
-            <a class="dx-action primary" href="#quickstart">
-              <span class="lang lang-pt">Instalar local</span>
-              <span class="lang lang-en">Install locally</span>
-            </a>
-            <a class="dx-action" href="#state-model">
-              <span class="lang lang-pt">Contrato de estado</span>
-              <span class="lang lang-en">State contract</span>
-            </a>
-            <a class="dx-action" href="#api">
-              <span class="lang lang-pt">Ver API</span>
-              <span class="lang lang-en">View API</span>
-            </a>
-            <a class="dx-action" href="https://github.com/OkamiOps/okami-maturity-lp" target="_blank" rel="noreferrer">GitHub</a>
+        </div>
+        <p class="docs-p">{{ t.sh.cloud }}</p>
+        <div class="docs-code">
+          <div class="docs-code-h"><span>cloudflare pages</span><span>frontend + proxy</span></div>
+          <div class="docs-code-b">
+            <span class="cl"><span class="c3">npx wrangler pages deploy</span> <span class="c1"># public/</span></span>
+            <span class="cl"><span class="c3">npx wrangler pages secret put</span> <span class="c2">BACKEND_URL</span></span>
           </div>
-          <div class="dx-note info">
-            <span class="ico">i</span>
-            <div class="txt">
-              <span class="ttl">
-                <span class="lang lang-pt">Escolha o caminho certo para o que você quer fazer</span>
-                <span class="lang lang-en">Choose the right path for what you want to do</span>
-              </span>
-              <span class="lang lang-pt">Quer apenas ver a interface funcionando? Comece pelo quick start. Leia o contrato de assessment, as rotas de maturidade e o stream de evidências. Vá para conectores para importar evidências reais.</span>
-              <span class="lang lang-en">Just want to see the interface running? Start with quickstart. Read the assessment contract, maturity routes and evidence stream. Go to connectors to import real evidence.</span>
+        </div>
+      </section>
+
+      <section class="docs-sec" id="assess">
+        <div class="docs-eyebrow cy">// 03 · {{ t.as.kicker }}</div>
+        <h2 class="docs-h2">{{ t.as.h2 }}</h2>
+        <p class="docs-p">{{ t.as.lead }}</p>
+        <div class="docs-tools">
+          <sc-for list="{{ t.as.steps }}" as="s" hint-placeholder-count="6"><span class="docs-tool">{{ s }}</span></sc-for>
+        </div>
+        <p class="docs-p">{{ t.as.note }}</p>
+      </section>
+
+      <section class="docs-sec" id="questions">
+        <div class="docs-eyebrow cy">// 04 · {{ t.q.kicker }}</div>
+        <h2 class="docs-h2">{{ t.q.h2 }}</h2>
+        <p class="docs-p">{{ t.q.lead }}</p>
+        <div class="docs-callout">
+          <span class="ic">i</span>
+          <div><b>{{ t.q.scaleTitle }}</b><p>{{ t.q.scaleNote }}</p></div>
+        </div>
+        <div class="qscale">
+          <sc-for list="{{ qx.scale }}" as="sc" hint-placeholder-count="4">
+            <div class="qscale-item"><span class="w">{{ sc.w }}</span><span class="l">{{ sc.label }}</span></div>
+          </sc-for>
+        </div>
+        <div class="qtabs">
+          <sc-for list="{{ qx.fnTabs }}" as="ft" hint-placeholder-count="5">
+            <button class="qtab {{ ft.tone }} {{ ft.active }}" onClick="{{ ft.on }}">{{ ft.code }} · {{ ft.label }}</button>
+          </sc-for>
+        </div>
+        <div class="qpractices">
+          <sc-for list="{{ qx.practices }}" as="pr" hint-placeholder-count="3">
+            <div class="qpractice {{ pr.tone }}">
+              <div class="qph"><span class="qph-code">{{ pr.code }}</span><span class="qph-name">{{ pr.name }}</span></div>
+              <div class="qstreams"><span class="qstream">A · <b>{{ pr.a }}</b></span><span class="qstream">B · <b>{{ pr.b }}</b></span></div>
+              <div class="qlist">
+                <sc-for list="{{ pr.questions }}" as="q" hint-placeholder-count="6">
+                  <div class="qitem {{ q.open }}">
+                    <button class="qq" onClick="{{ q.toggle }}">
+                      <span class="qbadge {{ q.streamClass }}">{{ q.tag }}</span>
+                      <span class="qtext">{{ q.text }}</span>
+                      <span class="qchev">+</span>
+                    </button>
+                    <div class="qguide">
+                      <div class="qguide-h">{{ t.q.lookFor }}</div>
+                      <ul><sc-for list="{{ q.guidance }}" as="g" hint-placeholder-count="3"><li>{{ g }}</li></sc-for></ul>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
             </div>
-          </div>
-          <div class="dx-cards">
-            <a class="dx-card" href="#quickstart">
-              <div class="dx-card-t">Quickstart <span class="arr">→</span></div>
-              <div class="dx-card-d"><span class="lang lang-pt">Suba a UI, abra a interface e teste avaliações SAMM com dados mock.</span><span class="lang lang-en">Start the UI, open the interface and test SAMM assessments with mock data.</span></div>
-            </a>
-            <a class="dx-card" href="#modules">
-              <div class="dx-card-t"><span class="lang lang-pt">Módulos da UI</span><span class="lang lang-en">UI modules</span> <span class="arr">→</span></div>
-              <div class="dx-card-d"><span class="lang lang-pt">Veja o que cada seção mostra: visão geral, práticas SAMM, níveis 0-3, evidências e roadmap.</span><span class="lang lang-en">See what each section shows: overview, SAMM practices, 0-3 levels, evidence and roadmap.</span></div>
-            </a>
-            <a class="dx-card" href="#state-model">
-              <div class="dx-card-t"><span class="lang lang-pt">Contrato de estado</span><span class="lang lang-en">State contract</span> <span class="arr">→</span></div>
-              <div class="dx-card-d"><span class="lang lang-pt">Entenda o JSON mínimo que qualquer backend precisa entregar ao modelo de maturidade.</span><span class="lang lang-en">Understand the minimum JSON any backend needs to deliver to the maturity model.</span></div>
-            </a>
-            <a class="dx-card" href="#api">
-              <div class="dx-card-t"><span class="lang lang-pt">Integração real</span><span class="lang lang-en">Real integration</span> <span class="arr">→</span></div>
-              <div class="dx-card-d"><span class="lang lang-pt">Veja rotas de maturidade, store de evidências, secrets e cuidados antes de conectar fontes reais.</span><span class="lang lang-en">See maturity routes, evidence store, secrets and safety notes before connecting real sources.</span></div>
-            </a>
-          </div>
-        </section>
+          </sc-for>
+        </div>
+        <p class="docs-p">{{ t.q.note }}</p>
+      </section>
 
-        <section class="doc-section" id="quickstart" data-doc-accent="cyan">
-          <p class="section-label"><span>01</span><span>quick start</span></p>
-          <h2>
-            <span class="lang lang-pt">Rode primeiro em modo mock. Conecte depois.</span>
-            <span class="lang lang-en">Run mock mode first. Connect later.</span>
-          </h2>
-          <p>
-            <span class="lang lang-pt">A interface carrega dados mock para demonstrar as avaliações SAMM sem backend. Permite testar o questionário de 90 perguntas, níveis de maturidade 0-3, evidências e roadmap antes de integrar fontes reais de assessment.</span>
-            <span class="lang lang-en">The interface loads mock data to demonstrate SAMM assessments without a backend. It lets you test the 90-question questionnaire, 0-3 maturity levels, evidence and roadmap before integrating real assessment sources.</span>
-          </p>
-          <div class="terminal-card">
-            <div class="terminal-top"><span>install</span><span>node >= 18</span></div>
-            <pre><code>git clone https://github.com/OkamiOps/okami-maturity-lp.git
-cd okami-maturity
-npm install
-npm run dev</code></pre>
+      <section class="docs-sec" id="scoring">
+        <div class="docs-eyebrow cy">// 05 · {{ t.sc.kicker }}</div>
+        <h2 class="docs-h2">{{ t.sc.h2 }}</h2>
+        <p class="docs-p">{{ t.sc.lead }}</p>
+        <div class="docs-levels">
+          <sc-for list="{{ t.sc.levels }}" as="lv" hint-placeholder-count="4">
+            <div class="docs-level"><span class="ln">{{ lv.n }}</span><span><span class="lt">{{ lv.t }}</span><span class="ld">{{ lv.d }}</span></span></div>
+          </sc-for>
+        </div>
+        <p class="docs-p">{{ t.sc.note }}</p>
+      </section>
+
+      <section class="docs-sec" id="report">
+        <div class="docs-eyebrow cy">// 06 · {{ t.rp.kicker }}</div>
+        <h2 class="docs-h2">{{ t.rp.h2 }}</h2>
+        <p class="docs-p">{{ t.rp.lead }}</p>
+        <p class="docs-p"><a class="ok-btn ghost sm" href="/#report">{{ t.rp.cta }} →</a></p>
+      </section>
+
+      <section class="docs-sec" id="api">
+        <div class="docs-eyebrow mg">// 07 · {{ t.api.kicker }}</div>
+        <h2 class="docs-h2">{{ t.api.h2 }}</h2>
+        <p class="docs-p">{{ t.api.lead }}</p>
+        <div class="docs-routes">
+          <div class="docs-route"><span class="m">GET</span><span class="rp">/healthz</span><span class="rd">{{ t.api.r1 }}</span></div>
+          <div class="docs-route"><span class="m post">POST</span><span class="rp">/api/auth/login</span><span class="rd">{{ t.api.r2 }}</span></div>
+          <div class="docs-route"><span class="m">GET</span><span class="rp">/api/assessments</span><span class="rd">{{ t.api.r3 }}</span></div>
+          <div class="docs-route"><span class="m post">POST</span><span class="rp">/api/assessments</span><span class="rd">{{ t.api.r4 }}</span></div>
+          <div class="docs-route"><span class="m">GET</span><span class="rp">/…/report.pdf</span><span class="rd">{{ t.api.r5 }}</span></div>
+          <div class="docs-route"><span class="m post">POST</span><span class="rp">/mcp</span><span class="rd">{{ t.api.r6 }}</span></div>
+        </div>
+        <p class="docs-p">{{ t.api.note }}</p>
+      </section>
+
+      <section class="docs-sec" id="mcp">
+        <div class="docs-eyebrow mg">// 08 · {{ t.mcp.kicker }}</div>
+        <h2 class="docs-h2">{{ t.mcp.h2 }}</h2>
+        <p class="docs-p">{{ t.mcp.lead }}</p>
+        <div class="docs-code">
+          <div class="docs-code-h"><span>claude code</span><span>mcp</span></div>
+          <div class="docs-code-b">
+            <span class="cl"><span class="c1"># {{ t.mcp.cm1 }}</span></span>
+            <span class="cl"><span class="c3">claude mcp add</span> --transport http okami-samm <span class="c2">https://your-instance/mcp</span></span>
+            <span class="cl"><span class="c1"># {{ t.mcp.cm2 }}</span></span>
+            <span class="cl"><span class="c3">claude mcp add</span> okami-samm -- node server/mcp-stdio.js</span>
           </div>
-          <div class="doc-steps">
-            <div class="accent-cyan">
-              <span>01</span>
-              <strong><span class="lang lang-pt">Abrir UI de maturidade</span><span class="lang lang-en">Open maturity UI</span></strong>
-              <p><span class="lang lang-pt">Vite sobe em <code>http://localhost:5173</code> com questionário SAMM.</span><span class="lang lang-en">Vite runs at <code>http://localhost:5173</code> with SAMM questionnaire.</span></p>
-            </div>
-            <div class="accent-orange">
-              <span>02</span>
-              <strong><span class="lang lang-pt">Carregar SAMM</span><span class="lang lang-en">Load SAMM</span></strong>
-              <p><span class="lang lang-pt">90 perguntas, 15 práticas e níveis 0-3 disponíveis offline.</span><span class="lang lang-en">90 questions, 15 practices and 0-3 levels available offline.</span></p>
-            </div>
-            <div class="accent-magenta">
-              <span>03</span>
-              <strong><span class="lang lang-pt">Explorar evidências</span><span class="lang lang-en">Explore evidence</span></strong>
-              <p><span class="lang lang-pt">Clique nas perguntas para ver intenção, evidência e interpretação.</span><span class="lang lang-en">Click questions to see intent, evidence and interpretation.</span></p>
-            </div>
-            <div class="accent-green">
-              <span>04</span>
-              <strong><span class="lang lang-pt">Gerar roadmap</span><span class="lang lang-en">Generate roadmap</span></strong>
-              <p><span class="lang lang-pt">Use os scores para priorizar melhorias de AppSec.</span><span class="lang lang-en">Use scores to prioritize AppSec improvements.</span></p>
-            </div>
+        </div>
+        <div class="docs-tools">
+          <sc-for list="{{ t.mcp.tools }}" as="tl" hint-placeholder-count="8"><span class="docs-tool">{{ tl }}</span></sc-for>
+        </div>
+        <p class="docs-p">{{ t.mcp.note }}</p>
+      </section>
+
+      <section class="docs-sec" id="ai">
+        <div class="docs-eyebrow mg">// 09 · {{ t.ai.kicker }}</div>
+        <h2 class="docs-h2">{{ t.ai.h2 }}</h2>
+        <p class="docs-p">{{ t.ai.lead }}</p>
+
+        <div class="docs-h3">{{ t.ai.connectH }}</div>
+        <p class="docs-p">{{ t.ai.connect }}</p>
+        <div class="docs-callout">
+          <span class="ic">i</span>
+          <div><b>{{ t.ai.methodsTitle }}</b><p>{{ t.ai.methodsBody }}</p></div>
+        </div>
+
+        <div class="docs-h3">{{ t.ai.provH }}</div>
+        <div class="docs-provs">
+          <sc-for list="{{ t.ai.provRows }}" as="p" hint-placeholder-count="5">
+            <div class="docs-prov"><span class="pn">{{ p.name }}</span><span class="pa {{ p.tone }}">{{ p.auth }}</span><span class="pd">{{ p.how }}</span></div>
+          </sc-for>
+        </div>
+        <div class="docs-code">
+          <div class="docs-code-h"><span>openai · codex</span><span>{{ t.ai.oauthMeta }}</span></div>
+          <div class="docs-code-b">
+            <span class="cl"><span class="c1"># {{ t.ai.oauthC1 }}</span></span>
+            <span class="cl">Settings → <span class="c2">Sign in with OpenAI</span> → auth.openai.com</span>
+            <span class="cl">→ {{ t.ai.oauthC2 }}</span>
           </div>
-        </section>
+        </div>
 
-        <section class="doc-section" id="environment" data-doc-accent="magenta">
-          <p class="section-label"><span>02</span><span>environment</span></p>
-          <h2>
-            <span class="lang lang-pt">Variáveis para o fluxo de avaliação SAMM.</span>
-            <span class="lang lang-en">Variables for the SAMM assessment workflow.</span>
-          </h2>
-          <p>
-            <span class="lang lang-pt">O demo usa mock por padrão. Variáveis controlam fontes de evidência, render de níveis e export de roadmaps.</span>
-            <span class="lang lang-en">The demo uses mock by default. Variables control evidence sources, level rendering and roadmap exports.</span>
-          </p>
-          <div class="doc-table doc-table-wide">
-            <div><strong>VITE_SAMM_MOCK</strong><span><span class="lang lang-pt">Ativa o dataset completo de 90 perguntas e 15 práticas.</span><span class="lang lang-en">Enables the full 90-question / 15-practice dataset.</span></span></div>
-            <div><strong>VITE_EVIDENCE_URL</strong><span><span class="lang lang-pt">Endpoint ou arquivo JSON para carregar evidências reais.</span><span class="lang lang-en">Endpoint or JSON file to load real evidence.</span></span></div>
-            <div><strong>SAMM_LEVELS</strong><span><span class="lang lang-pt">0-3: initial, basic, advanced, optimized.</span><span class="lang lang-en">0-3: initial, basic, advanced, optimized.</span></span></div>
-          </div>
-        </section>
+        <div class="docs-h3">{{ t.ai.modelsH }}</div>
+        <p class="docs-p">{{ t.ai.models }}</p>
+        <div class="docs-tools">
+          <sc-for list="{{ t.ai.modelList }}" as="m" hint-placeholder-count="6"><span class="docs-tool">{{ m }}</span></sc-for>
+        </div>
 
-        <section class="doc-section" id="project-map" data-doc-accent="green">
-          <p class="section-label"><span>03</span><span>project map</span></p>
-          <h2>
-            <span class="lang lang-pt">Estrutura do projeto para maturidade AppSec.</span>
-            <span class="lang lang-en">Project structure for AppSec maturity.</span>
-          </h2>
-          <div class="doc-file-tree">
-            <div><code>src/site.js</code><span><span class="lang lang-pt">sammData: 90 perguntas, 15 práticas, níveis 0-3 com evidências.</span><span class="lang lang-en">sammData: 90 questions, 15 practices, 0-3 levels with evidence.</span></span></div>
-            <div><code>docs/index.html</code><span><span class="lang lang-pt">Documentação + render do questionário SAMM.</span><span class="lang lang-en">Documentation + SAMM questionnaire renderer.</span></span></div>
-            <div><code>src/styles.css</code><span><span class="lang lang-pt">Tokens visuais e layout responsivo para assessments.</span><span class="lang lang-en">Visual tokens and responsive layout for assessments.</span></span></div>
-            <div><code>public/assets</code><span><span class="lang lang-pt">SVGs de níveis de maturidade e brand.</span><span class="lang lang-en">Maturity level SVGs and brand assets.</span></span></div>
-            <div><code>evidence/</code><span><span class="lang lang-pt">Store de evidências e roadmaps exportados (futuro).</span><span class="lang lang-en">Evidence store and exported roadmaps (future).</span></span></div>
-          </div>
-        </section>
-
-        <section class="doc-section" id="modules" data-doc-accent="magenta">
-          <p class="section-label"><span>04</span><span>modules</span></p>
-          <h2>
-            <span class="lang lang-pt">5 Funções &amp; 15 Práticas SAMM.</span>
-            <span class="lang lang-en">5 Functions &amp; 15 SAMM Practices.</span>
-          </h2>
-          <p>
-            <span class="lang lang-pt">O modelo OWASP SAMM organiza AppSec em 5 funções de negócio com 3 práticas cada. O UI renderiza scores 0-3 por prática com evidências.</span>
-            <span class="lang lang-en">The OWASP SAMM model organizes AppSec into 5 business functions with 3 practices each. The UI renders 0-3 scores per practice with evidence.</span>
-          </p>
-          <div class="doc-module-list">
-            <div class="accent-orange"><span>G</span><strong>Governança</strong><p><span class="lang lang-pt">Strategy &amp; Metrics, Policy &amp; Compliance, Education &amp; Guidance.</span><span class="lang lang-en">Strategy &amp; Metrics, Policy &amp; Compliance, Education &amp; Guidance.</span></p></div>
-            <div class="accent-magenta"><span>D</span><strong>Design</strong><p><span class="lang lang-pt">Threat Assessment, Security Requirements, Secure Architecture.</span><span class="lang lang-en">Threat Assessment, Security Requirements, Secure Architecture.</span></p></div>
-            <div class="accent-green"><span>I</span><strong>Implementação</strong><p><span class="lang lang-pt">Secure Build, Secure Deployment, Defect Management.</span><span class="lang lang-en">Secure Build, Secure Deployment, Defect Management.</span></p></div>
-            <div class="accent-cyan"><span>V</span><strong>Verificação</strong><p><span class="lang lang-pt">Security Testing, Vulnerability Management, Risk Assessment.</span><span class="lang lang-en">Security Testing, Vulnerability Management, Risk Assessment.</span></p></div>
-            <div class="accent-orange"><span>O</span><strong>Operações</strong><p><span class="lang lang-pt">Operations, Incident Management, Environment Management.</span><span class="lang lang-en">Operations, Incident Management, Environment Management.</span></p></div>
-          </div>
-        </section>
-
-        <section class="doc-section" id="frontend" data-doc-accent="cyan">
-          <p class="section-label"><span>05</span><span>frontend</span></p>
-          <h2>
-            <span class="lang lang-pt">Fluxo da UI de assessment.</span>
-            <span class="lang lang-en">Assessment UI data flow.</span>
-          </h2>
-          <div class="architecture-map architecture-map-wide">
-            <div><span>01</span><strong>App.jsx / site.js</strong><small>hash routing + SAMM render</small></div>
-            <div><span>02</span><strong>sammData</strong><small>90 questions + maturity levels</small></div>
-            <div><span>03</span><strong>renderSAMMQuestions</strong><small>interactive 0-3 scoring</small></div>
-            <div><span>04</span><strong>Evidence model</strong><small>per-practice evidence</small></div>
-          </div>
-          <div class="architecture-detail">
-            <div>
-              <h3><span class="lang lang-pt">Render</span><span class="lang lang-en">Render</span></h3>
-              <p><span class="lang lang-pt">O container #samm-question-root recebe o HTML gerado com 90 itens clicáveis.</span><span class="lang lang-en">The #samm-question-root container receives generated HTML with 90 clickable items.</span></p>
-            </div>
-            <div>
-              <h3><span class="lang lang-pt">Interação</span><span class="lang lang-en">Interaction</span></h3>
-              <p><span class="lang lang-pt">Clique expande intenção, evidência sugerida e interpretação do nível 0-3.</span><span class="lang lang-en">Click expands intent, suggested evidence and 0-3 level interpretation.</span></p>
-            </div>
-            <div>
-              <h3><span class="lang lang-pt">Estado</span><span class="lang lang-en">State</span></h3>
-              <p><span class="lang lang-pt">Scores são mantidos localmente para gerar roadmap e export.</span><span class="lang lang-en">Scores are kept locally to generate roadmap and export.</span></p>
-            </div>
-          </div>
-        </section>
-
-        <section class="doc-section" id="state-model" data-doc-accent="green">
-          <p class="section-label"><span>06</span><span>state model</span></p>
-          <h2>
-            <span class="lang lang-pt">Contrato de assessment e evidências.</span>
-            <span class="lang lang-en">Assessment and evidence contract.</span>
-          </h2>
-          <p>
-            <span class="lang lang-pt">O JSON mínimo que qualquer fonte de dados deve entregar para alimentar o modelo de maturidade.</span>
-            <span class="lang lang-en">The minimum JSON any data source must deliver to feed the maturity model.</span>
-          </p>
-          <div class="terminal-card">
-            <div class="terminal-top"><span>assessment contract</span><span>minimum shape</span></div>
-            <pre><code>{
-  "assessments": [{
-    "practice": "G-EG",
-    "level": 2,
-    "evidence": ["policy doc v3", "training records"],
-    "score": 2.5,
-    "notes": "partial adoption"
-  }],
-  "practices": 15,
-  "functions": 5,
-  "roadmap": [{"practice": "D-TA", "target": 3, "priority": "high"}],
-  "evidence": [{"id": "e1", "type": "doc", "link": "..."}]
-}</code></pre>
-          </div>
-        </section>
-
-        <section class="doc-section" id="api" data-doc-accent="cyan">
-          <p class="section-label"><span>07</span><span>api</span></p>
-          <h2>
-            <span class="lang lang-pt">Maturity API para assessments e evidências.</span>
-            <span class="lang lang-en">Maturity API for assessments and evidence.</span>
-          </h2>
-          <p>
-            <span class="lang lang-pt">Endpoints para importar/exportar assessments, evidências e roadmaps.</span>
-            <span class="lang lang-en">Endpoints to import/export assessments, evidence and roadmaps.</span>
-          </p>
-          <div class="route-table">
-            <div><b>GET</b><code>/api/maturity/assessments</code><span><span class="lang lang-pt">Lista de avaliações por prática.</span><span class="lang lang-en">List of assessments by practice.</span></span></div>
-            <div><b>PUT</b><code>/api/maturity/assessments/:practice</code><span><span class="lang lang-pt">Salva score + evidência para uma prática.</span><span class="lang lang-en">Saves score + evidence for a practice.</span></span></div>
-            <div><b>GET</b><code>/api/maturity/roadmap</code><span><span class="lang lang-pt">Roadmap gerado a partir dos scores.</span><span class="lang lang-en">Roadmap generated from scores.</span></span></div>
-            <div><b>POST</b><code>/api/maturity/evidence/import</code><span><span class="lang lang-pt">Importa evidências de CI, Git ou conector.</span><span class="lang lang-en">Imports evidence from CI, Git or connector.</span></span></div>
-            <div><b>GET</b><code>/api/maturity/export</code><span><span class="lang lang-pt">Exporta JSON ou relatório para stakeholder.</span><span class="lang lang-en">Exports JSON or report for stakeholders.</span></span></div>
-          </div>
-        </section>
-
-        <section class="doc-section" id="sse" data-doc-accent="magenta">
-          <p class="section-label"><span>08</span><span>event stream</span></p>
-          <h2>
-            <span class="lang lang-pt">Stream de eventos de maturidade e roadmap.</span>
-            <span class="lang lang-en">Maturity and roadmap event stream.</span>
-          </h2>
-          <div class="terminal-card">
-            <div class="terminal-top"><span>roadmap events</span><span>text/event-stream</span></div>
-            <pre><code>event: assessment-updated
-data: {"practice":"G-EG","level":2}
-
-event: roadmap-prioritized
-data: {"items":[...]}
-
-event: evidence-added
-data: {"practice":"D-TA","count":3}</code></pre>
-          </div>
-          <p>
-            <span class="lang lang-pt">O stream permite UI reativa quando novas evidências chegam ou scores mudam.</span>
-            <span class="lang lang-en">The stream enables reactive UI when new evidence arrives or scores change.</span>
-          </p>
-        </section>
-
-        <section class="doc-section" id="registries" data-doc-accent="green">
-          <p class="section-label"><span>09</span><span>evidence registries</span></p>
-          <h2>
-            <span class="lang lang-pt">Store local de evidências e roadmaps.</span>
-            <span class="lang lang-en">Local evidence and roadmap store.</span>
-          </h2>
-          <p>
-            <span class="lang lang-pt">Evidências e configurações de assessment são armazenadas localmente para uso offline e export.</span>
-            <span class="lang lang-en">Evidence and assessment configs are stored locally for offline use and export.</span>
-          </p>
-          <div class="source-grid">
-            <div><span>samm-data.json</span><strong>questions + levels</strong><small>embedded or loaded</small></div>
-            <div><span>evidence.json</span><strong>user evidence</strong><small>per practice</small></div>
-            <div><span>roadmap.json</span><strong>prioritized items</strong><small>target levels</small></div>
-            <div><span>exports/</span><strong>reports</strong><small>JSON / markdown</small></div>
-          </div>
-        </section>
-
-        <section class="doc-section" id="connectors" data-doc-accent="cyan">
-          <p class="section-label"><span>10</span><span>import connectors</span></p>
-          <h2>
-            <span class="lang lang-pt">Conectores para importar evidências de fontes externas.</span>
-            <span class="lang lang-en">Connectors to import evidence from external sources.</span>
-          </h2>
-          <p>
-            <span class="lang lang-pt">Exemplos de conectores para CI/CD, repositórios, scanners e ferramentas de AppSec.</span>
-            <span class="lang lang-en">Example connectors for CI/CD, repos, scanners and AppSec tools.</span>
-          </p>
-          <div class="doc-table doc-table-wide">
-            <div><strong>Git / GitHub</strong><span><span class="lang lang-pt">Parse SECURITY.md, policy files, PR reviews.</span><span class="lang lang-en">Parse SECURITY.md, policy files, PR reviews.</span></span></div>
-            <div><strong>CI Artifacts</strong><span><span class="lang lang-pt">Import SARIF, OWASP ZAP reports, SAST results.</span><span class="lang lang-en">Import SARIF, OWASP ZAP reports, SAST results.</span></span></div>
-            <div><strong>Scanners</strong><span><span class="lang lang-pt">Conectores para ferramentas de DAST/SAST e dependency.</span><span class="lang lang-en">Connectors for DAST/SAST and dependency tools.</span></span></div>
-            <div><strong>Manual</strong><span><span class="lang lang-pt">Upload de evidências via UI ou CLI.</span><span class="lang lang-en">Upload evidence via UI or CLI.</span></span></div>
-          </div>
-        </section>
-
-        </section>
-
-        <section class="doc-section" id="appsec" data-doc-accent="green">
-          <p class="section-label"><span>11</span><span>appsec maturity</span></p>
-          <h2>
-            <span class="lang lang-pt">Maturidade AppSec com OWASP SAMM.</span>
-            <span class="lang lang-en">AppSec Maturity with OWASP SAMM.</span>
-          </h2>
-          <p>
-            <span class="lang lang-pt">O projeto foca em avaliações de maturidade open source SAMM: 5 funções de negócio, 15 práticas, 90 perguntas com intenção, evidências e interpretação de níveis 0-3. Base para roadmaps de AppSec e Okami Maturity.</span>
-            <span class="lang lang-en">The project focuses on open source SAMM maturity assessments: 5 business functions, 15 practices, 90 questions with intent, evidence and 0-3 maturity level interpretation. Baseline for AppSec roadmaps and Okami Maturity.</span>
-          </p>
-          <div class="source-grid">
-            <div><span>SAMM</span><strong>90 perguntas</strong><small>modelo oficial OWASP</small></div>
-            <div><span>Funções</span><strong>5</strong><small>Governance, Design, Implementation, Verification, Operations</small></div>
-            <div><span>Práticas</span><strong>15</strong><small>3 por função</small></div>
-            <div><span>Níveis</span><strong>0-3</strong><small>initial a advanced</small></div>
-          </div>
-        </section>
-
-        <section class="doc-section" id="design-system" data-doc-accent="cyan">
-          <p class="section-label"><span>12</span><span>design system</span></p>
-          <h2>
-            <span class="lang lang-pt">Tokens visuais e convenções de UI.</span>
-            <span class="lang lang-en">Visual tokens and UI conventions.</span>
-          </h2>
-          <div class="doc-table doc-table-wide">
-            <div><strong>Colors</strong><span><code>--ok-bg-0..3</code>, <code>--ok-fg*</code>, <code>--ok-orange</code>, <code>--ok-magenta</code>, <code>--ok-cyan</code>, <code>--ok-success</code>.</span></div>
-            <div><strong>Type</strong><span><span class="lang lang-pt">Space Grotesk para títulos; JetBrains Mono para labels, comandos e tabelas.</span><span class="lang lang-en">Space Grotesk for titles; JetBrains Mono for labels, commands and tables.</span></span></div>
-            <div><strong>Shape</strong><span><span class="lang lang-pt">Cantos retos por padrão. Pílulas só quando representam status curto.</span><span class="lang lang-en">Sharp corners by default. Pills only for short status labels.</span></span></div>
-            <div><strong>Color rhythm</strong><span><span class="lang lang-pt">Ciano, magenta, laranja e verde devem alternar função; evite seção inteira monocromática.</span><span class="lang lang-en">Cyan, magenta, orange and green should rotate by function; avoid fully monochrome sections.</span></span></div>
-            <div><strong>Motion</strong><span><span class="lang lang-pt">Transições curtas com <code>--ok-ease</code>; evite animação que esconda informação.</span><span class="lang lang-en">Short transitions with <code>--ok-ease</code>; avoid animation that hides information.</span></span></div>
-            <div><strong>Components</strong><span><span class="lang lang-pt">Botões, cards, tabs, filter bars, modal, toast, skeleton, markdown lite e terminal cards.</span><span class="lang lang-en">Buttons, cards, tabs, filter bars, modal, toast, skeleton, markdown lite and terminal cards.</span></span></div>
-          </div>
-        </section>
-
-        <section class="doc-section" id="deploy" data-doc-accent="orange">
-          <p class="section-label"><span>13</span><span>deploy</span></p>
-          <h2>
-            <span class="lang lang-pt">Build, preview e proxy de produção.</span>
-            <span class="lang lang-en">Build, preview and production proxy.</span>
-          </h2>
-          <div class="terminal-card">
-            <div class="terminal-top"><span>production build</span><span>vite</span></div>
-            <pre><code>npm run build
-npm run preview</code></pre>
-          </div>
-          <p>
-            <span class="lang lang-pt">O repositório inclui <code>functions/api/[[path]].js</code> para Cloudflare Pages. A função copia headers seguros, remove hop-by-hop headers, injeta <code>x-okami-proxy-token</code> e encaminha chamadas para <code>OKAMI_BACKEND_URL</code>. Se o proxy não estiver configurado, retorna <code>503</code>.</span>
-            <span class="lang lang-en">The repository includes <code>functions/api/[[path]].js</code> for Cloudflare Pages. The function copies safe headers, removes hop-by-hop headers, injects <code>x-okami-proxy-token</code> and forwards calls to <code>OKAMI_BACKEND_URL</code>. If the proxy is not configured, it returns <code>503</code>.</span>
-          </p>
-          <div class="security-grid">
-            <div class="accent-cyan"><span>headers</span><strong>public/_headers</strong><small>X-Frame-Options, nosniff, no-referrer, permissions policy</small></div>
-            <div class="accent-magenta"><span>proxy</span><strong>same-origin /api</strong><small>frontend can call /api without public backend URL</small></div>
-            <div class="accent-orange"><span>token</span><strong>backend proxy token</strong><small>required when production backend is protected</small></div>
-          </div>
-        </section>
-
-        <section class="doc-section" id="security" data-doc-accent="green">
-          <p class="section-label"><span>14</span><span>security</span></p>
-          <h2>
-            <span class="lang lang-pt">Cuidados de segurança ao conectar dados reais.</span>
-            <span class="lang lang-en">Security notes for real data integrations.</span>
-          </h2>
-          <ul class="doc-list">
-            <li><span class="lang lang-pt">Não versione <code>assessment data store (local JSON)</code>, <code>.env.local</code>, private keys, senhas ou dumps de sessão.</span><span class="lang lang-en">Do not version <code>assessment data store (local JSON)</code>, <code>.env.local</code>, private keys, passwords or session dumps.</span></li>
-            <li><span class="lang lang-pt">Prefira usuário SSH com permissões mínimas para leitura e comandos específicos.</span><span class="lang lang-en">Prefer an SSH user with minimal permissions for reading and specific commands.</span></li>
-            <li><span class="lang lang-pt">Revise as rotas de import de evidências e comandos permitidos antes de expor a terceiros.</span><span class="lang lang-en">Review evidence import routes and allowed commands before exposing to others.</span></li>
-            <li><span class="lang lang-pt">Mantenha o backend atrás de token, VPN, Cloudflare Access ou rede privada quando usar dados reais.</span><span class="lang lang-en">Keep the backend behind a token, VPN, Cloudflare Access or private network when using real data.</span></li>
-            <li><span class="lang lang-pt">Redija logs e documentos antes de renderizar conteúdo em ambientes compartilhados.</span><span class="lang lang-en">Redact logs and documents before rendering content in shared environments.</span></li>
-          </ul>
-        </section>
-
-        <section class="doc-section" id="troubleshooting" data-doc-accent="magenta">
-          <p class="section-label"><span>15</span><span>troubleshooting</span></p>
-          <h2>
-            <span class="lang lang-pt">Problemas comuns.</span>
-            <span class="lang lang-en">Common issues.</span>
-          </h2>
-          <div class="playbook-grid">
-            <div class="playbook-card accent-cyan">
-              <span>mock</span>
-              <h3><span class="lang lang-pt">A UI só mostra dados mock.</span><span class="lang lang-en">The UI only shows mock data.</span></h3>
-              <p><span class="lang lang-pt">Verifique se o mock SAMM está carregado e se #samm-question-root renderizou as 90 perguntas.</span><span class="lang lang-en">Verify that SAMM mock is loaded and that #samm-question-root rendered the 90 questions.</span></p>
-            </div>
-            <div class="playbook-card accent-magenta">
-              <span>sse</span>
-              <h3><span class="lang lang-pt">Stream fecha ou não atualiza.</span><span class="lang lang-en">Stream closes or does not update.</span></h3>
-              <p><span class="lang lang-pt">Teste <code>/stream</code>, confirme proxy sem buffering e reduza temporariamente <code>OKAMI_STREAM_INTERVAL_MS</code>.</span><span class="lang lang-en">Test <code>/stream</code>, confirm proxy without buffering and temporarily reduce <code>OKAMI_STREAM_INTERVAL_MS</code>.</span></p>
-            </div>
-            <div class="playbook-card accent-orange">
-              <span>import</span>
-              <h3><span class="lang lang-pt">Falha no import de evidências.</span><span class="lang lang-en">Evidence import fails.</span></h3>
-              <p><span class="lang lang-pt">Confira o conector de import de evidências e as fontes configuradas (Git, CI artifacts ou upload manual).</span><span class="lang lang-en">Confirm the connector for evidence import and configured sources (Git, CI artifacts or manual upload).</span></p>
-            </div>
-            <div class="playbook-card accent-green">
-              <span>samm</span>
-              <h3><span class="lang lang-pt">Seção de maturidade não renderiza.</span><span class="lang lang-en">Maturity section does not render.</span></h3>
-              <p><span class="lang lang-pt">Confira se id="samm-question-root" existe no HTML e se renderSAMMQuestions() executou sem erro.</span><span class="lang lang-en">Check that id="samm-question-root" exists in HTML and renderSAMMQuestions() ran without error.</span></p>
-            </div>
-            <div class="playbook-card accent-cyan">
-              <span>write</span>
-              <h3><span class="lang lang-pt">Arquivo não salva.</span><span class="lang lang-en">File does not save.</span></h3>
-              <p><span class="lang lang-pt">O import de evidências respeita escopos permitidos. Ajuste o caminho conscientemente.</span><span class="lang lang-en">Evidence import respects allowed scopes. Adjust the path intentionally.</span></p>
-            </div>
-            <div class="playbook-card accent-magenta">
-              <span>build</span>
-              <h3><span class="lang lang-pt">Build quebra.</span><span class="lang lang-en">Build fails.</span></h3>
-              <p><span class="lang lang-pt">Rode <code>npm install</code>, confirme Node >= 18 e execute <code>npm run build</code> antes de abrir PR.</span><span class="lang lang-en">Run <code>npm install</code>, confirm Node >= 18 and execute <code>npm run build</code> before opening a PR.</span></p>
-            </div>
-          </div>
-        </section>
-
-        <section class="doc-section" id="contribute" data-doc-accent="cyan">
-          <p class="section-label"><span>16</span><span>contribute</span></p>
-          <h2>
-            <span class="lang lang-pt">Como contribuir com perguntas, evidências e documentação SAMM.</span>
-            <span class="lang lang-en">How to contribute SAMM questions, evidence and documentation.</span>
-          </h2>
-          <div class="release-checklist">
-            <h3><span class="lang lang-pt">Checklist de PR</span><span class="lang lang-en">PR checklist</span></h3>
-            <ul>
-              <li><span class="lang lang-pt">Preserve o modo mock-first: o questionário SAMM deve carregar sem backend.</span><span class="lang lang-en">Preserve mock-first: the SAMM questionnaire must load without backend.</span></li>
-              <li><span class="lang lang-pt">Não introduza segredos em arquivos versionados.</span><span class="lang lang-en">Do not introduce secrets into versioned files.</span></li>
-              <li><span class="lang lang-pt">Use tokens <code>--ok-*</code> e mantenha ciano, magenta, laranja e verde em equilíbrio.</span><span class="lang lang-en">Use <code>--ok-*</code> tokens and keep cyan, magenta, orange and green balanced.</span></li>
-              <li><span class="lang lang-pt">Para nova pergunta SAMM, adicione em sammData no src/site.js com intenção, evidência e níveis 0-3.</span><span class="lang lang-en">For a new SAMM question, add to sammData in src/site.js with intent, evidence and 0-3 levels.</span></li>
-              <li><span class="lang lang-pt">Para novo conector, documente método, payload e exemplo de evidência importada.</span><span class="lang lang-en">For a new connector, document method, payload and example imported evidence.</span></li>
-              <li><span class="lang lang-pt">Rode <code>npm run build</code> e teste a seção de 90 perguntas, troca PT/EN e responsividade.</span><span class="lang lang-en">Run <code>npm run build</code> and test the 90-question section, PT/EN toggle and responsiveness.</span></li>
-            </ul>
-          </div>
-        </section>
-
-        <section class="doc-section" id="maturity" data-doc-accent="orange">
-          <p class="section-label"><span>17</span><span>maturity</span></p>
-          <h2>
-            <span class="lang lang-pt">Maturidade com OWASP SAMM — 90 perguntas</span>
-            <span class="lang lang-en">Maturity with OWASP SAMM — 90 questions</span>
-          </h2>
-          <p>
-            <span class="lang lang-pt">Estrutura completa das 90 perguntas do modelo SAMM (5 funções de negócio, 15 práticas). Algumas expandidas com intenção, evidências e interpretação de maturidade 0-3. Clique para detalhes.</span>
-            <span class="lang lang-en">Full structure of the 90 SAMM model questions (5 business functions, 15 practices). Some expanded with intent, evidence and maturity level 0-3 interpretation. Click to expand details.</span>
-          </p>
-          <div id="samm-question-root" class="samm-root"></div>
-          <div class="dx-note info">
-            <span class="ico">i</span>
-            <div class="txt">
-              <span class="lang lang-pt">Fonte: modelo oficial OWASP SAMM (work-owaspsamm). Placeholders nomeados para as demais perguntas.</span>
-              <span class="lang lang-en">Source: official OWASP SAMM model (work-owaspsamm). Named placeholders for remaining questions.</span>
-            </div>
-          </div>
-        </section>
-      </article>
-
-      <nav class="dx-toc" aria-label="Nesta página" data-i18n-aria-label="docs_toc_label">
-        <p class="dx-toc-h">
-          <span class="lang lang-pt">Nesta página</span>
-          <span class="lang lang-en">On this page</span>
-        </p>
-        <ul>
-          <li><a class="active" href="#overview" aria-current="true">
-            <span class="lang lang-pt">Visão geral</span>
-            <span class="lang lang-en">Overview</span>
-          </a></li>
-          <li><a href="#quickstart">Quick start</a></li>
-          <li><a href="#environment"><span class="lang lang-pt">Ambiente</span><span class="lang lang-en">Environment</span></a></li>
-          <li><a href="#project-map"><span class="lang lang-pt">Mapa do projeto</span><span class="lang lang-en">Project map</span></a></li>
-          <li><a href="#modules"><span class="lang lang-pt">15 Práticas SAMM</span><span class="lang lang-en">15 SAMM practices</span></a></li>
-          <li><a href="#frontend"><span class="lang lang-pt">Fluxo da UI</span><span class="lang lang-en">UI flow</span></a></li>
-          <li><a href="#state-model"><span class="lang lang-pt">Contrato de assessment</span><span class="lang lang-en">Assessment contract</span></a></li>
-          <li><a href="#api">Maturity API</a></li>
-          <li><a href="#sse">Event stream</a></li>
-          <li><a href="#registries">Evidence store</a></li>
-          <li><a href="#connectors">Import connectors</a></li>
-          <li><a href="#appsec">Maturidade AppSec</a></li>
-          <li><a href="#security"><span class="lang lang-pt">Segurança</span><span class="lang lang-en">Security</span></a></li>
-          <li><a href="#maturity"><span data-i18n="docs_side_maturity">Maturidade SAMM</span></a></li>
-          <li><a href="#contribute"><span class="lang lang-pt">Contribuir</span><span class="lang lang-en">Contribute</span></a></li>
+        <div class="docs-h3">{{ t.ai.sugH }}</div>
+        <p class="docs-p">{{ t.ai.sug }}</p>
+        <ul class="docs-list">
+          <sc-for list="{{ t.ai.sugPoints }}" as="s" hint-placeholder-count="3"><li>{{ s }}</li></sc-for>
         </ul>
-        <a class="edit" href="https://github.com/OkamiOps/okami-maturity-lp" target="_blank" rel="noreferrer" data-i18n="docs_edit_github">Editar no GitHub →</a>
-      </nav>
+
+        <div class="docs-h3">{{ t.ai.envH }}</div>
+        <p class="docs-p">{{ t.ai.env }}</p>
+        <div class="docs-code">
+          <div class="docs-code-h"><span>.env</span><span>{{ t.ai.envMeta }}</span></div>
+          <div class="docs-code-b">
+            <span class="cl">AI_PROVIDER=<span class="c2">openai</span> <span class="c1"># openai · anthropic</span></span>
+            <span class="cl">AI_MODEL=<span class="c2">gpt-5.4-mini</span></span>
+            <span class="cl">AI_BASE_URL=<span class="c2">https://…/v1</span> <span class="c1"># {{ t.ai.envC1 }}</span></span>
+            <span class="cl">AI_API_KEY=<span class="c2">sk-…</span></span>
+          </div>
+        </div>
+
+        <p class="docs-p">{{ t.ai.note }}</p>
+      </section>
+
+      <section class="docs-sec" id="access">
+        <div class="docs-eyebrow mg">// 10 · {{ t.ac.kicker }}</div>
+        <h2 class="docs-h2">{{ t.ac.h2 }}</h2>
+        <p class="docs-p">{{ t.ac.lead }}</p>
+        <div class="docs-code">
+          <div class="docs-code-h"><span>admin cli</span><span>{{ t.ac.codeMeta }}</span></div>
+          <div class="docs-code-b">
+            <span class="cl"><span class="c3">npm run admin --</span> list</span>
+            <span class="cl"><span class="c3">npm run admin --</span> create-admin <span class="c2">&lt;user&gt; &lt;password&gt;</span></span>
+            <span class="cl"><span class="c3">npm run admin --</span> set-password <span class="c2">&lt;user&gt; &lt;password&gt;</span></span>
+            <span class="cl"><span class="c3">npm run admin --</span> reset <span class="c1"># {{ t.ac.cm1 }}</span></span>
+          </div>
+        </div>
+        <p class="docs-p">{{ t.ac.note }}</p>
+      </section>
+
+      <section class="docs-sec" id="data">
+        <div class="docs-eyebrow mg">// 11 · {{ t.dt.kicker }}</div>
+        <h2 class="docs-h2">{{ t.dt.h2 }}</h2>
+        <p class="docs-p">{{ t.dt.lead }}</p>
+        <div class="docs-routes">
+          <div class="docs-route"><span class="m">GET</span><span class="rp">/api/backup</span><span class="rd">{{ t.dt.r1 }}</span></div>
+          <div class="docs-route"><span class="m post">POST</span><span class="rp">/api/restore</span><span class="rd">{{ t.dt.r2 }}</span></div>
+        </div>
+        <div class="docs-callout">
+          <span class="ic">i</span>
+          <div><b>{{ t.dt.mobileTitle }}</b><p>{{ t.dt.mobileBody }}</p></div>
+        </div>
+        <p class="docs-p">{{ t.dt.note }}</p>
+      </section>
+
+      <section class="docs-sec" id="faq">
+        <div class="docs-eyebrow mg">// 12 · {{ t.fq.kicker }}</div>
+        <h2 class="docs-h2">{{ t.fq.h2 }}</h2>
+        <p class="docs-p">{{ t.fq.lead }}</p>
+        <div class="docs-faq">
+          <sc-for list="{{ t.fq.items }}" as="f" hint-placeholder-count="6">
+            <div class="docs-faq-item"><div class="q">{{ f.q }}</div><p class="a">{{ f.a }}</p></div>
+          </sc-for>
+        </div>
+      </section>
     </main>
 
-    <script type="module" src="/src/site.js"></script>
-  </body>
+    <nav class="docs-toc">
+      <div class="tt">{{ t.tocTitle }}</div>
+      <sc-for list="{{ t.toc }}" as="tc" hint-placeholder-count="9">
+        <a href="{{ tc.href }}" data-toc="{{ tc.href }}">{{ tc.label }}</a>
+      </sc-for>
+      <div class="edit"><a href="https://github.com/OkamiOps/okami-SAMM" target="_blank" rel="noopener">{{ t.editGh }} →</a></div>
+    </nav>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;lang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;pt&quot;,&quot;en&quot;],&quot;default&quot;:&quot;pt&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { lang: this.props.lang || "pt", activeFn: 0, open: {} };
+
+  componentDidMount() {
+    this._spy(); window.addEventListener("scroll", this._spy, { passive: true });
+    if (!window.SAMM) { let n = 0; const iv = setInterval(() => { if (window.SAMM || n++ > 60) { clearInterval(iv); this.forceUpdate(); } }, 80); }
+  }
+  componentWillUnmount() { window.removeEventListener("scroll", this._spy); }
+  _spy = () => {
+    const secs = [...document.querySelectorAll(".docs-main section[id]")];
+    if (!secs.length) return;
+    const y = window.scrollY + 140;
+    let cur = secs[0].id;
+    for (const s of secs) { if (s.offsetTop <= y) cur = s.id; }
+    document.querySelectorAll(".docs-toc a[data-toc]").forEach((a) => {
+      a.classList.toggle("active", a.getAttribute("data-toc") === "#" + cur);
+    });
+    document.querySelectorAll(".docs-side a[data-side]").forEach((a) => {
+      a.classList.toggle("active", a.getAttribute("data-side") === "#" + cur);
+    });
+  };
+
+  SIDE = (L) => [
+    { tone: "gov", label: L.gStart, items: [
+      { label: L.iIntro, href: "#overview", cls: "" },
+      { label: L.iQuick, href: "#quickstart", cls: "" },
+      { label: L.iSelf, href: "#selfhost", cls: "" } ] },
+    { tone: "des", label: L.gProduct, items: [
+      { label: L.iAssess, href: "#assess", cls: "" },
+      { label: L.iQuestions, href: "#questions", cls: "" },
+      { label: L.iScoring, href: "#scoring", cls: "" },
+      { label: L.iReport, href: "#report", cls: "" } ] },
+    { tone: "imp", label: L.gIntegration, items: [
+      { label: "API · /docs", href: "#api", cls: "" },
+      { label: "MCP & ACP", href: "#mcp", cls: "" },
+      { label: L.iAi, href: "#ai", cls: "" } ] },
+    { tone: "ops", label: L.gOps, items: [
+      { label: L.iAccess, href: "#access", cls: "" },
+      { label: L.iData, href: "#data", cls: "" },
+      { label: L.iFaq, href: "#faq", cls: "" } ] },
+    { tone: "gov", label: L.gResources, items: [
+      { label: "GitHub ↗", href: "https://github.com/OkamiOps/okami-SAMM", cls: "" },
+      { label: "Issues ↗", href: "https://github.com/OkamiOps/okami-SAMM/issues", cls: "" },
+      { label: "okamiops.com ↗", href: "https://okamiops.com", cls: "" } ] },
+  ];
+
+  COPY = {
+    pt: {
+      search: "Buscar nos docs…",
+      bcRoot: "Começar", bcHere: "Introdução",
+      tocTitle: "Nesta página", editGh: "Editar no GitHub",
+      gStart: "Começar", gProduct: "Produto", gIntegration: "Integração", gOps: "Operação", gResources: "Recursos",
+      iAccess: "Contas & acesso", iData: "Banco & backup", iFaq: "FAQ",
+      iIntro: "Introdução", iQuick: "Quick start", iSelf: "Self-host", iAssess: "Fluxo da avaliação",
+      iScoring: "Metodologia de scoring", iReport: "Relatório PDF", iAi: "Configuração de IA", iQuestions: "As 90 perguntas",
+      ov: {
+        kicker: "começar", h1: "O que é o Okami Maturity?",
+        lead: "Okami Maturity é uma avaliação de maturidade de segurança baseada no OWASP SAMM v2: 5 funções de negócio, 15 práticas e 90 perguntas (PT/EN). Roda 100% self-hosted, persiste em SQLite e gera um relatório PDF com a marca Okami. É operável por IA via MCP e ACP.",
+        bInstall: "Instalar local", bSite: "Ver a landing",
+        calloutTitle: "Escolha o caminho certo para o que você quer fazer",
+        calloutBody: "Só quer ver rodando? Comece pelo Quick start. Vai colocar em produção? Leia Self-host. Quer entender as notas? Veja Fluxo da avaliação e Metodologia de scoring. Vai conectar um agente? Vá para MCP & ACP.",
+        c1t: "Quick start", c1d: "Suba o app localmente e teste o fluxo completo com dados de exemplo.",
+        c2t: "Fluxo da avaliação", c2d: "Veja como responder as 90 perguntas, streams A/B e notas de entrevista.",
+        c3t: "Metodologia de scoring", c3d: "Entenda como cada prática vira um score de 0 a 3 e a lacuna até a meta.",
+        c4t: "MCP & ACP", c4d: "Deixe agentes de IA lerem e operarem o sistema sobre os protocolos.",
+      },
+      qs: {
+        kicker: "quick start", h2: "Rode local primeiro.",
+        lead: "O app não exige nuvem para abrir. Sem chave de IA ele funciona normalmente — só as sugestões de IA no roadmap ficam ocultas.",
+        codeLabel: "instalar", cm1: "clone o repositório e entre na pasta", cm2: "baixa o Chromium uma vez, para o PDF",
+        note: "Pronto: abra http://localhost:3000. Na primeira execução o app pede para criar um admin; depois todos entram com usuário e senha.",
+      },
+      sh: {
+        kicker: "self-host", h2: "Self-host com um comando.",
+        lead: "Todo o app — frontend, API, PDF e SQLite — sobe a partir de um único container. Seus dados vivem em ./data/okami-samm.db (modo WAL).",
+        codeMeta: "tudo em um", cm1: "seus dados em",
+        cloud: "Prefere separar camadas? Sirva o frontend estático no Cloudflare Pages e rode o backend (API + PDF) num container atrás do CDN. Uma Pages Function faz proxy de /api/* para o backend — mesma origem, sem CORS.",
+      },
+      as: {
+        kicker: "avaliação", h2: "O fluxo de avaliação.",
+        lead: "A avaliação é guiada por 90 perguntas em dois streams (A/B) por prática, com níveis 1–3 e notas de entrevista por pergunta. Dá para responder pelo teclado.",
+        steps: ["01 · Start", "02 · Assessment", "03 · Scorecard", "04 · Roadmap", "05 · History", "06 · Compare"],
+        note: "Atalhos: 0–3 responde a pergunta em foco e avança · ↑/↓ navegam · ←/→ trocam de prática · ⌫ limpa. O draft fica no localStorage e sincroniza com o servidor via Save.",
+      },
+      q: {
+        kicker: "as 90 perguntas", h2: "As 90 perguntas, explicadas.",
+        lead: "Cada uma das 15 práticas tem dois streams (A e B) e três níveis (1–3) — 6 perguntas por prática, 90 no total. Você não responde no escuro: cada pergunta traz uma orientação do que procurar para responder com honestidade.",
+        scaleTitle: "Como responder cada pergunta",
+        scaleNote: "Não é um sim/não binário. Cada pergunta é respondida numa escala de 4 pontos, pela proporção de aplicações ou times em que a prática realmente acontece. O peso entra na média do stream, que vira o nível 0–3 da prática.",
+        lookFor: "// o que procurar",
+        note: "Dica: responda por evidência, não por intenção. Se você só faz “para alguns” projetos, marque “para alguns” — o objetivo é um retrato real para priorizar o roadmap. Selecione uma função acima e clique numa pergunta para ver a orientação.",
+      },
+      sc: {
+        kicker: "scoring", h2: "Como o score é calculado.",
+        lead: "Cada prática é pontuada de 0 a 3 — a média dos seus dois streams. A maturidade geral é a média das práticas; a meta sugerida de cada prática é o próximo nível.",
+        levels: [
+          { n: "0", t: "Inexistente", d: "Prática ausente ou ad-hoc, sem processo definido." },
+          { n: "1", t: "Inicial", d: "Entendimento e execução iniciais, ainda inconsistentes." },
+          { n: "2", t: "Definido", d: "Processo definido e adotado com eficiência crescente." },
+          { n: "3", t: "Otimizado", d: "Domínio abrangente, medido e melhorado continuamente." },
+        ],
+        note: "A lacuna (gap) é a distância entre o nível atual e a meta. O roadmap ordena as práticas pela maior oportunidade de ganho de maturidade.",
+      },
+      rp: {
+        kicker: "relatório", h2: "Relatório PDF com a marca Okami.",
+        lead: "Um documento de 9 páginas (capa, conteúdo, resumo executivo, metodologia, maturidade por função, roadmap, evolução, conclusão e apêndices) renderizado por Playwright/Chromium seguindo a identidade OKAMI · Security Assessment Report.",
+        cta: "Ver a estrutura na landing",
+      },
+      api: {
+        kicker: "api", h2: "API & /docs (Swagger).",
+        lead: "Docs interativos em Swagger UI em /docs (self-hosted, sem CDN); o spec OpenAPI 3 fica em /api/openapi.json. Tudo exceto /healthz, /api/config e /api/auth/* exige um cookie de sessão (web) ou um API token por usuário (agentes).",
+        r1: "health check (público)", r2: "login de sessão", r3: "lista avaliações salvas",
+        r4: "cria avaliação ({ state })", r5: "PDF Okami da avaliação", r6: "MCP · Streamable HTTP",
+        note: "Agentes autenticam com Authorization: Bearer <token> ou X-API-Key: <token> (pegue em /api/auth/me, rotacione via POST /api/auth/token).",
+      },
+      mcp: {
+        kicker: "mcp & acp", h2: "Agentes leem e operam.",
+        lead: "Todo o sistema é exposto por MCP (dois transportes) e pelos dois protocolos ACP — a mesma camada de operações (server/operations.js). Um agente descobre o modelo, cria avaliações, responde, pontua, planeja e gera o relatório.",
+        cm1: "remoto (Streamable HTTP)", cm2: "local (stdio, mesmo SQLite)",
+        tools: ["get_samm_model", "create_assessment", "set_answers", "set_targets", "get_scorecard", "get_roadmap", "add_snapshot", "generate_report"],
+        note: "ACP: Agent Communication Protocol (REST em /acp, agente a agente) e Agent Client Protocol (Zed, JSON-RPC por stdio). O /mcp exige API token no header.",
+      },
+      ai: {
+        kicker: "ia", h2: "Configuração de IA (opcional).",
+        lead: "A IA é totalmente opcional: sem ela o app roda normal — só as sugestões de IA no roadmap ficam ocultas. Quando você pluga um provider, ele alimenta as ações sugeridas do roadmap e o modo de linguagem natural do agente ACP.",
+        connectH: "Conectar um provider",
+        connect: "Tudo em Settings (admin, ⚙ na toolbar): escolha um preset (OpenAI / Grok / Minimax / Anthropic / custom), selecione API key ou token OAuth, carregue a lista de modelos direto do provider (↻), cole a credencial e clique em Testar conexão. A chave é gravada no banco e nunca volta crua (fica mascarada na leitura). Cada login é lembrado por provider — entre uma vez em cada e troque pelo dropdown + Salvar IA, sem reautenticar.",
+        methodsTitle: "API key ou OAuth — dois caminhos",
+        methodsBody: "API key: cole a chave do provider e pronto. OAuth (pela assinatura, sem custo de API): Grok e Minimax têm login por device-code embutido (clique em Entrar, abra a URL, digite o código — o servidor guarda e renova o token). OpenAI usa o fluxo authorize do Codex: Entrar com OpenAI abre auth.openai.com e você cola de volta a URL que a OpenAI devolve (funciona local e remoto, sem porta aberta).",
+        provH: "Providers suportados",
+        provRows: [
+          { name: "OpenAI / Codex", auth: "OAuth · key", tone: "both", how: "Login Codex (cola a URL de retorno) ou API key. Usa a Responses API." },
+          { name: "Grok (xAI)", auth: "OAuth · key", tone: "both", how: "Login por device-code com a assinatura, ou API key." },
+          { name: "Minimax", auth: "OAuth · key", tone: "both", how: "Login por device-code com a assinatura, ou API key." },
+          { name: "Anthropic", auth: "API key", tone: "key", how: "Só API key — os Termos proíbem tokens OAuth Pro/Max fora do Claude." },
+          { name: "Custom / compat.", auth: "key + URL", tone: "oauth", how: "Qualquer endpoint compatível com OpenAI: base URL + API key." },
+        ],
+        oauthMeta: "sem porta aberta",
+        oauthC1: "OAuth pela assinatura (sem custo de API)",
+        oauthC2: "cole de volta a URL que a OpenAI te der",
+        modelsH: "Modelos suportados",
+        models: "Carregue a lista de modelos do provider com ↻ e escolha no dropdown. A OpenAI usa slugs com ponto (um nome com hífen como gpt-5-5 retorna 404). Exemplos atuais:",
+        modelList: ["gpt-5.5", "gpt-5.4", "gpt-5.4-mini", "gpt-5.3-codex", "gpt-5.3-codex-spark", "gpt-5"],
+        sugH: "Sugestões de IA no roadmap",
+        sug: "Com um provider ativo, cada prática prioritária do roadmap ganha ações recomendadas pela IA, derivadas dos critérios e da guidance do próprio OWASP SAMM — não é texto genérico.",
+        sugPoints: [
+          "Ações concretas por prática, ancoradas no nível atual e na meta",
+          "O próximo nível a atingir e a lacuna para fechá-lo",
+          "Você revisa e aplica — nada muda automaticamente; sem provider, o resto do app não se altera",
+        ],
+        envH: "Variáveis de ambiente (fallback)",
+        env: "As env vars valem como fallback se você preferir não usar a UI. AI_API_KEY é a chave do provider escolhido.",
+        envMeta: "opcional",
+        envC1: "minimax / compatível",
+        note: "Retenção e gestão de usuários também ficam em Settings. A guidance de cada provider aparece inline; API style e Base URL só aparecem no provider Custom.",
+      },
+      ac: {
+        kicker: "contas & acesso", h2: "Contas, papéis e tokens.",
+        lead: "Usuários locais, sem nuvem. No primeiro acesso o app pede para criar um admin; depois todos entram com usuário e senha. Dois papéis: admin (tudo, mais a gestão de usuários) e user (rodar avaliações e relatórios). Os dados são um workspace compartilhado — todos veem todas as avaliações.",
+        codeMeta: "sem login", cm1: "apaga usuários → recria o admin",
+        note: "Agentes (MCP/ACP) autenticam com um API token por usuário (veja em /api/auth/me, rotacione com POST /api/auth/token). Trancado para fora? Os comandos acima recuperam o acesso pelo terminal, sem precisar logar.",
+      },
+      dt: {
+        kicker: "dados & backup", h2: "Seus dados, no seu SQLite.",
+        lead: "O banco é um SQLite em DB_PATH (padrão ./data/okami-samm.db, modo WAL, criado automaticamente) com as tabelas assessments e snapshots. Fazer backup é copiar a pasta ./data — ou usar ⤓ Backup / ⤒ Restore na UI, ou os endpoints abaixo (o restore aceita merge ou replace).",
+        r1: "baixa um JSON com todas as avaliações", r2: "restaura um backup ({ assessments, mode })",
+        mobileTitle: "Também funciona no celular",
+        mobileBody: "A interface é responsiva: questionário, scorecard, radar e roadmap se adaptam à tela. Dá para conduzir uma entrevista com o tablet ou o celular em mãos e salvar direto no servidor.",
+        note: "Retenção (auto-purga de avaliações antigas) e gestão de usuários também ficam em Settings. Exponha à internet só atrás de um proxy reverso com auth ou uma VPN.",
+      },
+      fq: {
+        kicker: "faq", h2: "Perguntas frequentes.",
+        lead: "Dúvidas comuns antes de rodar o Okami SAMM.",
+        items: [
+          { q: "Preciso de IA para usar?", a: "Não. A IA é 100% opcional — sem provider, todo o fluxo (avaliar, pontuar, roadmap, relatório) funciona. A IA só acrescenta as ações sugeridas no roadmap." },
+          { q: "Onde ficam os meus dados?", a: "Num arquivo SQLite no seu servidor (./data/okami-samm.db). Sem SaaS, sem nuvem, sem telemetria — nada sai da sua infra." },
+          { q: "É SAMM v2?", a: "Sim — OWASP SAMM v2 completo: 5 funções de negócio, 15 práticas e as 90 perguntas de stream (A/B), pontuadas de 0 a 3." },
+          { q: "Funciona offline e no celular?", a: "Sim. O frontend React é vendorizado (sem CDN), roda offline, e a interface é responsiva — dá para conduzir entrevistas no tablet ou no celular." },
+          { q: "Posso expor na internet?", a: "Pode, mas só atrás de um proxy reverso com autenticação ou uma VPN. O /mcp exige API token; o login é por usuário e senha." },
+          { q: "Como faço backup?", a: "Copie a pasta ./data, use ⤓ Backup / ⤒ Restore na UI, ou os endpoints GET /api/backup e POST /api/restore (merge ou replace)." },
+        ],
+      },
+    },
+
+    en: {
+      search: "Search the docs…",
+      bcRoot: "Start", bcHere: "Overview",
+      tocTitle: "On this page", editGh: "Edit on GitHub",
+      gStart: "Start", gProduct: "Product", gIntegration: "Integration", gOps: "Operation", gResources: "Resources",
+      iAccess: "Accounts & access", iData: "Database & backup", iFaq: "FAQ",
+      iIntro: "Overview", iQuick: "Quick start", iSelf: "Self-host", iAssess: "Assessment flow",
+      iScoring: "Scoring methodology", iReport: "PDF report", iAi: "AI configuration", iQuestions: "The 90 questions",
+      ov: {
+        kicker: "start", h1: "What is Okami Maturity?",
+        lead: "Okami Maturity is a security maturity assessment built on OWASP SAMM v2: 5 business functions, 15 practices and 90 questions (EN/PT). It runs fully self-hosted, persists to SQLite and generates an Okami-branded PDF report. It is AI-operable over MCP and ACP.",
+        bInstall: "Install locally", bSite: "View the landing",
+        calloutTitle: "Choose the right path for what you want to do",
+        calloutBody: "Just want to see it running? Start with Quick start. Going to production? Read Self-host. Want to understand the scores? See Assessment flow and Scoring methodology. Connecting an agent? Go to MCP & ACP.",
+        c1t: "Quick start", c1d: "Bring the app up locally and test the full flow with sample data.",
+        c2t: "Assessment flow", c2d: "See how to answer the 90 questions, A/B streams and interview notes.",
+        c3t: "Scoring methodology", c3d: "Understand how each practice becomes a 0–3 score and the gap to target.",
+        c4t: "MCP & ACP", c4d: "Let AI agents read and operate the system over the protocols.",
+      },
+      qs: {
+        kicker: "quick start", h2: "Run it locally first.",
+        lead: "The app doesn't need the cloud to open. Without an AI key it works normally — only the roadmap's AI suggestions stay hidden.",
+        codeLabel: "install", cm1: "clone the repo and enter the folder", cm2: "downloads Chromium once, for the PDF",
+        note: "Done: open http://localhost:3000. On first run the app asks you to create an admin; after that everyone signs in with username and password.",
+      },
+      sh: {
+        kicker: "self-host", h2: "Self-host in one command.",
+        lead: "The whole app — frontend, API, PDF and SQLite — comes up from a single container. Your data lives in ./data/okami-samm.db (WAL mode).",
+        codeMeta: "all in one", cm1: "your data in",
+        cloud: "Prefer to split layers? Serve the static frontend on Cloudflare Pages and run the backend (API + PDF) in a container behind the CDN. A Pages Function proxies /api/* to the backend — same-origin, no CORS.",
+      },
+      as: {
+        kicker: "assessment", h2: "The assessment flow.",
+        lead: "The assessment is guided by 90 questions across two streams (A/B) per practice, with levels 1–3 and interview notes per question. You can answer by keyboard.",
+        steps: ["01 · Start", "02 · Assessment", "03 · Scorecard", "04 · Roadmap", "05 · History", "06 · Compare"],
+        note: "Shortcuts: 0–3 answers the focused question and advances · ↑/↓ move · ←/→ switch practice · ⌫ clears. The draft is kept in localStorage and syncs to the server via Save.",
+      },
+      q: {
+        kicker: "the 90 questions", h2: "The 90 questions, explained.",
+        lead: "Each of the 15 practices has two streams (A and B) and three levels (1–3) — 6 questions per practice, 90 in total. You don't answer blind: every question carries guidance on what to look for, so you can answer honestly.",
+        scaleTitle: "How to answer each question",
+        scaleNote: "It isn't a binary yes/no. Each question is answered on a 4-point scale, by the share of applications or teams where the practice actually happens. The weight feeds the stream average, which becomes the practice's 0–3 level.",
+        lookFor: "// what to look for",
+        note: "Tip: answer from evidence, not intent. If you only do it “for some” projects, pick “for some” — the goal is a real snapshot to prioritize the roadmap. Select a function above and click a question to see its guidance.",
+      },
+      sc: {
+        kicker: "scoring", h2: "How the score is computed.",
+        lead: "Each practice is scored 0 to 3 — the average of its two streams. Overall maturity is the average of practices; each practice's suggested target is the next level.",
+        levels: [
+          { n: "0", t: "None", d: "Practice absent or ad-hoc, with no defined process." },
+          { n: "1", t: "Initial", d: "Initial understanding and execution, still inconsistent." },
+          { n: "2", t: "Defined", d: "Defined, adopted process with increasing efficiency." },
+          { n: "3", t: "Optimized", d: "Comprehensive mastery, measured and improved continuously." },
+        ],
+        note: "The gap is the distance between the current level and the target. The roadmap orders practices by the greatest maturity-gain opportunity.",
+      },
+      rp: {
+        kicker: "report", h2: "Okami-branded PDF report.",
+        lead: "A 9-page document (cover, contents, executive summary, methodology, maturity by function, roadmap, evolution, conclusion and appendices) rendered by Playwright/Chromium following the OKAMI · Security Assessment Report identity.",
+        cta: "See the structure on the landing",
+      },
+      api: {
+        kicker: "api", h2: "API & /docs (Swagger).",
+        lead: "Interactive docs via Swagger UI at /docs (self-hosted, no CDN); the OpenAPI 3 spec is at /api/openapi.json. Everything except /healthz, /api/config and /api/auth/* requires a session cookie (web) or a per-user API token (agents).",
+        r1: "health check (public)", r2: "session login", r3: "list saved assessments",
+        r4: "create assessment ({ state })", r5: "Okami PDF of the assessment", r6: "MCP · Streamable HTTP",
+        note: "Agents authenticate with Authorization: Bearer <token> or X-API-Key: <token> (get it from /api/auth/me, rotate via POST /api/auth/token).",
+      },
+      mcp: {
+        kicker: "mcp & acp", h2: "Agents read and operate.",
+        lead: "The whole system is exposed over MCP (two transports) and both ACP protocols — the same operations layer (server/operations.js). An agent discovers the model, creates assessments, answers, scores, plans and generates the report.",
+        cm1: "remote (Streamable HTTP)", cm2: "local (stdio, same SQLite)",
+        tools: ["get_samm_model", "create_assessment", "set_answers", "set_targets", "get_scorecard", "get_roadmap", "add_snapshot", "generate_report"],
+        note: "ACP: Agent Communication Protocol (REST at /acp, agent-to-agent) and Agent Client Protocol (Zed, JSON-RPC over stdio). /mcp requires an API token header.",
+      },
+      ai: {
+        kicker: "ai", h2: "AI configuration (optional).",
+        lead: "AI is entirely optional: without it the app runs normally — only the roadmap AI suggestions stay hidden. When you plug in a provider it powers the roadmap's suggested actions and the ACP agent's natural-language mode.",
+        connectH: "Connect a provider",
+        connect: "Everything lives in Settings (admin, ⚙ in the toolbar): pick a preset (OpenAI / Grok / Minimax / Anthropic / custom), choose API key or OAuth token, load the model list straight from the provider (↻), paste your credential and hit Test connection. The key is stored in the DB and never returned raw (masked on read). Each login is remembered per provider — sign in once to each and switch from the dropdown + Save AI, no re-auth.",
+        methodsTitle: "API key or OAuth — two paths",
+        methodsBody: "API key: paste the provider's key and you're done. OAuth (your subscription, no API cost): Grok and Minimax have an embedded device-code login (click Sign in, open the URL, enter the code — the server stores and refreshes the token). OpenAI uses the Codex authorize flow: Sign in with OpenAI opens auth.openai.com and you paste back the URL OpenAI gives you (works local and remote, no open port).",
+        provH: "Supported providers",
+        provRows: [
+          { name: "OpenAI / Codex", auth: "OAuth · key", tone: "both", how: "Codex login (paste the return URL) or API key. Uses the Responses API." },
+          { name: "Grok (xAI)", auth: "OAuth · key", tone: "both", how: "Device-code login with your subscription, or API key." },
+          { name: "Minimax", auth: "OAuth · key", tone: "both", how: "Device-code login with your subscription, or API key." },
+          { name: "Anthropic", auth: "API key", tone: "key", how: "API key only — their Terms forbid Pro/Max OAuth tokens outside Claude." },
+          { name: "Custom / compat.", auth: "key + URL", tone: "oauth", how: "Any OpenAI-compatible endpoint: base URL + API key." },
+        ],
+        oauthMeta: "no open port",
+        oauthC1: "OAuth via your subscription (no API cost)",
+        oauthC2: "paste back the URL OpenAI hands you",
+        modelsH: "Supported models",
+        models: "Load the provider's model list with ↻ and pick from the dropdown. OpenAI uses dot-versioned slugs (a dashed name like gpt-5-5 returns 404). Current examples:",
+        modelList: ["gpt-5.5", "gpt-5.4", "gpt-5.4-mini", "gpt-5.3-codex", "gpt-5.3-codex-spark", "gpt-5"],
+        sugH: "AI suggestions in the roadmap",
+        sug: "With a provider active, each priority practice in the roadmap gains AI-recommended actions, derived from OWASP SAMM's own criteria and guidance — not generic text.",
+        sugPoints: [
+          "Concrete actions per practice, anchored to the current level and target",
+          "The next level to reach and the gap to close it",
+          "You review and apply — nothing changes automatically; with no provider, the rest of the app is unaffected",
+        ],
+        envH: "Environment variables (fallback)",
+        env: "Env vars work as a fallback if you'd rather not use the UI. AI_API_KEY is the chosen provider's key.",
+        envMeta: "optional",
+        envC1: "minimax / compatible",
+        note: "Retention and user management also live in Settings. Each provider's guidance shows inline; API style and Base URL only appear for the Custom provider.",
+      },
+      ac: {
+        kicker: "accounts & access", h2: "Accounts, roles and tokens.",
+        lead: "Local users, no cloud. On first run the app asks you to create an admin; after that everyone signs in with username and password. Two roles: admin (everything, plus user management) and user (run assessments and reports). Data is a shared workspace — everyone sees all assessments.",
+        codeMeta: "no login", cm1: "wipes users → recreates the admin",
+        note: "Agents (MCP/ACP) authenticate with a per-user API token (see /api/auth/me, rotate with POST /api/auth/token). Locked out? The commands above recover access from the terminal, no login needed.",
+      },
+      dt: {
+        kicker: "database & backup", h2: "Your data, in your SQLite.",
+        lead: "The database is a SQLite file at DB_PATH (default ./data/okami-samm.db, WAL mode, created automatically) with the assessments and snapshots tables. Backing up is copying the ./data folder — or use ⤓ Backup / ⤒ Restore in the UI, or the endpoints below (restore takes merge or replace).",
+        r1: "downloads a JSON of all assessments", r2: "restores a backup ({ assessments, mode })",
+        mobileTitle: "It works on mobile too",
+        mobileBody: "The interface is responsive: questionnaire, scorecard, radar and roadmap adapt to the screen. You can run an interview with a tablet or phone in hand and save straight to the server.",
+        note: "Retention (auto-purge of old assessments) and user management also live in Settings. Expose it to the internet only behind a reverse proxy with auth or a VPN.",
+      },
+      fq: {
+        kicker: "faq", h2: "Frequently asked questions.",
+        lead: "Common questions before you run Okami SAMM.",
+        items: [
+          { q: "Do I need AI to use it?", a: "No. AI is 100% optional — with no provider the whole flow (assess, score, roadmap, report) works. AI only adds the suggested actions in the roadmap." },
+          { q: "Where does my data live?", a: "In a SQLite file on your own server (./data/okami-samm.db). No SaaS, no cloud, no telemetry — nothing leaves your infra." },
+          { q: "Is it SAMM v2?", a: "Yes — the full OWASP SAMM v2: 5 business functions, 15 security practices and the 90 stream questions (A/B), scored 0 to 3." },
+          { q: "Does it work offline and on mobile?", a: "Yes. The React frontend is vendored (no CDN), runs offline, and the UI is responsive — you can run interviews from a tablet or phone." },
+          { q: "Can I expose it to the internet?", a: "You can, but only behind a reverse proxy with authentication or a VPN. /mcp requires an API token; login is per username and password." },
+          { q: "How do I back up?", a: "Copy the ./data folder, use ⤓ Backup / ⤒ Restore in the UI, or the GET /api/backup and POST /api/restore endpoints (merge or replace)." },
+        ],
+      },
+    },
+  };
+
+  buildQ(lang) {
+    const S = window.SAMM;
+    if (!S) return { scale: [], fnTabs: [], practices: [] };
+    const tones = ["gov", "des", "imp", "ver", "ops"];
+    const af = this.state.activeFn || 0;
+    const fn = S.functions[af];
+    const tone = tones[af];
+    const open = this.state.open || {};
+    return {
+      scale: (lang === "pt" ? S.answerScale.pt : S.answerScale.en).map((label, i) => ({ label, w: String(S.answerScale.weights[i]) })),
+      fnTabs: S.functions.map((f, i) => ({ code: f.code, label: lang === "pt" ? f.pt : f.name, tone: tones[i], active: i === af ? "active" : "", on: () => this.setState({ activeFn: i }) })),
+      practices: fn.practices.map((pr) => ({
+        code: pr.code, name: lang === "pt" ? pr.pt : pr.name, tone,
+        a: lang === "pt" ? pr.A.pt : pr.A.en, b: lang === "pt" ? pr.B.pt : pr.B.en,
+        questions: pr.questions.map((q) => {
+          const key = fn.code + "-" + pr.code + "-" + q.stream + "-" + q.level;
+          return {
+            tag: q.stream + " \u00b7 L" + q.level, streamClass: q.stream === "B" ? "b" : "",
+            text: lang === "pt" ? q.pt : q.en, guidance: lang === "pt" ? q.gpt : q.gen,
+            open: open[key] ? "open" : "",
+            toggle: () => this.setState((s) => ({ open: Object.assign({}, s.open, { [key]: !(s.open && s.open[key]) }) })),
+          };
+        }),
+      })),
+    };
+  }
+
+  renderVals() {
+    const lang = this.state.lang;
+    const t = { ...this.COPY[lang] };
+    t.side = this.SIDE(this.COPY[lang]);
+    t.toc = [
+      { label: this.COPY[lang].iIntro, href: "#overview" },
+      { label: this.COPY[lang].iQuick, href: "#quickstart" },
+      { label: this.COPY[lang].iSelf, href: "#selfhost" },
+      { label: this.COPY[lang].iAssess, href: "#assess" },
+      { label: this.COPY[lang].iQuestions, href: "#questions" },
+      { label: this.COPY[lang].iScoring, href: "#scoring" },
+      { label: this.COPY[lang].iReport, href: "#report" },
+      { label: "API · /docs", href: "#api" },
+      { label: "MCP & ACP", href: "#mcp" },
+      { label: this.COPY[lang].iAi, href: "#ai" },
+      { label: this.COPY[lang].iAccess, href: "#access" },
+      { label: this.COPY[lang].iData, href: "#data" },
+      { label: this.COPY[lang].iFaq, href: "#faq" },
+    ];
+    return {
+      t,
+      qx: this.buildQ(lang),
+      ptActive: lang === "pt" ? "active" : "",
+      enActive: lang === "en" ? "active" : "",
+      setPt: () => this.setState({ lang: "pt" }),
+      setEn: () => this.setState({ lang: "en" }),
+    };
+  }
+}
+</script>
+</body>
 </html>

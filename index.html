@@ -1,465 +1,946 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Okami Maturity transforma auditorias de AppSec em roadmap medido com OWASP SAMM: 5 funções, 15 práticas, 90 perguntas com evidências e níveis 0-3."
-    />
-    <meta name="theme-color" content="#060609" />
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="Okami Maturity | AppSec Maturity Roadmap com SAMM" />
-    <meta
-      property="og:description"
-      content="Okami Maturity: ferramenta open source para avaliações SAMM, roadmap de maturidade AppSec para executivos e times de segurança."
-    />
-    <meta property="og:image" content="/assets/brand/okami-maturity-logo-light-transparent-v2.png" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Okami Maturity | AppSec Maturity Roadmap com SAMM" />
-    <meta
-      name="twitter:description"
-      content="Avalie maturidade AppSec com SAMM, gere roadmap e evidências. Clone, rode e conecte para seus times."
-    />
-    <title>Okami Maturity | Maturidade de AppSec com OWASP SAMM</title>
-    <link rel="icon" href="/favicon.ico" sizes="any" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="stylesheet" href="/src/styles.css" />
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "Okami Maturity",
-        "applicationCategory": "BusinessApplication",
-        "operatingSystem": "Web",
-        "description": "Open source AppSec maturity tool using OWASP SAMM: 90 questions, evidence mapping, maturity levels 0-3 for roadmap execution.",
-        "creator": {
-          "@type": "Organization",
-          "name": "OkamiOps",
-          "url": "https://okamiops.com"
-        },
-        "codeRepository": "https://github.com/OkamiOps/okami-maturity-lp"
-      }
-    </script>
-  </head>
-  <body data-page="home" class="okami-agent-surface">
-    <header class="site-header">
-      <a class="brand" href="/" aria-label="Okami Maturity home">
-        <img src="/assets/brand/okami-maturity-logo-light-transparent-v2.png" alt="Okami Maturity" class="brand-logo" />
-      </a>
-      <nav class="nav-links nav-console" aria-label="Main navigation">
-        <a class="nav-orange" href="#demo"><span>01</span><strong data-i18n="nav_demo">Avaliação</strong></a>
-        <a class="nav-magenta" href="#capabilities"><span>02</span><strong data-i18n="nav_capabilities">Práticas SAMM</strong></a>
-        <a class="nav-green" href="#intelligence"><span>03</span><strong data-i18n="nav_intel">Roadmap &amp; Evidências</strong></a>
-        <a class="nav-blue" href="#ecosystem"><span>04</span><strong data-i18n="nav_ecosystem">Governança</strong></a>
-        <a class="nav-cyan" href="/docs/"><span>05</span><strong data-i18n="nav_docs">Docs</strong></a>
+<head>
+<meta charset="utf-8">
+<title>Okami Maturity | OWASP SAMM self-hosted</title>
+<meta name="description" content="Okami Maturity avalia o SDLC seguro com OWASP SAMM v2: 5 funções, 15 práticas, 90 perguntas, scorecard, roadmap e PDF Okami." />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="/support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="icon" type="image/png" href="/assets/okami-maturity-dark.png" />
+<link rel="stylesheet" href="/okami.css" />
+<link rel="stylesheet" href="/okami-patterns.css" />
+<style>
+  body{ margin:0; background:var(--ok-bg-0); }
+  .mat-page{
+    --ok-glow: 0.55;
+    position:relative; min-height:100vh; color:var(--ok-fg);
+    font-family:var(--ok-display); -webkit-font-smoothing:antialiased; line-height:1.5;
+    overflow-x:clip;
+    background:
+      radial-gradient(900px 500px at 88% -2%, color-mix(in oklch, var(--ok-magenta) calc(11% * var(--ok-glow)), transparent), transparent 64%),
+      radial-gradient(760px 460px at -6% 26%, color-mix(in oklch, var(--ok-cyan) calc(9% * var(--ok-glow)), transparent), transparent 64%),
+      radial-gradient(640px 440px at 52% 88%, color-mix(in oklch, var(--ok-orange) calc(6% * var(--ok-glow)), transparent), transparent 70%),
+      var(--ok-bg-0);
+  }
+  .mat-page::before{ content:""; position:fixed; inset:0; pointer-events:none; z-index:1;
+    background-image:linear-gradient(var(--ok-grid) 1px,transparent 1px),linear-gradient(90deg,var(--ok-grid) 1px,transparent 1px);
+    background-size:64px 64px; mask-image:radial-gradient(ellipse at 50% 24%, black 28%, transparent 82%);
+    opacity:calc(0.55 + var(--ok-glow)*0.4); }
+  .mat-page.no-grid::before{ display:none; }
+  .mat-page::after{ content:""; position:fixed; inset:0; pointer-events:none; z-index:1;
+    background:repeating-linear-gradient(0deg, transparent 0 2px, rgba(255,255,255,.012) 2px 3px); mix-blend-mode:overlay; opacity:var(--ok-glow); }
+  .mat-page > *{ position:relative; z-index:2; }
+  .mat-wrap{ max-width:1200px; margin:0 auto; padding:0 32px; }
+
+  /* nav */
+  .mat-nav{ position:sticky; top:0; z-index:50; display:flex; align-items:center; gap:26px;
+    padding:13px 0; border-bottom:1px solid var(--ok-line);
+    background:color-mix(in srgb, var(--ok-bg-0) 82%, transparent); backdrop-filter:blur(16px); }
+  .mat-brand{ display:flex; align-items:center; gap:12px; flex-shrink:0; }
+  .mat-brand img{ height:29px; width:auto; }
+  .mat-brand-tag{ font-family:var(--ok-mono); font-size:9px; letter-spacing:.14em; text-transform:uppercase; color:var(--ok-fg-mute); border:1px solid var(--ok-line); padding:3px 7px; line-height:1; }
+  .mat-nav-links{ display:flex; gap:18px; margin-left:16px; }
+  .mat-nav-links a{ position:relative; font-family:var(--ok-mono); font-size:11px; letter-spacing:.07em; text-transform:uppercase; color:var(--ok-fg-soft); transition:color .15s; display:inline-flex; gap:6px; align-items:baseline; white-space:nowrap; padding-bottom:4px; }
+  .mat-nav-links a:hover{ color:var(--ok-fg); }
+  .mat-nav-links a::after{ content:""; position:absolute; left:0; right:0; bottom:-1px; height:1.5px; background:var(--ok-fg-soft); transform:scaleX(0); transform-origin:left; transition:transform .2s cubic-bezier(.2,.8,.2,1); }
+  .mat-nav-links a:hover::after, .mat-nav-links a.active::after{ transform:scaleX(1); }
+  .mat-nav-links .idx{ font-size:10px; font-weight:600; }
+  .mat-nav-links a:nth-child(1) .idx{ color:var(--ok-orange); } .mat-nav-links a:nth-child(1)::after{ background:var(--ok-orange); }
+  .mat-nav-links a:nth-child(2) .idx{ color:var(--ok-cyan); } .mat-nav-links a:nth-child(2)::after{ background:var(--ok-cyan); }
+  .mat-nav-links a:nth-child(3) .idx{ color:var(--ok-magenta); } .mat-nav-links a:nth-child(3)::after{ background:var(--ok-magenta); }
+  .mat-nav-links a:nth-child(4) .idx{ color:var(--ok-warning); } .mat-nav-links a:nth-child(4)::after{ background:var(--ok-warning); }
+  .mat-nav-links a:nth-child(5) .idx{ color:var(--ok-success); } .mat-nav-links a:nth-child(5)::after{ background:var(--ok-success); }
+  .mat-nav-links a.active{ color:var(--ok-fg); }
+  /* flatten CTA/consult washes for a cleaner, more professional surface */
+  .ok-cta{ background:var(--ok-bg-1); }
+  .mat-consult{ background:var(--ok-bg-1) !important; }
+  .mat-nav-right{ margin-left:auto; display:flex; align-items:center; gap:18px; }
+  .mat-nav-docs{ font-family:var(--ok-mono); font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ok-fg-soft); display:inline-flex; align-items:center; gap:7px; transition:color .15s; }
+  .mat-nav-docs:hover{ color:var(--ok-cyan); }
+  .mat-nav-docs svg{ width:13px; height:13px; }
+  .mat-nav-gh{ color:var(--ok-fg-mute); display:inline-flex; transition:color .15s; }
+  .mat-nav-gh:hover{ color:var(--ok-fg); }
+  .mat-nav-gh svg{ width:18px; height:18px; display:block; }
+  .mat-nav-sep{ width:1px; height:20px; background:var(--ok-line); }
+  .lang-pills{ padding:3px; }
+  .lang-pills .ok-pill{ padding:6px 10px; }
+
+  /* hero */
+  .mat-hero{ display:grid; grid-template-columns:1.02fr .98fr; gap:52px; align-items:center; padding:80px 0 60px; }
+  .mat-hero-title{ font-family:var(--ok-display); font-weight:500; font-size:clamp(40px,5vw,66px); line-height:.98; letter-spacing:-.035em; margin:20px 0 22px; }
+  .mat-hero-title .acc-cy{ color:var(--ok-cyan); }
+  .mat-hero-title .acc-mg{ color:var(--ok-magenta); }
+  .mat-hero-lede{ font-size:18px; line-height:1.62; color:var(--ok-fg-soft); max-width:54ch; margin:0 0 16px; }
+  .mat-hero-anti{ font-family:var(--ok-mono); font-size:12.5px; color:var(--ok-fg-mute); letter-spacing:.02em; margin:0 0 30px; }
+  .mat-hero-actions{ display:flex; gap:12px; flex-wrap:wrap; margin-bottom:28px; }
+  .mat-hero-badges{ display:flex; gap:10px; flex-wrap:wrap; }
+  .mat-hero-actions .ok-btn.solid{ box-shadow:0 0 calc(36px*var(--ok-glow)) -12px color-mix(in oklch, var(--ok-orange) 75%, transparent); }
+  .mat-hero-cmd{ display:inline-flex; align-items:center; gap:11px; font-family:var(--ok-mono); font-size:12px; color:var(--ok-fg-soft); border:1px solid var(--ok-line); background:var(--ok-bg-0); padding:10px 15px; margin-bottom:26px; max-width:max-content; }
+  .mat-hero-cmd .led{ width:7px; height:7px; border-radius:50%; background:var(--ok-success); box-shadow:0 0 8px var(--ok-success); flex-shrink:0; }
+  .mat-hero-cmd .p{ color:var(--ok-success); }
+  .mat-hero-cmd b{ color:var(--ok-fg); font-weight:500; }
+  .mat-gh-link{ display:flex; width:max-content; margin-top:16px; align-items:center; gap:7px; font-family:var(--ok-mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--ok-fg-mute); border:1px solid var(--ok-line); padding:7px 12px; transition:all var(--ok-fast); }
+  .mat-gh-link:hover{ color:var(--ok-cyan); border-color:color-mix(in oklch, var(--ok-cyan) 45%, var(--ok-line)); box-shadow:0 0 18px -9px color-mix(in oklch, var(--ok-cyan) 60%, transparent); }
+  .mat-fab{ position:fixed; right:22px; bottom:22px; z-index:60; display:flex; flex-direction:column; gap:11px; }
+  .mat-fab a, .mat-fab button{ width:46px; height:46px; display:flex; align-items:center; justify-content:center; border:1px solid var(--ok-line); background:color-mix(in srgb, var(--ok-bg-0) 84%, transparent); backdrop-filter:blur(12px); color:var(--ok-fg-soft); cursor:pointer; padding:0; transition:all var(--ok-fast); }
+  .mat-fab a:hover{ color:var(--ok-bg-0); background:var(--ok-cyan); border-color:var(--ok-cyan); box-shadow:0 0 26px -6px color-mix(in oklch, var(--ok-cyan) 75%, transparent); }
+  .mat-fab button:hover{ color:var(--ok-bg-0); background:var(--ok-orange); border-color:var(--ok-orange); box-shadow:0 0 26px -6px color-mix(in oklch, var(--ok-orange) 75%, transparent); }
+  .mat-fab svg{ width:19px; height:19px; }
+  .mat-fab .totop{ opacity:0; transform:translateY(12px); pointer-events:none; transition:opacity .25s, transform .25s, color var(--ok-fast), background var(--ok-fast), border-color var(--ok-fast), box-shadow var(--ok-fast); }
+  .mat-fab .totop.show{ opacity:1; transform:none; pointer-events:auto; }
+  @media (max-width:560px){ .mat-fab{ right:14px; bottom:14px; } .mat-fab a, .mat-fab button{ width:42px; height:42px; } }
+
+  /* radar panel */
+  .mat-radar{ background:var(--ok-bg-0); border:1px solid var(--ok-line); font-family:var(--ok-mono); position:relative; overflow:hidden;
+    box-shadow:0 0 0 1px color-mix(in oklch, var(--ok-cyan) calc(15% * var(--ok-glow)), transparent),
+      0 0 calc(54px * var(--ok-glow)) -18px color-mix(in oklch, var(--ok-cyan) 60%, transparent),
+      0 28px 70px -28px rgba(0,0,0,.72); }
+  .mat-radar-head{ display:flex; align-items:center; gap:12px; padding:11px 15px; border-bottom:1px solid var(--ok-line);
+    background:linear-gradient(180deg, var(--ok-bg-1), var(--ok-bg-0)); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--ok-fg-mute); }
+  .mat-radar-head .dots{ display:flex; gap:6px; }
+  .mat-radar-head .dots span{ width:10px; height:10px; border:1px solid var(--ok-line); border-radius:50%; }
+  .mat-radar-head .dots span:nth-child(1){ border-color:var(--ok-orange); }
+  .mat-radar-head .dots span:nth-child(2){ border-color:var(--ok-magenta); }
+  .mat-radar-head .dots span:nth-child(3){ border-color:var(--ok-cyan); }
+  .mat-radar-head .stat{ margin-left:auto; color:var(--ok-cyan); display:inline-flex; align-items:center; gap:6px; }
+  .mat-radar-head .stat::before{ content:""; width:6px; height:6px; border-radius:50%; background:var(--ok-cyan); box-shadow:0 0 8px var(--ok-cyan); }
+  .mat-radar-body{ padding:14px 16px 16px; }
+  .mat-radar-top{ display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:2px; }
+  .mat-radar-score b{ font-family:var(--ok-display); font-weight:600; font-size:38px; letter-spacing:-.03em; color:var(--ok-orange); line-height:1; }
+  .mat-radar-score b small{ font-size:17px; color:var(--ok-fg-mute); font-weight:500; }
+  .mat-radar-score span{ display:block; font-size:9px; letter-spacing:.16em; text-transform:uppercase; color:var(--ok-fg-mute); margin-top:6px; }
+  .mat-radar-legend{ display:flex; flex-direction:column; gap:7px; align-items:flex-end; padding-top:3px; }
+  .mat-radar-legend i{ display:inline-flex; align-items:center; gap:7px; font-size:9px; letter-spacing:.12em; text-transform:uppercase; color:var(--ok-fg-soft); font-style:normal; }
+  .mat-radar-legend .sw{ width:16px; height:0; border-top:2px solid var(--ok-magenta); }
+  .mat-radar-legend .sw.t{ border-top:2px dashed var(--ok-cyan); }
+  .mat-radar svg{ display:block; width:100%; height:auto; }
+  .mat-radar-shot{ margin-top:16px; border:1px solid var(--ok-line); background:var(--ok-bg-1); overflow:hidden; }
+  .mat-radar-shot img{ display:block; width:100%; height:auto; object-fit:cover; object-position:top center; }
+  .rg{ fill:none; stroke:var(--ok-line); stroke-width:1; }
+  .rax{ stroke:var(--ok-line-soft); stroke-width:1; }
+  .rtgt{ fill:none; stroke:var(--ok-cyan); stroke-width:1.4; stroke-dasharray:3 4; opacity:.8; }
+  .rcur{ fill:url(#matFill); stroke:var(--ok-magenta); stroke-width:2; }
+  .rdot{ filter:drop-shadow(0 0 3px rgba(255,255,255,.4)); }
+  .rlbl{ fill:var(--ok-fg-mute); font-family:var(--ok-mono); font-size:9px; letter-spacing:.08em; }
+
+  /* stats strip */
+  .mat-stats{ display:grid; grid-template-columns:repeat(4,1fr); border:1px solid var(--ok-line); border-right:0; }
+  .mat-stat{ padding:26px 28px; border-right:1px solid var(--ok-line); }
+  .mat-stat b{ font-family:var(--ok-display); font-weight:600; font-size:42px; letter-spacing:-.03em; line-height:1; display:block; }
+  .mat-stat:nth-child(1) b{ color:var(--ok-orange); } .mat-stat:nth-child(2) b{ color:var(--ok-cyan); }
+  .mat-stat:nth-child(3) b{ color:var(--ok-magenta); } .mat-stat:nth-child(4) b{ color:var(--ok-fg); }
+  .mat-stat span{ display:block; margin-top:10px; font-family:var(--ok-mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--ok-fg-mute); }
+
+  /* sections */
+  .mat-section{ padding:78px 0; border-top:1px solid var(--ok-line-soft); }
+
+  /* function grid */
+  .mat-fns{ display:grid; grid-template-columns:repeat(5,1fr); border:1px solid var(--ok-line); border-right:0; border-bottom:0; }
+  .fn-card{ --fc:var(--ok-orange); padding:24px 22px 26px; border-right:1px solid var(--ok-line); border-bottom:1px solid var(--ok-line); border-top:2px solid var(--fc); background:color-mix(in srgb,var(--ok-bg-1) 55%,transparent); transition:background .2s; }
+  .fn-card:hover{ background:var(--ok-bg-2); }
+  .fn-card.gov{ --fc:var(--ok-orange); } .fn-card.des{ --fc:var(--ok-cyan); } .fn-card.imp{ --fc:var(--ok-magenta); }
+  .fn-card.ver{ --fc:var(--ok-warning); } .fn-card.ops{ --fc:var(--ok-success); }
+  .fn-abbr{ display:inline-flex; align-items:center; gap:8px; font-family:var(--ok-mono); font-size:10px; letter-spacing:.16em; color:var(--fc); margin-bottom:14px; }
+  .fn-abbr::before{ content:""; width:7px; height:7px; background:var(--fc); box-shadow:0 0 8px var(--fc); }
+  .fn-name{ font-family:var(--ok-display); font-weight:500; font-size:18px; letter-spacing:-.01em; margin:0 0 14px; min-height:46px; }
+  .fn-practices{ list-style:none; margin:0; padding:0; }
+  .fn-practices li{ font-family:var(--ok-mono); font-size:11.5px; color:var(--ok-fg-soft); padding:6px 0 6px 16px; position:relative; border-top:1px dashed var(--ok-line-soft); line-height:1.4; }
+  .fn-practices li:first-child{ border-top:0; }
+  .fn-practices li::before{ content:""; position:absolute; left:0; top:12px; width:8px; height:1px; background:var(--fc); }
+
+  /* how — phases + shots */
+  .mat-phases{ display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--ok-line); border:1px solid var(--ok-line); }
+  .howphase{ background:var(--ok-bg-1); padding:24px 26px 26px; display:grid; grid-template-columns:46px 1fr; gap:18px; align-items:start; transition:background .2s; }
+  .howphase:hover{ background:var(--ok-bg-2); }
+  .howphase .pn{ font-family:var(--ok-display); font-weight:600; font-size:30px; color:var(--ok-accent); line-height:1; letter-spacing:-.02em; }
+  .howphase.cyan .pn{ color:var(--ok-cyan); } .howphase.magenta .pn{ color:var(--ok-magenta); } .howphase.green .pn{ color:var(--ok-success); }
+  .howphase h4{ font-family:var(--ok-display); font-weight:500; font-size:18px; margin:0 0 8px; letter-spacing:-.01em; }
+  .howphase p{ margin:0; font-size:13.5px; line-height:1.55; color:var(--ok-fg-soft); }
+  .mat-howshots{ display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:18px; }
+  .frame{ border:1px solid var(--ok-line); background:var(--ok-bg-1); overflow:hidden; box-shadow:0 18px 50px -30px rgba(0,0,0,.8); }
+  .frame-bar{ display:flex; align-items:center; gap:10px; padding:9px 13px; border-bottom:1px solid var(--ok-line); background:var(--ok-bg-0); font-family:var(--ok-mono); font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--ok-fg-mute); }
+  .frame-bar .d{ display:flex; gap:5px; } .frame-bar .d span{ width:9px; height:9px; border-radius:50%; border:1px solid var(--ok-line); }
+  .frame-bar .d span:nth-child(1){ border-color:var(--ok-orange); } .frame-bar .d span:nth-child(2){ border-color:var(--ok-magenta); } .frame-bar .d span:nth-child(3){ border-color:var(--ok-cyan); }
+  .frame-img{ overflow:hidden; aspect-ratio:16 / 11; background:var(--ok-bg-0); }
+  .frame-img img{ width:100%; height:100%; object-fit:cover; object-position:top center; display:block; }
+
+  /* meter shell */
+  .mat-meter-wrap{ margin-top:24px; }
+
+  /* report */
+  .mat-pdfpages{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-bottom:40px; }
+  .pdfpage .frame-img{ aspect-ratio:1 / 1.3; background:#f4f4f0; }
+  .report-list{ list-style:none; margin:0; padding:0; display:grid; grid-template-columns:1fr 1fr; gap:0 44px; }
+  .report-list li{ display:grid; grid-template-columns:32px 1fr; gap:13px; padding:13px 0; border-top:1px solid var(--ok-line); align-items:baseline; }
+  .report-list li:nth-child(1), .report-list li:nth-child(2){ border-top:0; }
+  .report-list .rn{ font-family:var(--ok-mono); font-size:11px; color:var(--ok-cyan); letter-spacing:.1em; }
+  .report-list .rt{ font-family:var(--ok-display); font-size:15px; color:var(--ok-fg); }
+  .report-list .rd{ font-family:var(--ok-mono); font-size:11px; color:var(--ok-fg-mute); display:block; margin-top:3px; line-height:1.4; }
+
+  /* ai */
+  .mat-aihl{ border:1px solid color-mix(in oklch, var(--ok-magenta) 32%, var(--ok-line)); position:relative; overflow:hidden;
+    background:linear-gradient(135deg, color-mix(in oklch,var(--ok-magenta) 9%,transparent), transparent 52%), var(--ok-bg-1);
+    padding:28px 30px; margin-bottom:30px; display:grid; grid-template-columns:1fr auto; gap:30px; align-items:center;
+    box-shadow:0 0 calc(44px*var(--ok-glow)) -18px color-mix(in oklch,var(--ok-magenta) 55%,transparent); }
+  .mat-aihl .tag{ font-family:var(--ok-mono); font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--ok-magenta); margin-bottom:10px; display:inline-flex; align-items:center; gap:8px; }
+  .mat-aihl .tag::before{ content:""; width:7px; height:7px; background:var(--ok-magenta); box-shadow:0 0 8px var(--ok-magenta); }
+  .mat-aihl h4{ font-family:var(--ok-display); font-weight:500; font-size:21px; margin:0 0 8px; letter-spacing:-.01em; }
+  .mat-aihl p{ margin:0; font-size:14px; color:var(--ok-fg-soft); line-height:1.55; max-width:66ch; }
+  .mat-aihl .provs{ display:flex; flex-wrap:wrap; gap:7px; margin-top:16px; }
+  .mat-aihl .prov{ font-family:var(--ok-mono); font-size:10.5px; letter-spacing:.04em; padding:5px 10px; border:1px solid color-mix(in oklch,var(--ok-magenta) 25%,var(--ok-line)); color:var(--ok-fg-soft); }
+  .mat-aihl-pts{ list-style:none; margin:15px 0 0; padding:0; display:flex; flex-direction:column; gap:7px; }
+  .mat-aihl-pts li{ font-family:var(--ok-mono); font-size:12px; color:var(--ok-fg-soft); padding-left:20px; position:relative; line-height:1.45; }
+  .mat-aihl-pts li::before{ content:"\2192"; position:absolute; left:0; color:var(--ok-magenta); }
+  .mat-aihl-cta{ display:flex; flex-direction:column; gap:10px; align-items:flex-end; }
+  .mat-tools{ display:flex; flex-wrap:wrap; gap:8px; margin-top:24px; }
+  .mat-tool{ font-family:var(--ok-mono); font-size:11px; letter-spacing:.04em; padding:6px 11px; border:1px solid var(--ok-line); background:var(--ok-bg-1); color:var(--ok-fg-soft); }
+  .mat-tool b{ color:var(--ok-cyan); font-weight:500; }
+  .mat-two{ display:grid; grid-template-columns:1.05fr .95fr; gap:40px; align-items:stretch; margin-top:8px; }
+  .mat-two .ok-terminal{ display:flex; flex-direction:column; }
+  .mat-two .ok-terminal .body{ flex:1 1 auto; }
+
+  /* architecture */
+  .mat-arch{ display:grid; grid-template-columns:1fr auto 1fr; border:1px solid var(--ok-line); background:var(--ok-bg-1); margin-bottom:30px; }
+  .mat-arch-node{ padding:24px 26px; }
+  .mat-arch-node .nh{ font-family:var(--ok-mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--ok-cyan); margin-bottom:10px; display:inline-flex; align-items:center; gap:8px; }
+  .mat-arch-node.a .nh{ color:var(--ok-orange); }
+  .mat-arch-node .nh::before{ content:""; width:7px; height:7px; border-radius:50%; background:currentColor; box-shadow:0 0 8px currentColor; }
+  .mat-arch-node h4{ font-family:var(--ok-display); font-weight:500; font-size:18px; margin:0 0 6px; }
+  .mat-arch-node p{ margin:0; font-family:var(--ok-mono); font-size:11.5px; color:var(--ok-fg-mute); line-height:1.6; letter-spacing:.02em; }
+  .mat-arch-mid{ display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; padding:0 24px; border-left:1px solid var(--ok-line); border-right:1px solid var(--ok-line); background:var(--ok-bg-0); }
+  .mat-arch-mid .ar{ font-size:22px; color:var(--ok-cyan); line-height:1; }
+  .mat-arch-mid span{ font-family:var(--ok-mono); font-size:9.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ok-fg-mute); text-align:center; white-space:nowrap; }
+  .mat-arch-note{ font-family:var(--ok-mono); font-size:12px; color:var(--ok-fg-soft); line-height:1.6; margin:0 0 30px; padding-left:16px; border-left:2px solid var(--ok-cyan); }
+
+  /* consulting band */
+  .mat-consult{ position:relative; overflow:hidden; border:1px solid color-mix(in oklch,var(--ok-orange) 32%, var(--ok-line)); border-radius:var(--ok-r-3);
+    padding:48px 52px; display:grid; grid-template-columns:1.35fr .65fr; gap:48px; align-items:center;
+    background:radial-gradient(760px 320px at 82% 12%, color-mix(in oklch,var(--ok-orange) 13%,transparent), transparent 60%),
+      radial-gradient(620px 280px at 6% 92%, color-mix(in oklch,var(--ok-magenta) 9%,transparent), transparent 60%), var(--ok-bg-1);
+    box-shadow:0 0 calc(50px*var(--ok-glow)) -22px color-mix(in oklch,var(--ok-orange) 55%,transparent); }
+  .mat-consult::before{ content:""; position:absolute; top:16px; left:16px; width:34px; height:34px; border-top:1px solid var(--ok-orange); border-left:1px solid var(--ok-orange); }
+  .mat-consult::after{ content:""; position:absolute; bottom:16px; right:16px; width:34px; height:34px; border-bottom:1px solid var(--ok-magenta); border-right:1px solid var(--ok-magenta); }
+  .mat-consult .eye{ font-family:var(--ok-mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--ok-orange); display:inline-flex; align-items:center; gap:12px; margin-bottom:18px; }
+  .mat-consult .eye::before{ content:""; width:24px; height:1px; background:currentColor; }
+  .mat-consult h3{ font-family:var(--ok-display); font-weight:500; font-size:clamp(26px,3vw,38px); letter-spacing:-.025em; line-height:1.08; margin:0 0 16px; max-width:20ch; }
+  .mat-consult .lede{ font-size:15.5px; line-height:1.6; color:var(--ok-fg-soft); max-width:60ch; margin:0 0 22px; }
+  .mat-consult .points{ list-style:none; margin:0 0 26px; padding:0; display:flex; flex-direction:column; gap:9px; }
+  .mat-consult .points li{ font-family:var(--ok-mono); font-size:12.5px; color:var(--ok-fg-soft); padding-left:22px; position:relative; line-height:1.45; }
+  .mat-consult .points li::before{ content:"→"; position:absolute; left:0; color:var(--ok-orange); }
+  .mat-consult .points li:nth-child(2)::before{ color:var(--ok-magenta); } .mat-consult .points li:nth-child(3)::before{ color:var(--ok-cyan); }
+  .mat-consult-actions{ display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+  .mat-consult-side{ border:1px solid var(--ok-line); background:color-mix(in srgb,var(--ok-bg-0) 60%,transparent); padding:24px; }
+  .mat-consult-side img{ height:54px; width:auto; display:block; margin:0 auto 18px; filter:drop-shadow(0 0 calc(20px*var(--ok-glow)) color-mix(in oklch,var(--ok-orange) 50%,transparent)); }
+  .mat-consult-side .dh{ font-family:var(--ok-mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--ok-fg-mute); margin-bottom:12px; text-align:center; }
+  .mat-consult-side ul{ list-style:none; margin:0; padding:0; }
+  .mat-consult-side li{ font-family:var(--ok-mono); font-size:11.5px; color:var(--ok-fg-soft); padding:8px 0; border-top:1px dashed var(--ok-line-soft); display:flex; align-items:center; gap:9px; }
+  .mat-consult-side li:first-child{ border-top:0; }
+  .mat-consult-side li::before{ content:"✓"; color:var(--ok-success); font-size:11px; }
+
+  /* footer */
+  .mat-footer{ border-top:1px solid var(--ok-line); margin-top:24px; padding:62px 0 34px; }
+  .mat-footer-grid{ display:grid; grid-template-columns:1.5fr 1fr 1fr 1fr 1fr; gap:36px; }
+  .mat-footer-brand img{ height:32px; width:auto; }
+  .mat-footer-col h5{ font-family:var(--ok-mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--ok-fg-mute); margin:0 0 16px; }
+  .mat-footer-col ul{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:11px; }
+  .mat-footer-col a{ font-size:13px; color:var(--ok-fg-soft); transition:color .15s; }
+  .mat-footer-col a:hover{ color:var(--ok-accent); }
+  .mat-footer-legal{ margin-top:46px; padding-top:22px; border-top:1px solid var(--ok-line); display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; font-family:var(--ok-mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--ok-fg-mute); }
+
+  @media (max-width:1000px){
+    .mat-hero{ grid-template-columns:1fr; gap:40px; } .mat-nav-links{ display:none; }
+    .mat-two{ grid-template-columns:1fr; } .mat-aihl{ grid-template-columns:1fr; }
+    .mat-aihl-cta{ align-items:flex-start; }
+    .mat-fns{ grid-template-columns:1fr 1fr; } .mat-stats{ grid-template-columns:1fr 1fr; }
+    .mat-pdfpages{ grid-template-columns:1fr 1fr; } .report-list{ grid-template-columns:1fr; }
+    .report-list li:nth-child(2){ border-top:1px solid var(--ok-line); }
+    .mat-consult{ grid-template-columns:1fr; } .mat-footer-grid{ grid-template-columns:1fr 1fr; }
+    .mat-arch{ grid-template-columns:1fr; } .mat-arch-mid{ flex-direction:row; border:0; border-top:1px solid var(--ok-line); border-bottom:1px solid var(--ok-line); padding:12px; } .mat-arch-mid .ar{ transform:rotate(90deg); }
+  }
+  @media (max-width:560px){ .mat-fns,.mat-phases,.mat-howshots,.mat-pdfpages{ grid-template-columns:1fr; } .mat-stats{ grid-template-columns:1fr 1fr; } }
+</style>
+</helmet>
+
+<div class="mat-page {{ gridClass }}" style="--ok-glow: {{ glow }};">
+  <div class="mat-wrap">
+    <header class="mat-nav">
+      <a class="mat-brand" href="#top"><img src="/assets/okami-maturity-dark.png" alt="Okami Maturity" /><span class="mat-brand-tag">SAMM v2</span></a>
+      <nav class="mat-nav-links">
+        <sc-for list="{{ t.nav }}" as="item" hint-placeholder-count="5">
+          <a href="{{ item.href }}" data-nav="{{ item.href }}"><span class="idx">{{ item.idx }}</span>{{ item.label }}</a>
+        </sc-for>
       </nav>
-      <div class="header-actions">
-        <span class="nav-status"><i></i> live preview</span>
-        <div class="language-toggle" aria-label="Language selector">
-          <button type="button" data-lang-button="pt">PT-BR</button>
-          <button type="button" data-lang-button="en">EN</button>
+      <div class="mat-nav-right">
+        <a class="mat-nav-docs" href="/docs/"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 2h6l3 3v9H4z"></path><path d="M10 2v3h3"></path><path d="M6 8h5M6 11h5"></path></svg>{{ t.docs }}</a>
+        <a class="mat-nav-gh" href="https://github.com/OkamiOps/okami-SAMM" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a>
+        <div class="mat-nav-sep"></div>
+        <div class="ok-pills lang-pills">
+          <div class="ok-pill {{ ptActive }}" onClick="{{ setPt }}">PT</div>
+          <div class="ok-pill {{ enActive }}" onClick="{{ setEn }}">EN</div>
         </div>
-        <a class="ok-btn ok-btn-primary" href="https://github.com/OkamiOps/okami-maturity-lp" target="_blank" rel="noreferrer">
-          GitHub
-        </a>
+        <a class="ok-btn solid sm" href="#deploy">{{ t.navCta }} →</a>
       </div>
     </header>
 
-    <main>
-      <section class="hero grid-bg">
-        <div class="hero-copy">
-          <p class="section-label hero-kicker"><span>// open source</span><span>AppSec maturity roadmap</span></p>
-          <h1 class="hero-title">
-            <span class="lang lang-pt">Maturidade de AppSec que vira plano, não planilha.</span>
-            <span class="lang lang-en">AppSec maturity that becomes a roadmap, not a spreadsheet.</span>
-            <span class="hero-accent lang lang-pt">5 funções · 15 práticas · 90 perguntas · evidências 0-3.</span>
-            <span class="hero-accent lang lang-en">5 functions · 15 practices · 90 questions · 0-3 evidence.</span>
-          </h1>
-          <p class="hero-lede">
-            <span class="lang lang-pt">Okami Maturity usa OWASP SAMM para transformar avaliações em roadmap executável. Avalie, priorize e acompanhe maturidade AppSec.</span>
-            <span class="lang lang-en">Okami Maturity uses OWASP SAMM to turn assessments into an executable roadmap. Evaluate, prioritize and track AppSec maturity.</span>
-          </p>
-          <p class="hero-note">
-            <span class="lang lang-pt">// Avalie com o modelo SAMM. Gere roadmap e evidências sem planilhas.</span>
-            <span class="lang lang-en">// Assess with the SAMM model. Generate roadmap and evidence without spreadsheets.</span>
-          </p>
-          <div class="install-line" aria-label="Okami Maturity command">
-            <span>$</span>
-            <code>git clone https://github.com/OkamiOps/okami-maturity-lp.git</code>
-            <button type="button"><span class="lang lang-pt">copiar</span><span class="lang lang-en">copy</span></button>
-          </div>
-          <div class="hero-actions">
-            <a class="ok-btn ok-btn-primary" href="#demo" data-i18n="cta_watch">Ver avaliação</a>
-            <a class="ok-btn ok-btn-outline" href="/docs/#architecture" data-i18n="cta_docs">Ler documentação</a>
-          </div>
-          <div class="hero-proofbar" aria-label="Okami Maturity proof points">
-            <div class="nav-orange">
-              <b>5</b>
-              <span><span class="lang lang-pt">funções</span><span class="lang lang-en">functions</span></span>
-              <small>Governança · Design · Implementação</small>
-            </div>
-            <div class="nav-cyan">
-              <b>15</b>
-              <span><span class="lang lang-pt">práticas</span><span class="lang lang-en">practices</span></span>
-              <small>por função · evidências</small>
-            </div>
-            <div class="nav-magenta">
-              <b>90</b>
-              <span><span class="lang lang-pt">perguntas</span><span class="lang lang-en">questions</span></span>
-              <small>com evidências · 0-3</small>
-            </div>
-            <div class="nav-green">
-              <b>Roadmap</b>
-              <span><span class="lang lang-pt">executável</span><span class="lang lang-en">executable</span></span>
-              <small>níveis · priorização · governança</small>
-            </div>
-          </div>
+    <section class="mat-hero" id="top" data-screen-label="Hero">
+      <div class="mat-hero-copy">
+        <div class="ok-eyebrow">{{ t.hero.eyebrow }}</div>
+        <h1 class="mat-hero-title">{{ t.hero.t1 }} <span class="acc-cy">{{ t.hero.t2 }}</span> {{ t.hero.tjoin }} <span class="acc-mg">{{ t.hero.t3 }}</span></h1>
+        <p class="mat-hero-lede">{{ t.hero.lede }}</p>
+        <p class="mat-hero-anti">{{ t.hero.anti }}</p>
+        <div class="mat-hero-actions">
+          <a class="ok-btn solid lg" href="#deploy">{{ t.hero.ctaSelf }} →</a>
+          <a class="ok-btn cyan lg" href="https://github.com/OkamiOps/okami-SAMM" target="_blank" rel="noopener">★ {{ t.hero.ctaStar }}</a>
+          <a class="ok-btn ghost lg" href="/docs/">{{ t.hero.ctaDocs }} →</a>
         </div>
-        <div class="hero-panel terminal-hero" id="demo-preview">
-          <div class="panel-topline">
-            <span>~/samm · appsec-maturity</span>
-            <span class="status-dot">session</span>
-          </div>
-          <div class="terminal-body" aria-label="Okami Maturity terminal preview">
-            <div class="terminal-brand">◆ Okami Maturity</div>
-            <div class="terminal-meta">SAMM · 5 funcs · 15 practices · 90 questions · /help</div>
-            <div class="terminal-rule"></div>
-            <div class="terminal-prompt"><span class="lang lang-pt">avalie maturidade sem planilhas</span><span class="lang lang-en">assess maturity without spreadsheets</span></div>
-            <div class="terminal-row accent-orange"><span class="lang lang-pt">5 funções · 15 práticas · evidências 0-3</span><span class="lang lang-en">5 functions · 15 practices · evidence 0-3</span></div>
-            <div class="terminal-row"><span class="lang lang-pt">roadmap gerado · níveis de maturidade · priorização</span><span class="lang lang-en">generated roadmap · maturity levels · prioritization</span></div>
-            <div class="terminal-row"><span class="lang lang-pt">90 perguntas · evidências · interpretação</span><span class="lang lang-en">90 questions · evidence · interpretation</span></div>
-            <div class="terminal-row accent-magenta"><span class="lang lang-pt">práticas por função · métricas · plano</span><span class="lang lang-en">practices per function · metrics · plan</span></div>
-            <div class="terminal-row accent-green"><span class="lang lang-pt">relatório executivo · export · integração</span><span class="lang lang-en">executive report · export · integration</span></div>
-            <div class="terminal-prompt"></div>
-          </div>
-          <div class="terminal-status">
-            <span>claude · strong</span>
-            <span>ctx 18%</span>
-            <span class="accent-green">● <span class="lang lang-pt">pronto</span><span class="lang lang-en">ready</span></span>
-            <span><span class="lang lang-pt">Ctrl-C cancela · Ctrl-D sai</span><span class="lang lang-en">Ctrl-C cancels · Ctrl-D exits</span></span>
-          </div>
+        <div class="mat-hero-cmd"><span class="led"></span><span class="p">$</span><span><b>docker compose up -d</b> · localhost:3000</span></div>
+        <div class="mat-hero-badges">
+          <span class="ok-badge orange">5 {{ t.hero.bFn }}</span>
+          <span class="ok-badge cyan">15 {{ t.hero.bPr }}</span>
+          <span class="ok-badge magenta">90 {{ t.hero.bQ }}</span>
+          <span class="ok-badge">PT · EN</span>
+          <span class="ok-badge success">{{ t.hero.bMobile }}</span>
         </div>
-      </section>
+      </div>
 
-      <section class="section band proof-section" id="demo">
-        <div class="proof-hero">
-          <div>
-            <p class="section-label"><span>§01</span><span><span class="lang lang-pt">por que usar</span><span class="lang lang-en">why use it</span></span></p>
-            <h2>
-              <span class="lang lang-pt">Avalie com SAMM. Gere roadmap com evidências.</span>
-              <span class="lang lang-en">Assess with SAMM. Generate evidence-backed roadmap.</span>
-            </h2>
-          </div>
-          <p>
-            <span class="lang lang-pt">Okami Maturity usa o modelo OWASP SAMM para transformar avaliações em roadmap executável. 5 funções, 15 práticas, 90 perguntas com evidências e níveis de maturidade 0-3.</span>
-            <span class="lang lang-en">Okami Maturity uses the OWASP SAMM model to turn assessments into an executable roadmap. 5 functions, 15 practices, 90 evidence-backed questions and 0-3 maturity levels.</span>
-          </p>
+      <div class="mat-radar">
+        <div class="mat-radar-head">
+          <span class="dots"><span></span><span></span><span></span></span>
+          <span>okami · maturity · radar</span>
+          <span class="stat">15 {{ t.hero.bPr }}</span>
         </div>
-
-        <div class="proof-stage">
-          <div class="proof-card nav-orange">
-            <span class="proof-icon" aria-hidden="true">
-              <svg viewBox="0 0 48 48"><path d="M8 34h32" /><path d="M12 30V16h8v14" /><path d="M24 30V10h8v20" /><path d="M36 30v-9h4v9" /></svg>
-            </span>
-            <span class="proof-kicker">01 / SAMM</span>
-            <h3><span class="lang lang-pt">5 funções de maturidade.</span><span class="lang lang-en">5 maturity functions.</span></h3>
-            <p><span class="lang lang-pt">Governança, Design, Implementação, Verificação e Operações cobrem o programa AppSec.</span><span class="lang lang-en">Governance, Design, Implementation, Verification and Operations cover the AppSec program.</span></p>
-          </div>
-          <div class="proof-card nav-magenta">
-            <span class="proof-icon" aria-hidden="true">
-              <svg viewBox="0 0 48 48"><path d="M24 6l15 7v10c0 9-6 15-15 19C15 38 9 32 9 23V13z" /><path d="M18 24l4 4 9-10" /></svg>
-            </span>
-            <span class="proof-kicker">02 / Práticas</span>
-            <h3><span class="lang lang-pt">15 práticas com evidências.</span><span class="lang lang-en">15 practices with evidence.</span></h3>
-            <p><span class="lang lang-pt">Cada prática tem perguntas, critérios e exemplos para coletar evidências reais.</span><span class="lang lang-en">Each practice has questions, criteria and examples to collect real evidence.</span></p>
-          </div>
-          <div class="proof-card nav-cyan">
-            <span class="proof-icon" aria-hidden="true">
-              <svg viewBox="0 0 48 48"><path d="M10 12h28v26H10z" /><path d="M16 19h16M16 25h12M16 31h8" /><path d="M34 34l6 6" /></svg>
-            </span>
-            <span class="proof-kicker">03 / Níveis</span>
-            <h3><span class="lang lang-pt">Níveis 0-3 e roadmap.</span><span class="lang lang-en">Levels 0-3 and roadmap.</span></h3>
-            <p><span class="lang lang-pt">Avalie, priorize e gere plano de melhoria com evidências por prática.</span><span class="lang lang-en">Assess, prioritize and generate improvement plan with evidence per practice.</span></p>
-          </div>
-        </div>
-
-        <div class="samm-showcase">
-          <p class="section-label"><span><span class="lang lang-pt">Níveis SAMM</span><span class="lang lang-en">SAMM Levels</span></span></p>
-          <div class="samm-levels">
-            <div class="level-card"><strong>Nível 0</strong><span>Incompleto</span></div>
-            <div class="level-card"><strong>Nível 1</strong><span>Inicial</span></div>
-            <div class="level-card"><strong>Nível 2</strong><span>Gerenciado</span></div>
-            <div class="level-card"><strong>Nível 3</strong><span>Otimizado</span></div>
-          </div>
-          <p><span class="lang lang-pt">5 funções SAMM · 15 práticas · 90 perguntas com evidências · Roadmap executável.</span><span class="lang lang-en">5 SAMM functions · 15 practices · 90 evidence-backed questions · Executable roadmap.</span></p>
-        </div>
-      </section>
-
-      <section class="section decision-modules" id="capabilities">
-        <div class="section-heading">
-          <div>
-            <p class="section-label magenta-label"><span>§02</span><span data-i18n="cap_label">Funções e Práticas</span></p>
-            <h2>
-              <span class="lang lang-pt">SAMM cobre o programa AppSec completo.</span>
-              <span class="lang lang-en">SAMM covers the full AppSec program.</span>
-            </h2>
-          </div>
-          <p>
-            <span class="lang lang-pt">5 funções, 15 práticas, perguntas com evidências e níveis 0-3. Foco em avaliação, priorização e roadmap de maturidade.</span>
-            <span class="lang lang-en">5 functions, 15 practices, evidence-backed questions and 0-3 levels. Focus on assessment, prioritization and maturity roadmap.</span>
-          </p>
-        </div>
-        <div class="module-grid">
-          <article class="module-card nav-cyan">
-            <span class="module-kicker">G</span>
-            <span class="module-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M7 24s6-10 17-10 17 10 17 10-6 10-17 10S7 24 7 24z" /><circle cx="24" cy="24" r="4" /></svg></span>
-            <h3><span class="lang lang-pt">Governança</span><span class="lang lang-en">Governance</span></h3>
-            <p><span class="lang lang-pt">Políticas, papéis, estratégia e métricas de maturidade AppSec.</span><span class="lang lang-en">Policies, roles, strategy and AppSec maturity metrics.</span></p>
-            <small>5 práticas · G-EG, G-PC, G-SM</small>
-          </article>
-          <article class="module-card nav-orange">
-            <span class="module-kicker">D</span>
-            <span class="module-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M24 6l15 7v10c0 9-6 15-15 19C15 38 9 32 9 23V13z" /><path d="M24 16v10" /><path d="M24 32h.01" /></svg></span>
-            <h3><span class="lang lang-pt">Design</span><span class="lang lang-en">Design</span></h3>
-            <p><span class="lang lang-pt">Requisitos de segurança, threat modeling e controles por prática.</span><span class="lang lang-en">Security requirements, threat modeling and controls per practice.</span></p>
-            <small>3 práticas · D-SA, D-SR, D-TA</small>
-          </article>
-          <article class="module-card nav-magenta">
-            <span class="module-kicker">I</span>
-            <span class="module-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M10 12h8v24h-8zM20 12h8v24h-8zM30 12h8v24h-8z" /></svg></span>
-            <h3><span class="lang lang-pt">Implementação</span><span class="lang lang-en">Implementation</span></h3>
-            <p><span class="lang lang-pt">Build, deploy, dependências e gestão de segredos.</span><span class="lang lang-en">Build, deploy, dependencies and secrets management.</span></p>
-            <small>3 práticas · I-DM, I-SB, I-SD</small>
-          </article>
-          <article class="module-card nav-green">
-            <span class="module-kicker">V</span>
-            <span class="module-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M14 6h15l7 7v29H14z" /></svg></span>
-            <h3><span class="lang lang-pt">Verificação</span><span class="lang lang-en">Verification</span></h3>
-            <p><span class="lang lang-pt">Testes, revisões, scans e coleta de evidências por nível.</span><span class="lang lang-en">Tests, reviews, scans and evidence collection per level.</span></p>
-            <small>3 práticas · V-AA, V-RT, V-ST</small>
-          </article>
-          <article class="module-card nav-blue">
-            <span class="module-kicker">O</span>
-            <span class="module-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M15 14a14 14 0 1 1-3 15" /></svg></span>
-            <h3><span class="lang lang-pt">Operações</span><span class="lang lang-en">Operations</span></h3>
-            <p><span class="lang lang-pt">Monitoramento, incidentes, proteção de dados e descomissionamento.</span><span class="lang lang-en">Monitoring, incidents, data protection and decommissioning.</span></p>
-            <small>3 práticas · O-EM, O-IM, O-OM</small>
-          </article>
-        </div>
-      </section>
-
-      <section class="section band intelligence-room-section" id="intelligence">
-        <div class="section-heading">
-          <div>
-            <p class="section-label green-label"><span>§03</span><span data-i18n="intel_label">Sinais de maturidade</span></p>
-            <h2>
-              <span class="lang lang-pt">Menos adivinhação. Mais tela aberta.</span>
-              <span class="lang lang-en">Less guessing. More visible state.</span>
-            </h2>
-          </div>
-          <p>
-            <span class="lang lang-pt">Okami Maturity organiza avaliações SAMM que já existem no seu programa: práticas, evidências, níveis e roadmap. O objetivo é facilitar execução, não criar mais uma camada confusa.</span>
-            <span class="lang lang-en">Okami Maturity organizes SAMM assessments that already exist in your program: practices, evidence, levels and roadmap. The goal is to facilitate execution, not add another confusing layer.</span>
-          </p>
-        </div>
-        <div class="intel-room">
-          <div class="intel-feed">
-            <div class="terminal-windowbar">
-              <span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span>
-              <span>~/samm-intel · evidence feed</span>
-              <strong>watch</strong>
+        <div class="mat-radar-body">
+          <div class="mat-radar-top">
+            <div class="mat-radar-score">
+              <b>1.2<small> / 3.0</small></b>
+              <span>{{ t.radar.score }} · {{ t.radar.dev }}</span>
             </div>
-            <div class="intel-feed-body">
-              <div class="feed-row critical"><b>log</b><span><span class="lang lang-pt">lacuna detectada na prática G-EG</span><span class="lang lang-en">gap detected in G-EG practice</span></span><small>review · hide</small></div>
-              <div class="feed-row high"><b>usage</b><span><span class="lang lang-pt">evidência ausente para V-ST nível 2</span><span class="lang lang-en">evidence missing for V-ST level 2</span></span><small>open chart</small></div>
-              <div class="feed-row medium"><b>queue</b><span><span class="lang lang-pt">lacuna em prática identificada</span><span class="lang lang-en">gap in practice identified</span></span><small>assign</small></div>
-              <div class="feed-row ok"><b>docs</b><span><span class="lang lang-pt">item de roadmap priorizado</span><span class="lang lang-en">roadmap item prioritized</span></span><small>open file</small></div>
+            <div class="mat-radar-legend">
+              <i><span class="sw"></span>{{ t.radar.current }}</i>
+              <i><span class="sw t"></span>{{ t.radar.target }}</i>
             </div>
           </div>
-          <div class="intervention-panel">
-            <span>// leitura de evidências</span>
-            <h3><span class="lang lang-pt">Quando algo muda, você sabe onde olhar.</span><span class="lang lang-en">When something changes, you know where to look.</span></h3>
-            <div class="intervention-stack">
-              <div><strong>01</strong><span><span class="lang lang-pt">Identificar lacuna</span><span class="lang lang-en">Identify gap</span></span><small>practice gap · missing evidence</small></div>
-              <div><strong>02</strong><span><span class="lang lang-pt">Registrar evidência</span><span class="lang lang-en">Log evidence</span></span><small>assessment status · control weakness</small></div>
-              <div><strong>03</strong><span><span class="lang lang-pt">Criar entrada de evidência</span><span class="lang lang-en">Create evidence entry</span></span><small>evidence · owner · roadmap priority</small></div>
-            </div>
+          <div class="mat-radar-shot" role="img" aria-label="Okami Maturity scorecard preview">
+            <img src="/assets/app-scorecard.png" alt="Okami Maturity scorecard preview" />
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section class="section operation-flow-section" id="operation">
-        <div class="section-heading">
-          <div>
-            <p class="section-label"><span>§04</span><span data-i18n="workflow_label">Como usar</span></p>
-            <h2>
-              <span class="lang lang-pt">Comece em mock. Conecte dados reais quando fizer sentido.</span>
-              <span class="lang lang-en">Start in mock mode. Connect real data when it makes sense.</span>
-            </h2>
-          </div>
-          <p>
-            <span class="lang lang-pt">Rode local com dados mock. Colete avaliações SAMM, evidências e gere roadmap. Integração opcional via API para importar dados reais.</span>
-            <span class="lang lang-en">Run locally with mock data. Collect SAMM assessments, evidence and generate roadmap. Optional API integration to import real data.</span>
-          </p>
-        </div>
-        <div class="deployment-grid">
-          <div class="deployment-step nav-magenta"><span>01</span><strong><span class="lang lang-pt">Clonar</span><span class="lang lang-en">Clone</span></strong><p>github · MIT · local first</p></div>
-          <div class="deployment-step nav-cyan"><span>02</span><strong><span class="lang lang-pt">Rodar</span><span class="lang lang-en">Run</span></strong><p>npm install · dev:all · mock data</p></div>
-          <div class="deployment-step nav-orange"><span>03</span><strong><span class="lang lang-pt">Conectar</span><span class="lang lang-en">Connect</span></strong><p>Mock · API · Import</p></div>
-          <div class="deployment-step nav-green"><span>04</span><strong><span class="lang lang-pt">Acompanhar</span><span class="lang lang-en">Watch</span></strong><p>assessment status · evidence gaps · roadmap priority</p></div>
-        </div>
-        <div class="implementation-band nav-cyan">
-          <div>
-            <span><span class="lang lang-pt">// suporte opcional</span><span class="lang lang-en">// optional support</span></span>
-            <h3><span class="lang lang-pt">Contribuir com evidências ou perguntas para o modelo?</span><span class="lang lang-en">Contribute evidence or questions to the model?</span></h3>
-            <p><span class="lang lang-pt">O projeto é open source e pode ser usado pela comunidade. Se precisar de ajuda com arquitetura, segurança ou integração, a OkamiOps pode apoiar a implementação.</span><span class="lang lang-en">The project is open source and can be used by the community. If you need help with architecture, security or integration, OkamiOps can support implementation.</span></p>
-          </div>
-          <a href="https://okamiops.com" target="_blank" rel="noreferrer"><span>okamiops.com</span><strong><span class="lang lang-pt">Conhecer serviços</span><span class="lang lang-en">Explore services</span></strong><b>↗</b></a>
-        </div>
-      </section>
+    <div class="mat-stats">
+      <div class="mat-stat"><b>5</b><span>{{ t.stats.s1 }}</span></div>
+      <div class="mat-stat"><b>15</b><span>{{ t.stats.s2 }}</span></div>
+      <div class="mat-stat"><b>90</b><span>{{ t.stats.s3 }}</span></div>
+      <div class="mat-stat"><b>0–3</b><span>{{ t.stats.s4 }}</span></div>
+    </div>
 
-      <section class="section band runtime-boundary-section" id="ecosystem">
-        <div class="section-heading compact">
-          <p class="section-label info-label"><span>§05</span><span><span class="lang lang-pt">open source</span><span class="lang lang-en">open source</span></span></p>
-          <h2>
-            <span class="lang lang-pt">Avalie maturidade local. Compartilhe evidências e roadmap.</span>
-            <span class="lang lang-en">Assess maturity locally. Share evidence and roadmap.</span>
-          </h2>
+    <section class="mat-section" id="what" data-screen-label="What is SAMM">
+      <div class="ok-sec-hd">
+        <div class="ok-left">
+          <div class="ok-sec-num"><b>§01</b><span>·</span><span>{{ t.what.kicker }}</span></div>
+          <h2>{{ t.what.title }}</h2>
         </div>
-        <div class="boundary-grid">
-          <div class="boundary-diagram" aria-label="Private runtime integration diagram">
-            <div class="boundary-node nav-green">
-              <span><span class="lang lang-pt">01 · seu ambiente</span><span class="lang lang-en">01 · your environment</span></span>
-              <strong><span class="lang lang-pt">Runtime dos agentes</span><span class="lang lang-en">Agent runtime</span></strong>
-              <small><span class="lang lang-pt">local · cloud · stack existente</span><span class="lang lang-en">local · cloud · existing stack</span></small>
-            </div>
-            <div class="boundary-link"><span><span class="lang lang-pt">sinais aprovados</span><span class="lang lang-en">approved signals</span></span></div>
-            <div class="boundary-node nav-magenta">
-              <span><span class="lang lang-pt">02 · ponte segura</span><span class="lang lang-en">02 · secure bridge</span></span>
-              <strong><span class="lang lang-pt">Coletor com política</span><span class="lang lang-en">Policy collector</span></strong>
-              <small><span class="lang lang-pt">redaction · escopo · permissões</span><span class="lang lang-en">redaction · scope · permissions</span></small>
-            </div>
-            <div class="boundary-link"><span><span class="lang lang-pt">estado ao vivo</span><span class="lang lang-en">live state</span></span></div>
-            <div class="boundary-node nav-cyan">
-              <span>03 · Avaliação</span>
-              <strong>Okami Maturity</strong>
-              <small><span class="lang lang-pt">sessões · tokens · logs · docs</span><span class="lang lang-en">sessions · tokens · logs · docs</span></small>
-            </div>
-          </div>
-          <div class="boundary-copy">
-            <span><span class="lang lang-pt">// integração opcional</span><span class="lang lang-en">// optional integration</span></span>
-            <h3><span class="lang lang-pt">Integre via API ou importe evidências.</span><span class="lang lang-en">Optional API integration for real evidence import.</span></h3>
-            <p><span class="lang lang-pt">Use mock para testar avaliações. Depois importe evidências reais via API para completar o roadmap SAMM.</span><span class="lang lang-en">Use mock to test assessments. Import real evidence via API to complete SAMM roadmap.</span></p>
-            <ul>
-              <li><span class="lang lang-pt">Rode 100% com dados mock enquanto testa a UI.</span><span class="lang lang-en">Run 100% with mock data while testing the UI.</span></li>
-              <li><span class="lang lang-pt">Aponte para sua API ou VPS quando quiser estado real.</span><span class="lang lang-en">Point it to your API or VPS when you want real state.</span></li>
-              <li><span class="lang lang-pt">Guarde configs e segredos no backend local, fora do Git.</span><span class="lang lang-en">Keep configs and secrets in the local backend, out of Git.</span></li>
+        <div class="ok-right">{{ t.what.note }}<a class="mat-gh-link" href="https://github.com/OkamiOps/okami-SAMM" target="_blank" rel="noopener">// {{ t.hero.ghLink }} ↗</a></div>
+      </div>
+      <div class="mat-fns">
+        <sc-for list="{{ t.what.functions }}" as="fn" hint-placeholder-count="5">
+          <div class="fn-card {{ fn.tone }}">
+            <div class="fn-abbr">{{ fn.abbr }}</div>
+            <div class="fn-name">{{ fn.name }}</div>
+            <ul class="fn-practices">
+              <sc-for list="{{ fn.practices }}" as="pr" hint-placeholder-count="3"><li>{{ pr }}</li></sc-for>
             </ul>
           </div>
-        </div>
-      </section>
+        </sc-for>
+      </div>
+    </section>
 
-      <section class="section source-proof-section" id="source">
-        <div class="section-heading compact">
-          <p class="section-label"><span>§06</span><span><span class="lang lang-pt">open source</span><span class="lang lang-en">open source</span></span></p>
-          <h2><span class="lang lang-pt">Feito para a comunidade rodar, adaptar e melhorar.</span><span class="lang lang-en">Built for the community to run, adapt and improve.</span></h2>
+    <section class="mat-section" id="how" data-screen-label="How it works">
+      <div class="ok-sec-hd">
+        <div class="ok-left">
+          <div class="ok-sec-num"><b>§02</b><span>·</span><span>{{ t.how.kicker }}</span></div>
+          <h2>{{ t.how.title }}</h2>
         </div>
-        <div class="origin-grid">
-          <a class="source-link nav-orange" href="https://github.com/OkamiOps/okami-maturity-lp" target="_blank" rel="noreferrer">
-            <span>source code</span>
-            <strong>Okami Maturity</strong>
-            <p><span class="lang lang-pt">Repositório MIT para avaliações SAMM. Clone, rode local, adapte e gere roadmaps de maturidade AppSec.</span><span class="lang lang-en">MIT repository for Okami Maturity. Clone, run locally, contribute questions and evidence to the SAMM model.</span></p>
-            <b>GitHub ↗</b>
-          </a>
-          <a class="source-link nav-magenta" href="https://okamiagent.com" target="_blank" rel="noreferrer">
-            <span>related product</span>
-            <strong>Okami Agent</strong>
-            <p><span class="lang lang-pt">Outro projeto da família Okami para avaliações SAMM local-first. Okami Maturity foca em roadmap AppSec open source.</span><span class="lang lang-en">Another Okami project for experimenting with local-first agents. Okami Maturity stays focused on the SAMM maturity model and AppSec roadmap.</span></p>
-            <b>okamiagent.com ↗</b>
-          </a>
+        <div class="ok-right">{{ t.how.note }}<a class="mat-gh-link" href="https://github.com/OkamiOps/okami-SAMM" target="_blank" rel="noopener">// {{ t.hero.ghLink }} ↗</a></div>
+      </div>
+      <div class="mat-phases">
+        <sc-for list="{{ t.how.phases }}" as="ph" hint-placeholder-count="4">
+          <div class="howphase {{ ph.tone }}">
+            <div class="pn">{{ ph.n }}</div>
+            <div><h4>{{ ph.title }}</h4><p>{{ ph.desc }}</p></div>
+          </div>
+        </sc-for>
+      </div>
+      <div class="mat-howshots">
+        <div class="frame">
+          <div class="frame-bar"><span class="d"><span></span><span></span><span></span></span>{{ t.how.shotA }}</div>
+          <div class="frame-img"><img src="/assets/app-scorecard.png" alt="Scorecard" loading="lazy" /></div>
         </div>
-      </section>
+        <div class="frame">
+          <div class="frame-bar"><span class="d"><span></span><span></span><span></span></span>{{ t.how.shotB }}</div>
+          <div class="frame-img"><img src="/assets/app-roadmap.png" alt="Roadmap" loading="lazy" /></div>
+        </div>
+      </div>
+      <div class="mat-meter-wrap">
+        <div class="ok-meter">
+          <div class="ok-meter-head">
+            <span class="label">// {{ t.meter.label }}</span>
+            <a href="/docs/#scoring" class="ok-btn cyan sm">{{ t.meter.cta }} →</a>
+          </div>
+          <div class="ok-meter-track">
+            <div class="ok-meter-line"></div>
+            <div class="ok-meter-bar to" style="left:0; width:80%"></div>
+            <div class="ok-meter-bar from" style="left:0; width:40%"></div>
+            <div class="ok-meter-step now" style="left:0%"><span class="dot"></span><span class="lvl">0</span><span class="nm">{{ t.meter.l0 }}</span></div>
+            <div class="ok-meter-step now" style="left:33.33%"><span class="dot"></span><span class="lvl">1</span><span class="nm">{{ t.meter.l1 }}</span></div>
+            <div class="ok-meter-step target" style="left:66.66%"><span class="dot"></span><span class="lvl">2</span><span class="nm">{{ t.meter.l2 }}</span></div>
+            <div class="ok-meter-step target" style="left:100%"><span class="dot"></span><span class="lvl">3</span><span class="nm">{{ t.meter.l3 }}</span></div>
+          </div>
+          <div class="ok-meter-caption">{{ t.meter.caption }}</div>
+        </div>
+      </div>
+    </section>
 
-      <section class="section cta-section" id="cta">
-        <div class="closing-cta-v2">
-          <div class="closing-left">
-            <span class="lang lang-pt">comece pelo código</span><span class="lang lang-en">start with code</span></span></p>
-            <h2>
-              <span class="lang lang-pt">Clone o projeto e veja sua maturidade AppSec em um roadmap controlado.</span>
-              <span class="lang lang-en">Clone the project and see your AppSec maturity in a controlled roadmap.</span>
-            </h2>
-            <p>
-              <span class="lang lang-pt">Rode com dados mock, explore as avaliações SAMM, entenda o modelo e importe evidências quando quiser completar o roadmap.</span>
-              <span class="lang lang-en">Run with mock data, explore SAMM assessments, understand the model and import evidence when ready to complete the roadmap.</span>
-            </p>
-          </div>
-          <div class="closing-right">
-            <a class="closing-action-main" href="https://github.com/OkamiOps/okami-maturity-lp" target="_blank" rel="noreferrer">
-              <span class="closing-action-icon" aria-hidden="true">
-                <svg viewBox="0 0 48 48"><path d="M9 14h30v20H9z" /><path d="M15 24h10M29 24h4" /><path d="M18 39h12" /></svg>
-              </span>
-              <strong><span class="lang lang-pt">Abrir repositório</span><span class="lang lang-en">Open repository</span></strong>
-              <small><span class="lang lang-pt">Código MIT, quick start e backend opcional</span><span class="lang lang-en">MIT code, quick start and optional backend</span></small>
-              <b>→</b>
-            </a>
-            <div class="closing-action-grid">
-              <a href="/docs/#architecture">
-                <span>docs</span>
-                <strong><span class="lang lang-pt">Ler docs</span><span class="lang lang-en">Read docs</span></strong>
-              </a>
-              <a href="#demo">
-                <span>preview</span>
-                <strong><span class="lang lang-pt">Ver SAMM</span><span class="lang lang-en">View SAMM</span></strong>
-              </a>
-            </div>
-            <div class="closing-trust">
-              <span>mock-first</span>
-              <span>open source</span>
-              <span>SAMM · 0-3</span>
-            </div>
-          </div>
+    <section class="mat-section" id="report" data-screen-label="PDF report">
+      <div class="ok-sec-hd">
+        <div class="ok-left">
+          <div class="ok-sec-num"><b>§03</b><span>·</span><span>{{ t.report.kicker }}</span></div>
+          <h2>{{ t.report.title }}</h2>
         </div>
-      </section>
-    </main>
+        <div class="ok-right">{{ t.report.note }}<a class="mat-gh-link" href="https://github.com/OkamiOps/okami-SAMM" target="_blank" rel="noopener">// {{ t.hero.ghLink }} ↗</a></div>
+      </div>
+      <div class="mat-pdfpages">
+        <div class="frame pdfpage">
+          <div class="frame-bar"><span class="d"><span></span><span></span><span></span></span>{{ t.report.f1 }}</div>
+          <div class="frame-img"><img src="/assets/pdf-cover.png" alt="PDF cover" loading="lazy" /></div>
+        </div>
+        <div class="frame pdfpage">
+          <div class="frame-bar"><span class="d"><span></span><span></span><span></span></span>{{ t.report.f2 }}</div>
+          <div class="frame-img"><img src="/assets/pdf-exec.png" alt="PDF executive summary" loading="lazy" /></div>
+        </div>
+        <div class="frame pdfpage">
+          <div class="frame-bar"><span class="d"><span></span><span></span><span></span></span>{{ t.report.f3 }}</div>
+          <div class="frame-img"><img src="/assets/pdf-roadmap.png" alt="PDF roadmap" loading="lazy" /></div>
+        </div>
+      </div>
+      <ul class="report-list">
+        <sc-for list="{{ t.report.sections }}" as="rs" hint-placeholder-count="8">
+          <li><span class="rn">{{ rs.n }}</span><span><span class="rt">{{ rs.t }}</span><span class="rd">{{ rs.d }}</span></span></li>
+        </sc-for>
+      </ul>
+    </section>
 
-    <footer class="site-footer">
-      <div class="footer-main">
-        <div class="footer-brand">
-          <a class="footer-logo" href="/" aria-label="Okami Maturity home">
-            <img src="/assets/brand/okami-maturity-logo-light-transparent-v2.png" alt="Okami Maturity" class="brand-logo" style="height: 24px; width: auto;" />
-          </a>
-          <p>
-            <span class="lang lang-pt">Okami Maturity é open source para avaliações SAMM e roadmaps de AppSec.</span>
-            <span class="lang lang-en">Okami Maturity is open source for SAMM assessments and AppSec roadmaps.</span>
-          </p>
+    <section class="mat-section" id="ai" data-screen-label="AI · MCP · ACP">
+      <div class="ok-sec-hd">
+        <div class="ok-left">
+          <div class="ok-sec-num"><b>§04</b><span>·</span><span>{{ t.ai.kicker }}</span></div>
+          <h2>{{ t.ai.title }}</h2>
         </div>
-        <nav class="footer-nav" aria-label="Footer navigation">
-          <div>
-            <strong>Okami Maturity</strong>
-            <a href="#demo">Demo</a>
-            <a href="#ecosystem">Governança</a>
-            <a href="/docs/">Docs</a>
-          </div>
-          <div>
-            <strong>Network</strong>
-            <a href="https://github.com/OkamiOps/okami-maturity-lp" target="_blank" rel="noreferrer">GitHub ↗</a>
-            <a href="https://okamiops.com" target="_blank" rel="noreferrer">OkamiOps ↗</a>
-            <a href="https://okamiagent.com" target="_blank" rel="noreferrer">Okami Agent ↗</a>
-            <a href="https://cybersecnews.com.br" target="_blank" rel="noreferrer">CyberSecNews ↗</a>
-          </div>
-        </nav>
+        <div class="ok-right">{{ t.ai.note }}<a class="mat-gh-link" href="https://github.com/OkamiOps/okami-SAMM" target="_blank" rel="noopener">// {{ t.hero.ghLink }} ↗</a></div>
       </div>
 
-      <div class="footer-bottom">
-        <span>Okami Maturity</span>
-        <span>OkamiOps · 2026</span>
-        <span>open source · mock-first · SAMM 0-3</span>
+      <div class="mat-aihl">
+        <div>
+          <div class="tag">{{ t.ai.suggestTag }}</div>
+          <h4>{{ t.ai.suggestTitle }}</h4>
+          <p>{{ t.ai.suggestBody }}</p>
+          <ul class="mat-aihl-pts"><sc-for list="{{ t.ai.suggestPoints }}" as="sp" hint-placeholder-count="3"><li>{{ sp }}</li></sc-for></ul>
+          <div class="provs">
+            <sc-for list="{{ t.ai.providers }}" as="pv" hint-placeholder-count="5"><span class="prov">{{ pv }}</span></sc-for>
+          </div>
+        </div>
+        <div class="mat-aihl-cta">
+          <a class="ok-btn magenta" href="/docs/#ai">{{ t.ai.suggestCta }} →</a>
+          <span class="ok-badge magenta">{{ t.ai.optional }}</span>
+        </div>
+      </div>
+
+      <div class="mat-two">
+        <div class="ok-stack" style="grid-template-columns:1fr 1fr;">
+          <sc-for list="{{ t.ai.cards }}" as="c" hint-placeholder-count="4">
+            <div class="ok-stack-card {{ c.tone }}">
+              <div class="ok-stack-h">{{ c.h }}</div>
+              <h4>{{ c.title }}</h4>
+              <ul><sc-for list="{{ c.items }}" as="it" hint-placeholder-count="3"><li>{{ it }}</li></sc-for></ul>
+            </div>
+          </sc-for>
+        </div>
+        <div class="ok-terminal">
+          <div class="topbar"><span class="dots"><span></span><span></span><span></span></span><span>~/okami-samm · mcp · agent</span><span class="status">● connected</span></div>
+          <div class="body">
+            <div class="line"><span class="prompt">$</span><span class="cmd">claude mcp add --transport http okami-samm …/mcp</span></div>
+            <div class="line"><span class="out">→ {{ t.ai.term1 }}</span></div>
+            <div class="line"><span class="prompt">agent ›</span><span class="cmd">create_assessment · set_answers</span></div>
+            <div class="line"><span class="out">&nbsp;&nbsp;✓ assessment <b>acme-payments</b> · 90/90 <span class="ok-ok">answered</span></span></div>
+            <div class="line"><span class="prompt">agent ›</span><span class="cmd">set_targets · get_scorecard · get_roadmap</span></div>
+            <div class="line"><span class="out">&nbsp;&nbsp;✓ scorecard <span class="ok-ok">1.2 / 3.0 · developing</span></span></div>
+            <div class="line"><span class="out">&nbsp;&nbsp;✓ roadmap <span class="ok-ok">1.2 → 2.4</span> · 12 {{ t.ai.termActions }}</span></div>
+            <div class="line"><span class="prompt">agent ›</span><span class="cmd">add_snapshot · generate_report</span></div>
+            <div class="line"><span class="out">&nbsp;&nbsp;✓ snapshot · history +1 · <span class="ok-ok">pdf ready</span></span></div>
+            <div class="line"><span class="out">→ {{ t.ai.term2 }} <b>report.pdf</b></span></div>
+            <div class="line"><span class="prompt">$</span><span class="cmd"><span class="cursor"></span></span></div>
+          </div>
+        </div>
+      </div>
+      <div class="mat-tools">
+        <sc-for list="{{ t.ai.tools }}" as="tl" hint-placeholder-count="14"><span class="mat-tool"><b>{{ tl }}</b></span></sc-for>
+      </div>
+    </section>
+
+    <section class="mat-section" id="deploy" data-screen-label="Self-host">
+      <div class="ok-sec-hd">
+        <div class="ok-left">
+          <div class="ok-sec-num"><b>§05</b><span>·</span><span>{{ t.deploy.kicker }}</span></div>
+          <h2>{{ t.deploy.title }}</h2>
+        </div>
+        <div class="ok-right">{{ t.deploy.note }}<a class="mat-gh-link" href="https://github.com/OkamiOps/okami-SAMM" target="_blank" rel="noopener">// {{ t.hero.ghLink }} ↗</a></div>
+      </div>
+
+      <div class="mat-arch">
+        <div class="mat-arch-node a">
+          <div class="nh">{{ t.deploy.arch.pagesH }}</div>
+          <h4>{{ t.deploy.arch.pages }}</h4>
+          <p>{{ t.deploy.arch.pagesSub }}</p>
+        </div>
+        <div class="mat-arch-mid">
+          <span class="ar">→</span>
+          <span>{{ t.deploy.arch.proxy }}</span>
+        </div>
+        <div class="mat-arch-node">
+          <div class="nh">{{ t.deploy.arch.apiH }}</div>
+          <h4>{{ t.deploy.arch.api }}</h4>
+          <p>{{ t.deploy.arch.apiSub }}</p>
+        </div>
+      </div>
+      <p class="mat-arch-note">{{ t.deploy.arch.note }}</p>
+
+      <div class="mat-two">
+        <div class="ok-terminal">
+          <div class="topbar"><span class="dots"><span></span><span></span><span></span></span><span>~/okami-samm · deploy · zsh</span><span class="status">● ready</span></div>
+          <div class="body">
+            <div class="line"><span class="prompt">$</span><span class="cmd">docker compose up -d</span></div>
+            <div class="line"><span class="out">→ okami-samm · express + sqlite + chromium</span></div>
+            <div class="line"><span class="out">&nbsp;&nbsp;✓ api <span class="ok-ok">:3000</span> · pdf <span class="ok-ok">playwright ready</span></span></div>
+            <div class="line"><span class="out">&nbsp;&nbsp;✓ db <b>./data/okami-samm.db</b> <span class="ok-ok">wal</span></span></div>
+            <div class="line"><span class="out">&nbsp;&nbsp;✓ vendor <b>react</b> · no CDN · <span class="ok-ok">offline ok</span></span></div>
+            <div class="line"><span class="out">&nbsp;&nbsp;✓ healthz <span class="ok-ok">200</span> · /docs swagger <span class="ok-ok">up</span></span></div>
+            <div class="line"><span class="out">&nbsp;&nbsp;✓ backup <b>/api/backup</b> · restore <span class="ok-ok">ready</span></span></div>
+            <div class="line"><span class="prompt">→</span><span class="out">{{ t.deploy.term }} <b>http://localhost:3000</b></span></div>
+            <div class="line"><span class="prompt">$</span><span class="cmd"><span class="cursor"></span></span></div>
+          </div>
+        </div>
+        <div class="ok-stack" style="grid-template-columns:1fr 1fr;">
+          <sc-for list="{{ t.deploy.cards }}" as="c" hint-placeholder-count="4">
+            <div class="ok-stack-card {{ c.tone }}">
+              <div class="ok-stack-h">{{ c.h }}</div>
+              <h4>{{ c.title }}</h4>
+              <ul><sc-for list="{{ c.items }}" as="it" hint-placeholder-count="3"><li>{{ it }}</li></sc-for></ul>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <section class="mat-section" id="consult" data-screen-label="OKAMI consulting">
+      <div class="mat-consult">
+        <div>
+          <div class="eye">{{ t.consult.kicker }}</div>
+          <h3>{{ t.consult.title }}</h3>
+          <p class="lede">{{ t.consult.lede }}</p>
+          <ul class="points">
+            <sc-for list="{{ t.consult.points }}" as="pt" hint-placeholder-count="3"><li>{{ pt }}</li></sc-for>
+          </ul>
+          <div class="mat-consult-actions">
+            <a class="ok-btn solid lg" href="https://okamiops.com" target="_blank" rel="noopener">{{ t.consult.cta }} →</a>
+            <a class="mat-nav-docs" href="https://okamiops.com" target="_blank" rel="noopener">okamiops.com ↗</a>
+          </div>
+        </div>
+        <div class="mat-consult-side">
+          <img src="/assets/okami-logo.png" alt="OKAMI" />
+          <div class="dh">{{ t.consult.deliverTitle }}</div>
+          <ul>
+            <sc-for list="{{ t.consult.deliver }}" as="d" hint-placeholder-count="4"><li>{{ d }}</li></sc-for>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="mat-section">
+      <div class="ok-cta">
+        <h3>{{ t.cta.title }}</h3>
+        <p>{{ t.cta.lede }}</p>
+        <div class="ok-cta-actions">
+          <a class="ok-btn solid lg" href="#deploy">{{ t.cta.primary }} →</a>
+          <a class="ok-btn cyan lg" href="https://github.com/OkamiOps/okami-SAMM" target="_blank" rel="noopener">{{ t.cta.ghost }} →</a>
+          <a class="ok-btn ghost lg" href="/docs/">{{ t.cta.ghost2 }} →</a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="mat-footer">
+      <div class="mat-footer-grid">
+        <div class="mat-footer-brand">
+          <img src="/assets/okami-maturity-dark.png" alt="Okami Maturity" />
+          <div class="ok-t-mono" style="margin-top:14px; color:var(--ok-fg-mute); letter-spacing:.08em; max-width:30ch; line-height:1.5;">{{ t.footer.tag }}</div>
+          <div style="margin-top:18px; display:flex; gap:8px;"><span class="ok-badge cyan">OWASP SAMM V2</span><span class="ok-badge">OPEN SOURCE</span></div>
+        </div>
+        <sc-for list="{{ t.footer.cols }}" as="col" hint-placeholder-count="4">
+          <div class="mat-footer-col">
+            <h5>// {{ col.h }}</h5>
+            <ul><sc-for list="{{ col.links }}" as="lk" hint-placeholder-count="4"><li><a href="{{ lk.href }}" target="{{ lk.tgt }}" rel="noopener">{{ lk.label }}</a></li></sc-for></ul>
+          </div>
+        </sc-for>
+      </div>
+      <div class="mat-footer-legal">
+        <span>OKAMI · {{ t.footer.legalL }}</span>
+        <span>{{ t.footer.legalR }}</span>
       </div>
     </footer>
-    <script type="module" src="/src/site.js"></script>
-  </body>
+  </div>
+</div>
+<div class="mat-fab">
+  <button class="totop" type="button" title="{{ t.hero.toTopLabel }}" aria-label="{{ t.hero.toTopLabel }}" onClick="{{ toTop }}"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M8 13V3.5M3.5 8L8 3.5 12.5 8"></path></svg></button>
+  <a class="gh" href="https://github.com/OkamiOps/okami-SAMM" target="_blank" rel="noopener" title="GitHub" aria-label="GitHub"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1200},&quot;lang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;pt&quot;,&quot;en&quot;],&quot;default&quot;:&quot;en&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;glow&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:0.55,&quot;min&quot;:0,&quot;max&quot;:1,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;},&quot;showGrid&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  state = { lang: this.props.lang || "pt" };
+
+  componentDidMount() { this._spy(); window.addEventListener("scroll", this._spy, { passive: true }); }
+  componentWillUnmount() { window.removeEventListener("scroll", this._spy); }
+  _spy = () => {
+    const ids = ["what", "how", "report", "ai", "deploy", "consult"];
+    const y = window.scrollY + 120;
+    let cur = "";
+    for (const id of ids) { const el = document.getElementById(id); if (el && el.offsetTop <= y) cur = id; }
+    document.querySelectorAll(".mat-nav-links a[data-nav]").forEach((a) => {
+      a.classList.toggle("active", a.getAttribute("data-nav") === "#" + cur);
+    });
+    const tt = document.querySelector(".mat-fab .totop");
+    if (tt) tt.classList.toggle("show", window.scrollY > 600);
+  };
+
+  buildRadar() {
+    const RAD = [
+      ["SM", 1.25, "var(--ok-orange)"], ["PC", 1.13, "var(--ok-orange)"], ["EG", 1.25, "var(--ok-orange)"],
+      ["TA", 1.38, "var(--ok-cyan)"], ["SR", 1.00, "var(--ok-cyan)"], ["SA", 1.38, "var(--ok-cyan)"],
+      ["SB", 1.25, "var(--ok-magenta)"], ["SD", 1.38, "var(--ok-magenta)"], ["DM", 1.00, "var(--ok-magenta)"],
+      ["AA", 1.38, "var(--ok-warning)"], ["RT", 1.25, "var(--ok-warning)"], ["ST", 1.13, "var(--ok-warning)"],
+      ["IM", 1.25, "var(--ok-success)"], ["EM", 1.00, "var(--ok-success)"], ["OM", 1.13, "var(--ok-success)"],
+    ];
+    const cx = 230, cy = 200, R = 150, N = RAD.length;
+    const at = (i, r) => {
+      const a = (-90 + i * (360 / N)) * Math.PI / 180;
+      return [cx + Math.cos(a) * r, cy + Math.sin(a) * r];
+    };
+    const poly = (rfn) => RAD.map((p, i) => { const [x, y] = at(i, rfn(p)); return x.toFixed(1) + "," + y.toFixed(1); }).join(" ");
+    return {
+      cx, cy,
+      ring1: poly(() => R / 3), ring2: poly(() => R * 2 / 3), ring3: poly(() => R),
+      current: poly((p) => R * p[1] / 3),
+      target: poly(() => R * 2.2 / 3),
+      axes: RAD.map((p, i) => { const [x, y] = at(i, R); return { x: x.toFixed(1), y: y.toFixed(1) }; }),
+      dots: RAD.map((p, i) => { const [x, y] = at(i, R * p[1] / 3); return { x: x.toFixed(1), y: y.toFixed(1), c: p[2] }; }),
+      labels: RAD.map((p, i) => {
+        const [x, y] = at(i, R + 17);
+        const cv = Math.cos((-90 + i * (360 / N)) * Math.PI / 180);
+        const anchor = cv > 0.3 ? "start" : cv < -0.3 ? "end" : "middle";
+        return { x: x.toFixed(1), y: (y + 3).toFixed(1), t: p[0], anchor };
+      }),
+    };
+  }
+
+  COPY = {
+    pt: {
+      nav: [
+        { idx: "01", label: "O que é", href: "#what" },
+        { idx: "02", label: "Como funciona", href: "#how" },
+        { idx: "03", label: "Relatório", href: "#report" },
+        { idx: "04", label: "IA · MCP", href: "#ai" },
+        { idx: "05", label: "Self-host", href: "#deploy" },
+      ],
+      navCta: "Self-host", docs: "Docs",
+      hero: {
+        eyebrow: "// owasp samm v2 · open source · self-hosted",
+        t1: "Maturidade de SDLC seguro,", t2: "medida", tjoin: "e", t3: "movida.", ghLink: "Ver no GitHub", toTopLabel: "Voltar ao topo",
+        lede: "Okami Maturity avalia seu ciclo de desenvolvimento seguro contra o OWASP SAMM v2 — 5 funções de negócio, 15 práticas, 90 perguntas. Scorecard ao vivo, radar de maturidade, roadmap priorizado e relatório PDF com a marca Okami.",
+        anti: "// sem SaaS, sem telemetria — seus dados vivem no seu próprio SQLite.",
+        ctaSelf: "Self-host", ctaStar: "Star no GitHub", ctaDocs: "Ler os docs",
+        bFn: "funções", bPr: "práticas", bQ: "perguntas", bMobile: "Mobile-ready",
+      },
+      radar: { score: "maturidade geral", dev: "em desenvolvimento", current: "atual", target: "meta" },
+      stats: { s1: "funções de negócio", s2: "práticas de segurança", s3: "perguntas (streams A/B)", s4: "níveis de maturidade" },
+      what: {
+        kicker: "o que é", title: "OWASP SAMM v2, operável.",
+        note: "O Software Assurance Maturity Model organiza a segurança do SDLC em 5 funções de negócio, cada uma com 3 práticas. Cada prática é pontuada de 0 a 3.",
+        functions: [
+          { abbr: "GOV", tone: "gov", name: "Governança", practices: ["Estratégia & Métricas", "Política & Compliance", "Educação & Orientação"] },
+          { abbr: "DES", tone: "des", name: "Design", practices: ["Avaliação de Ameaças", "Requisitos de Segurança", "Arquitetura Segura"] },
+          { abbr: "IMP", tone: "imp", name: "Implementação", practices: ["Build Seguro", "Deploy Seguro", "Gestão de Defeitos"] },
+          { abbr: "VER", tone: "ver", name: "Verificação", practices: ["Avaliação de Arquitetura", "Testes por Requisitos", "Testes de Segurança"] },
+          { abbr: "OPS", tone: "ops", name: "Operações", practices: ["Gestão de Incidentes", "Gestão de Ambiente", "Gestão Operacional"] },
+        ],
+      },
+      how: {
+        kicker: "como funciona", title: "Avaliar, pontuar, planejar, reportar.",
+        note: "Um fluxo contínuo do questionário ao PDF — guiado, com atalhos de teclado e notas de entrevista por pergunta.",
+        phases: [
+          { n: "01", tone: "", title: "Avaliar", desc: "90 perguntas em dois streams (A/B), níveis 1–3, com notas de entrevista. Responda por teclado: 0–3 pontua e avança." },
+          { n: "02", tone: "cyan", title: "Pontuar", desc: "Scorecard ao vivo: maturidade geral, por função e por prática, radar e KPIs de práticas na meta." },
+          { n: "03", tone: "magenta", title: "Planejar", desc: "Roadmap com nível atual, lacuna até a meta e próximo nível por prática — com ações concretas." },
+          { n: "04", tone: "green", title: "Reportar", desc: "PDF de 9 páginas com a marca Okami, mais histórico e comparação entre snapshots." },
+        ],
+        shotA: "app · scorecard", shotB: "app · roadmap",
+      },
+      meter: {
+        label: "gap analysis · 0 → 3", cta: "Ver metodologia",
+        l0: "Inexistente", l1: "Inicial", l2: "Definido", l3: "Otimizado",
+        caption: "// a meta sugerida de cada prática é o próximo nível; a lacuna é a distância até lá. O roadmap prioriza onde o ganho de maturidade é maior.",
+      },
+      report: {
+        kicker: "relatório pdf", title: "Um PDF com a marca Okami.",
+        note: 'Documento de 9 páginas seguindo a identidade "OKAMI · Security Assessment Report" — Space Grotesk, papel branco-frio, acentos de marca por função.',
+        f1: "pdf · capa", f2: "pdf · resumo executivo", f3: "pdf · roadmap",
+        sections: [
+          { n: "00", t: "Capa & Conteúdo", d: "Capa escura com gradientes de marca e metadados de escopo." },
+          { n: "01", t: "Resumo executivo", d: "Métricas, barras por função e radar de maturidade." },
+          { n: "02", t: "Metodologia", d: "As 5 funções, como o score é calculado, níveis 0–3." },
+          { n: "03", t: "Maturidade por função", d: "Tabelas por prática com análise de força e atenção." },
+          { n: "04", t: "Roadmap — próximos passos", d: "Práticas prioritárias com ações recomendadas." },
+          { n: "05", t: "Evolução da maturidade", d: "Tendência geral entre snapshots salvos." },
+          { n: "06", t: "Conclusão & Apêndice", d: "Interpretação, prioridades e notas de entrevista." },
+        ],
+      },
+      ai: {
+        kicker: "operável por ia", title: "Agentes leem e operam o sistema.",
+        note: "Tudo é exposto por MCP e pelos dois protocolos ACP — mesma camada de operações. Um agente descobre o modelo, cria avaliações, responde, pontua, planeja e gera o relatório.",
+        suggestTag: "sugestões por ia · opcional",
+        suggestTitle: "Receba sugestões no roadmap — basta plugar um provider.",
+        suggestBody: "Sem IA, o app funciona normalmente. Configure um provider e cada prática prioritária do roadmap ganha ações sugeridas por IA, derivadas dos critérios do SAMM. A chave fica no seu banco e nunca sai do seu servidor.",
+        providers: ["OpenAI / Codex", "Grok (xAI)", "Minimax", "Anthropic", "Compatível / custom"],
+        suggestCta: "Como configurar", optional: "OPCIONAL",
+        suggestPoints: ["Ações priorizadas por prática, derivadas dos critérios e da guidance do SAMM", "Meta sugerida e próximo nível para fechar cada lacuna", "Você revisa e aplica — nada muda automaticamente"],
+        cards: [
+          { h: "// mcp", tone: "", title: "MCP · HTTP", items: ["POST /mcp", "Streamable HTTP", "remoto"] },
+          { h: "// mcp", tone: "cyan", title: "MCP · stdio", items: ["mcp-stdio.js", "mesmo SQLite", "local"] },
+          { h: "// acp", tone: "magenta", title: "ACP · Comm", items: ["REST /acp", "entre agentes", "samm-operator"] },
+          { h: "// acp", tone: "", title: "ACP · Client", items: ["Zed · JSON-RPC", "stdio", "/comandos"] },
+        ],
+        tools: ["get_samm_model", "list_assessments", "get_assessment", "create_assessment", "set_answers", "set_targets", "set_notes", "get_scorecard", "get_roadmap", "add_snapshot", "generate_report", "delete_assessment", "export_backup", "import_backup"],
+        term1: "descobrindo o modelo SAMM · 15 práticas", term2: "playwright · chromium →", termActions: "ações",
+      },
+      deploy: {
+        kicker: "self-host", title: "Um comando. Seus dados.",
+        note: "Frontend + API + PDF + SQLite a partir de um único container. Ou separe as camadas: Cloudflare Pages para o frontend e um container para o backend.",
+        term: "pronto em",
+        arch: {
+          pagesH: "// frontend", pages: "Cloudflare Pages", pagesSub: "app estático · React vendorizado · sem CDN",
+          proxy: "/api/* · proxy same-origin", apiH: "// backend",
+          api: "Container", apiSub: "Express · better-sqlite3 · Playwright/Chromium",
+          note: "// ou tudo num único container: ele mesmo serve o frontend em / — docker run já é um deploy completo. Seus dados ficam em ./data/okami-samm.db.",
+        },
+        cards: [
+          { h: "// frontend", tone: "", title: "App estático", items: ["React vendorizado", "sem CDN / offline", "Cloudflare Pages"] },
+          { h: "// backend", tone: "cyan", title: "Express + SQLite", items: ["better-sqlite3", "score.js (espelho)", "Render / Fly / VPS"] },
+          { h: "// pdf", tone: "magenta", title: "Playwright", items: ["Chromium headless", "render.js → A4", "marca Okami"] },
+          { h: "// dados", tone: "", title: "SQLite (WAL)", items: ["backup = copiar pasta", "⤓ Backup / ⤒ Restore", "workspace compartilhado"] },
+        ],
+      },
+      consult: {
+        kicker: "// precisa de ajuda?",
+        title: "Não quer fazer sozinho? A OKAMI conduz o assessment.",
+        lede: "A ferramenta é open source e gratuita. Se você quer acelerar, a OKAMI conduz a avaliação OWASP SAMM v2 com seu time, interpreta o scorecard e entrega um roadmap de 90 dias priorizado — engenharia bank-grade de AppSec, não consultoria de slide.",
+        points: [
+          "AppSec Journey — do threat model ao deploy seguro",
+          "GAP Analysis — diagnóstico 0–3 com roadmap de 90 dias",
+          "Execução com o seu time e on-call compartilhado",
+        ],
+        cta: "Falar com a OKAMI",
+        deliverTitle: "// entregamos",
+        deliver: ["Assessment conduzido", "Scorecard interpretado", "Roadmap priorizado", "Suporte à execução"],
+      },
+      cta: {
+        title: "Open source. Self-hosted. Sua maturidade, no seu controle.",
+        lede: "Clone, suba com um comando e meça seu SDLC seguro contra o OWASP SAMM v2 hoje. PT e EN com o mesmo peso.",
+        primary: "Self-host", ghost: "Star no GitHub", ghost2: "Documentação",
+      },
+      footer: {
+        tag: "OWASP SAMM v2 · avaliação de maturidade de AppSec, por Okami.",
+        cols: [
+          { h: "Produto", links: [
+            { label: "O que é SAMM", href: "#what", tgt: "_self" }, { label: "Como funciona", href: "#how", tgt: "_self" },
+            { label: "Relatório PDF", href: "#report", tgt: "_self" }, { label: "Self-host", href: "#deploy", tgt: "_self" } ] },
+          { h: "Docs", links: [
+            { label: "Introdução", href: "/docs/", tgt: "_self" }, { label: "As 90 perguntas", href: "/docs/#questions", tgt: "_self" },
+            { label: "API · /docs", href: "/docs/#api", tgt: "_self" }, { label: "MCP & ACP", href: "/docs/#mcp", tgt: "_self" } ] },
+          { h: "Open source", links: [
+            { label: "GitHub", href: "https://github.com/OkamiOps/okami-SAMM", tgt: "_blank" }, { label: "Issues", href: "https://github.com/OkamiOps/okami-SAMM/issues", tgt: "_blank" },
+            { label: "OWASP SAMM", href: "https://owaspsamm.org", tgt: "_blank" } ] },
+          { h: "OKAMI", links: [
+            { label: "Consultoria", href: "https://okamiops.com", tgt: "_blank" }, { label: "okamiops.com", href: "https://okamiops.com", tgt: "_blank" },
+            { label: "okamiagent.com", href: "https://okamiagent.com", tgt: "_blank" }, { label: "os.okamiops.com", href: "https://os.okamiops.com", tgt: "_blank" } ] },
+        ],
+        legalL: "Engenharia bank-grade de IA & AppSec",
+        legalR: "OWASP SAMM v2 · LGPD · GDPR",
+      },
+    },
+
+    en: {
+      nav: [
+        { idx: "01", label: "What it is", href: "#what" },
+        { idx: "02", label: "How it works", href: "#how" },
+        { idx: "03", label: "Report", href: "#report" },
+        { idx: "04", label: "AI · MCP", href: "#ai" },
+        { idx: "05", label: "Self-host", href: "#deploy" },
+      ],
+      navCta: "Self-host", docs: "Docs",
+      hero: {
+        eyebrow: "// owasp samm v2 · open source · self-hosted",
+        t1: "Secure-SDLC maturity,", t2: "measured", tjoin: "and", t3: "moved.", ghLink: "View on GitHub", toTopLabel: "Back to top",
+        lede: "Okami Maturity assesses your secure development lifecycle against OWASP SAMM v2 — 5 business functions, 15 practices, 90 questions. Live scorecard, maturity radar, prioritized roadmap and an Okami-branded PDF report.",
+        anti: "// no SaaS, no telemetry — your data lives in your own SQLite.",
+        ctaSelf: "Self-host", ctaStar: "Star on GitHub", ctaDocs: "Read the docs",
+        bFn: "functions", bPr: "practices", bQ: "questions", bMobile: "Mobile-ready",
+      },
+      radar: { score: "overall maturity", dev: "developing", current: "current", target: "target" },
+      stats: { s1: "business functions", s2: "security practices", s3: "questions (streams A/B)", s4: "maturity levels" },
+      what: {
+        kicker: "what it is", title: "OWASP SAMM v2, operable.",
+        note: "The Software Assurance Maturity Model organizes secure-SDLC into 5 business functions, each with 3 practices. Every practice is scored 0 to 3.",
+        functions: [
+          { abbr: "GOV", tone: "gov", name: "Governance", practices: ["Strategy & Metrics", "Policy & Compliance", "Education & Guidance"] },
+          { abbr: "DES", tone: "des", name: "Design", practices: ["Threat Assessment", "Security Requirements", "Security Architecture"] },
+          { abbr: "IMP", tone: "imp", name: "Implementation", practices: ["Secure Build", "Secure Deployment", "Defect Management"] },
+          { abbr: "VER", tone: "ver", name: "Verification", practices: ["Architecture Assessment", "Requirements Testing", "Security Testing"] },
+          { abbr: "OPS", tone: "ops", name: "Operations", practices: ["Incident Management", "Environment Management", "Operational Management"] },
+        ],
+      },
+      how: {
+        kicker: "how it works", title: "Assess, score, plan, report.",
+        note: "A continuous flow from questionnaire to PDF — guided, with keyboard shortcuts and interview notes per question.",
+        phases: [
+          { n: "01", tone: "", title: "Assess", desc: "90 questions across two streams (A/B), levels 1–3, with interview notes. Answer by keyboard: 0–3 scores and advances." },
+          { n: "02", tone: "cyan", title: "Score", desc: "Live scorecard: overall maturity, per-function and per-practice scores, a radar and on-target KPIs." },
+          { n: "03", tone: "magenta", title: "Plan", desc: "Roadmap with current level, gap to target and the next level per practice — with concrete actions." },
+          { n: "04", tone: "green", title: "Report", desc: "A 9-page Okami-branded PDF, plus history and comparison across snapshots." },
+        ],
+        shotA: "app · scorecard", shotB: "app · roadmap",
+      },
+      meter: {
+        label: "gap analysis · 0 → 3", cta: "See methodology",
+        l0: "None", l1: "Initial", l2: "Defined", l3: "Optimized",
+        caption: "// each practice's suggested target is the next level; the gap is the distance to it. The roadmap prioritizes where the maturity gain is greatest.",
+      },
+      report: {
+        kicker: "pdf report", title: "An Okami-branded PDF.",
+        note: 'A 9-page document following the "OKAMI · Security Assessment Report" identity — Space Grotesk, cool-white paper, per-function brand accents.',
+        f1: "pdf · cover", f2: "pdf · executive summary", f3: "pdf · roadmap",
+        sections: [
+          { n: "00", t: "Cover & Contents", d: "Dark cover with brand gradients and scope metadata." },
+          { n: "01", t: "Executive summary", d: "Metrics, by-function bars and a maturity radar." },
+          { n: "02", t: "Methodology", d: "The 5 functions, how the score is computed, levels 0–3." },
+          { n: "03", t: "Maturity by function", d: "Per-practice tables with strength/attention analysis." },
+          { n: "04", t: "Roadmap — next steps", d: "Priority practices with recommended actions." },
+          { n: "05", t: "Maturity evolution", d: "Overall trend across saved snapshots." },
+          { n: "06", t: "Conclusion & Appendix", d: "Interpretation, priorities and interview notes." },
+        ],
+      },
+      ai: {
+        kicker: "ai-operable", title: "Agents read and operate it.",
+        note: "Everything is exposed over MCP and both ACP protocols — one operations layer. An agent discovers the model, creates assessments, answers, scores, plans and generates the report.",
+        suggestTag: "ai suggestions · optional",
+        suggestTitle: "Get roadmap suggestions — just plug in a provider.",
+        suggestBody: "Without AI, the app works normally. Configure a provider and each priority practice in the roadmap gains AI-suggested actions, derived from the SAMM criteria. The key stays in your database and never leaves your server.",
+        providers: ["OpenAI / Codex", "Grok (xAI)", "Minimax", "Anthropic", "Compatible / custom"],
+        suggestCta: "How to configure", optional: "OPTIONAL",
+        suggestPoints: ["Prioritized actions per practice, derived from the SAMM criteria and guidance", "A suggested target and next level to close each gap", "You review and apply — nothing changes automatically"],
+        cards: [
+          { h: "// mcp", tone: "", title: "MCP · HTTP", items: ["POST /mcp", "Streamable HTTP", "remote"] },
+          { h: "// mcp", tone: "cyan", title: "MCP · stdio", items: ["mcp-stdio.js", "same SQLite", "local"] },
+          { h: "// acp", tone: "magenta", title: "ACP · Comm", items: ["REST /acp", "agent-to-agent", "samm-operator"] },
+          { h: "// acp", tone: "", title: "ACP · Client", items: ["Zed · JSON-RPC", "stdio", "/commands"] },
+        ],
+        tools: ["get_samm_model", "list_assessments", "get_assessment", "create_assessment", "set_answers", "set_targets", "set_notes", "get_scorecard", "get_roadmap", "add_snapshot", "generate_report", "delete_assessment", "export_backup", "import_backup"],
+        term1: "discovering the SAMM model · 15 practices", term2: "playwright · chromium →", termActions: "actions",
+      },
+      deploy: {
+        kicker: "self-host", title: "One command. Your data.",
+        note: "Frontend + API + PDF + SQLite from a single container. Or split the layers: Cloudflare Pages for the frontend and a container for the backend.",
+        term: "ready at",
+        arch: {
+          pagesH: "// frontend", pages: "Cloudflare Pages", pagesSub: "static app · React vendored · no CDN",
+          proxy: "/api/* · same-origin proxy", apiH: "// backend",
+          api: "Container", apiSub: "Express · better-sqlite3 · Playwright/Chromium",
+          note: "// or everything in a single container: it serves the frontend at / — docker run alone is a complete deploy. Your data lives in ./data/okami-samm.db.",
+        },
+        cards: [
+          { h: "// frontend", tone: "", title: "Static app", items: ["React vendored", "no CDN / offline", "Cloudflare Pages"] },
+          { h: "// backend", tone: "cyan", title: "Express + SQLite", items: ["better-sqlite3", "score.js (mirror)", "Render / Fly / VPS"] },
+          { h: "// pdf", tone: "magenta", title: "Playwright", items: ["headless Chromium", "render.js → A4", "Okami brand"] },
+          { h: "// data", tone: "", title: "SQLite (WAL)", items: ["backup = copy folder", "⤓ Backup / ⤒ Restore", "shared workspace"] },
+        ],
+      },
+      consult: {
+        kicker: "// need a hand?",
+        title: "Don't want to go it alone? OKAMI runs the assessment.",
+        lede: "The tool is open source and free. If you want to move faster, OKAMI runs the OWASP SAMM v2 assessment with your team, interprets the scorecard and delivers a prioritized 90-day roadmap — bank-grade AppSec engineering, not slide-deck consulting.",
+        points: [
+          "AppSec Journey — from threat model to secure deploy",
+          "GAP Analysis — 0–3 diagnosis with a 90-day roadmap",
+          "Execution with your team and shared on-call",
+        ],
+        cta: "Talk to OKAMI",
+        deliverTitle: "// we deliver",
+        deliver: ["Assessment run for you", "Scorecard interpreted", "Prioritized roadmap", "Execution support"],
+      },
+      cta: {
+        title: "Open source. Self-hosted. Your maturity, in your control.",
+        lede: "Clone it, bring it up with one command and measure your secure SDLC against OWASP SAMM v2 today. PT and EN, equal weight.",
+        primary: "Self-host", ghost: "Star on GitHub", ghost2: "Documentation",
+      },
+      footer: {
+        tag: "OWASP SAMM v2 · AppSec maturity assessment, by Okami.",
+        cols: [
+          { h: "Product", links: [
+            { label: "What is SAMM", href: "#what", tgt: "_self" }, { label: "How it works", href: "#how", tgt: "_self" },
+            { label: "PDF report", href: "#report", tgt: "_self" }, { label: "Self-host", href: "#deploy", tgt: "_self" } ] },
+          { h: "Docs", links: [
+            { label: "Overview", href: "/docs/", tgt: "_self" }, { label: "The 90 questions", href: "/docs/#questions", tgt: "_self" },
+            { label: "API · /docs", href: "/docs/#api", tgt: "_self" }, { label: "MCP & ACP", href: "/docs/#mcp", tgt: "_self" } ] },
+          { h: "Open source", links: [
+            { label: "GitHub", href: "https://github.com/OkamiOps/okami-SAMM", tgt: "_blank" }, { label: "Issues", href: "https://github.com/OkamiOps/okami-SAMM/issues", tgt: "_blank" },
+            { label: "OWASP SAMM", href: "https://owaspsamm.org", tgt: "_blank" } ] },
+          { h: "OKAMI", links: [
+            { label: "Consulting", href: "https://okamiops.com", tgt: "_blank" }, { label: "okamiops.com", href: "https://okamiops.com", tgt: "_blank" },
+            { label: "okamiagent.com", href: "https://okamiagent.com", tgt: "_blank" }, { label: "os.okamiops.com", href: "https://os.okamiops.com", tgt: "_blank" } ] },
+        ],
+        legalL: "Bank-grade AI & AppSec engineering",
+        legalR: "OWASP SAMM v2 · LGPD · GDPR",
+      },
+    },
+  };
+
+  renderVals() {
+    const lang = this.state.lang;
+    const t = this.COPY[lang];
+    return {
+      t,
+      radar: this.buildRadar(),
+      glow: this.props.glow ?? 0.55,
+      gridClass: (this.props.showGrid ?? true) ? "" : "no-grid",
+      ptActive: lang === "pt" ? "active" : "",
+      enActive: lang === "en" ? "active" : "",
+      setPt: () => this.setState({ lang: "pt" }),
+      setEn: () => this.setState({ lang: "en" }),
+      toTop: () => window.scrollTo({ top: 0, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }),
+    };
+  }
+}
+</script>
+</body>
 </html>
